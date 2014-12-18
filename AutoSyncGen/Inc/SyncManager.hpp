@@ -7,7 +7,7 @@
 
 namespace syn
 {
-	template<template<typename> class TLFManager, typename... TTypes> class SyncManagerna
+	template<template<typename> class TLFManager, typename... TTypes> class SyncManager
 	{
 		friend struct ManagerHelper;
 
