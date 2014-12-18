@@ -6,6 +6,8 @@
 #include "../../AutoSyncGen/Inc/ManagerHelper.hpp"
 #include "../../AutoSyncGen/Inc/SyncManager.hpp"
 
+#define SYN_PROXY(mIdx, mName) ProxyAt<mIdx> mName{get<mIdx>()}
+
 struct TestPlayer : syn::SyncObj
 <
 	float,			// X
@@ -15,19 +17,10 @@ struct TestPlayer : syn::SyncObj
 >
 {
 	public:
-		ProxyAt<0> x;
-		ProxyAt<1> y;
-		ProxyAt<2> health;
-		ProxyAt<3> name;
-
-		inline TestPlayer()
-			:   x{get<0>()},
-				y{get<1>()},
-				health{get<2>()},
-				name{get<3>()}
-		{
-
-		}
+		SYN_PROXY(0, x);
+		SYN_PROXY(1, y);
+		SYN_PROXY(2, health);
+		SYN_PROXY(3, name);
 };
 
 struct TestEnemy : syn::SyncObj
@@ -38,17 +31,9 @@ struct TestEnemy : syn::SyncObj
 >
 {
 	public:
-		ProxyAt<0> x;
-		ProxyAt<1> y;
-		ProxyAt<2> health;
-
-		inline TestEnemy()
-			:   x{get<0>()},
-				y{get<1>()},
-				health{get<2>()}
-		{
-
-		}
+		SYN_PROXY(0, x);
+		SYN_PROXY(1, y);
+		SYN_PROXY(2, health);
 };
 
 template<typename T> struct LifetimeManager;
@@ -103,7 +88,6 @@ template<> struct LifetimeManager<TestEnemy>
 		});
 	}
 };
-
 
 int main()
 {

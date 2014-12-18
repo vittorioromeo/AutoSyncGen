@@ -19,6 +19,8 @@ namespace syn
 			template<typename T> using HandleMapFor = std::map<ID, HandleFor<T>>;
 
 		private:
+			// TODO: current state id (always increasing, used in case something needs to be sent again) 
+
 			using TplLFManagers = std::tuple<LFManagerFor<TTypes>...>;
 			using TplHandleMaps = std::tuple<HandleMapFor<TTypes>...>;
 			using TplIDs = ssvu::TplRepeat<ID, typeCount>;
@@ -74,7 +76,7 @@ namespace syn
 			template<typename T> inline void updateImpl(ID mID, const ssvj::Val& mVal)
 			{
 				SSVU_ASSERT(isPresent<T>(mID));
-				
+
 				auto& handle(getHandleFor<T>(mID));
 				handle->setFromJson(mVal);
 			}
