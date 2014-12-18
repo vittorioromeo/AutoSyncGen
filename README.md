@@ -24,7 +24,8 @@ Example usage:
 
 ```
 // `Sphere` is a synchronizable object. 
-// The fields specified as template parameters of `syn::SyncObj` are synchronizable fields.
+// The fields specified as template parameters of `syn::SyncObj` are 
+// synchronizable fields.
 
 struct Sphere : syn::SyncObj
 <
@@ -51,11 +52,12 @@ struct Sphere : syn::SyncObj
 	ProxyAt<7> label{get<7>()};
 }; 
 
-// It is necessary to create a lifetime manager that tells the synchronizable manager how to
-// create and delete object instances.
+// It is necessary to create a lifetime manager that tells the synchronizable manager 
+// how to create and delete object instances.
 template<typename> struct LifetimeManager;
 
-// By specializing the lifetime manager, we can specify how to store objects of a certain type.
+// By specializing the lifetime manager, we can specify how to store objects of 
+// a certain type.
 template<> struct LifetimeManager<Sphere>
 {
 	using Handle = Sphere*;
@@ -80,25 +82,25 @@ template<> struct LifetimeManager<Sphere>
 
 int main()
 {
-	// Instantiate two synchronization managers that simulate server-client communication
-	// The first template parameter is the lifetime manager type, the rest of parameters are the types of 
-	// all synchronizable objects
+	// Instantiate two synchronization managers that simulate server-client communication.
+	// The first template parameter is the lifetime manager type, the rest of parameters 
+	// are the types of all synchronizable objects.
 	syn::SyncManager<LifetimeManager, Sphere> server;
 	syn::SyncManager<LifetimeManager, Sphere> client;
 
-	// Create a sphere on the server with some data
+	// Create a sphere on the server with some data.
 	auto h1(server.serverCreate<Sphere>(/* ... data here ... */));
 
-	// Get the diff between the state of the client and the server
+	// Get the diff between the state of the client and the server.
 	auto diff(server.getDiffWith(client)); 
 
-	// Convert the diff to Json, to send it over the network
+	// Convert the diff to Json, to send it over the network.
 	auto diffJson(server.getDiffWith(client).toJson()); 
 
 	/* ... send the diff here ... */
 
-	// Apply the received diff to the client
-	// Objects are created/removed/updated on the client
+	// Apply the received diff to the client.
+	// Objects are created/removed/updated on the client.
 	client.applyDiff(diff);
 
 	return 0;
