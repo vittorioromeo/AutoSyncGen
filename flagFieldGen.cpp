@@ -36,6 +36,7 @@ namespace syn
 {
 	using Idx = ssvu::SizeT;
 	using ID = int;
+	constexpr ssvu::SizeT maxObjs{100};
 
 	namespace Impl
 	{
@@ -201,7 +202,7 @@ namespace syn
 		}
 	};
 
-	constexpr ssvu::SizeT maxObjs{100};
+	
 
 	template<template<typename> class TLFManager, typename... TTypes> class SyncManager
 	{
