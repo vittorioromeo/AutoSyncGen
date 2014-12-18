@@ -59,11 +59,6 @@ template<> struct LifetimeManager<TestPlayer>
 			return mUPtr.get() == mHandle;
 		});
 	}
-
-	inline void update(Handle mHandle)
-	{
-
-	}
 };
 
 template<> struct LifetimeManager<TestEnemy>
