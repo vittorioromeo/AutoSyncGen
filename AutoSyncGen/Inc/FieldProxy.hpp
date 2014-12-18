@@ -36,7 +36,7 @@
 
 namespace syn
 {
-	template<Idx TI, typename TObj> class FieldProxy
+	template<TypeIdx TI, typename TObj> class FieldProxy
 	{
 		private:
 			TObj& syncObj;
@@ -76,7 +76,7 @@ namespace syn
 		using Type = std::false_type;
 	};
 
-	template<Idx TI, typename TObj> struct IsFieldProxy<FieldProxy<TI, TObj>>
+	template<TypeIdx TI, typename TObj> struct IsFieldProxy<FieldProxy<TI, TObj>>
 	{
 		using Type = std::true_type;
 	};

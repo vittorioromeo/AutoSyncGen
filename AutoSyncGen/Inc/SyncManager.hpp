@@ -68,6 +68,7 @@ namespace syn
 				getLFManagerFor<T>().remove(handle);
 				handle = getNullHandleFor<T>();
 
+				// TODO: null handle?
 				getHandleMapFor<T>().erase(mID);
 			}
 			template<typename T> inline void updateImpl(ID mID, const ssvj::Val& mVal)
@@ -75,6 +76,8 @@ namespace syn
 				SSVU_ASSERT(isPresent<T>(mID));
 
 				auto& handle(getHandleFor<T>(mID));
+
+				// TODO: no need for this, just update from json
 				getLFManagerFor<T>().update(handle);
 
 				handle->setFromJson(mVal);
@@ -86,39 +89,18 @@ namespace syn
 				ManagerHelper::initManager<SyncManager<TLFManager, TTypes...>, 0, TTypes...>(*this);
 			}
 
-			template<typename T> inline static constexpr ID getTypeID() noexcept
-			{
-				return ssvu::TplIdxOf<T, std::tuple<TTypes...>>::value;
-			}
+			template<typename T> inline static constexpr ID getTypeID() noexcept { return ssvu::TplIdxOf<T, std::tuple<TTypes...>>::value; }
 
-			template<typename T> inline ID getFirstFreeID() noexcept
-			{
-				constexpr ID typeID{getTypeID<T>()};
-				return std::get<typeID>(lastIDs)++;
-			}
+			// TODO: ID pool, recycle deleted IDs
+			template<typename T> inline ID getFirstFreeID() noexcept { return std::get<getTypeID<T>()>(lastIDs)++; }
 
-			template<typename T> inline auto getNullHandleFor() noexcept
-			{
-				return getLFManagerFor<T>().getNullHandle();
-			}
+			template<typename T> inline auto getNullHandleFor() noexcept { return getLFManagerFor<T>().getNullHandle(); }
+			template<typename T> inline auto& getLFManagerFor() noexcept { return std::get<LFManagerFor<T>>(lfManagers); }
+			template<typename T> inline auto& getHandleMapFor() noexcept { return std::get<HandleMapFor<T>>(handleMaps); }
+			
+			template<typename T> inline auto& getHandleFor(ID mID) noexcept { return getHandleMapFor<T>()[mID]; }		
 
-			template<typename T> inline auto& getLFManagerFor() noexcept
-			{
-				return std::get<LFManagerFor<T>>(lfManagers);
-			}
-			template<typename T> inline auto& getHandleMapFor() noexcept
-			{
-				return std::get<HandleMapFor<T>>(handleMaps);
-			}
-			template<typename T> inline auto& getHandleFor(ID mID) noexcept
-			{
-				return getHandleMapFor<T>()[mID];
-			}
-			///template<typename T> inline auto& getLastIDOf() noexcept
-			//{
-				//return std::get<ssvu::TplIdxOf<T, decltype(handles)>>(lastIDs);
-			//}
-
+			// TODO: rename?
 			template<typename T> inline auto serverCreate(const ssvj::Val& mVal)
 			{
 				auto createID(getFirstFreeID<T>());
@@ -157,15 +139,16 @@ namespace syn
 					{
 						using namespace ssvj;
 
-						Val result{Obj{}};
+						// TODO: better syntax in ssvj
+						Val result{Arr{}};
+						result.emplace(Obj{});
+						result.emplace(Obj{});
+						result.emplace(Obj{});
 
-						result["create"] = Obj{};
-						result["remove"] = Arr{};
-						result["update"] = Obj{};
-
-						auto& jCreate(result["create"]);
-						auto& jRemove(result["remove"]);
-						auto& jUpdate(result["update"]);
+						// TODO: better syntax in ssvj
+						auto& jCreate(result[jsonCreateIdx]);
+						auto& jRemove(result[jsonRemoveIdx]);
+						auto& jUpdate(result[jsonUpdateIdx]);
 
 						for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
 						for(const auto& x : toRemove) jRemove.emplace(x);
@@ -219,9 +202,7 @@ namespace syn
 					{
 						for(const auto& p : mDTD.toCreate) this->onReceivedPacketCreate(mIType, p.first, p.second);
 						for(auto i : mDTD.toRemove) this->onReceivedPacketRemove(mIType, i);
-						for(const auto& p : mDTD.toUpdate) this->onReceivedPacketUpdate(mIType, p.first, p.second);
-
-						
+						for(const auto& p : mDTD.toUpdate) this->onReceivedPacketUpdate(mIType, p.first, p.second);					
 					}
 				}, handleMaps, mX.diffTypeDatas);
 			}

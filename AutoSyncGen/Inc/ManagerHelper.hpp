@@ -7,13 +7,13 @@ namespace syn
 {
 	struct ManagerHelper
 	{
-		template<typename TManager, ssvu::SizeT>
+		template<typename TManager, TypeIdx>
 		inline static void initManager(TManager&)
 		{
 
 		}
 
-		template<typename TManager, ssvu::SizeT TI, typename T, typename... TTypes>
+		template<typename TManager, TypeIdx TI, typename T, typename... TTypes>
 		inline static void initManager(TManager& mManager)
 		{
 			mManager.funcsCreate[TI] = &TManager::template createImpl<T>;

@@ -1,7 +1,7 @@
 #include "../../AutoSyncGen/Inc/Common.hpp"
 #include "../../AutoSyncGen/Inc/ObjBase.hpp"
 #include "../../AutoSyncGen/Inc/FieldProxy.hpp"
-#include "../../AutoSyncGen/Inc/SerializationHelper.hpp"
+#include "../../AutoSyncGen/Inc/SerializationHelper.hpp"	
 #include "../../AutoSyncGen/Inc/SyncObj.hpp"
 #include "../../AutoSyncGen/Inc/ManagerHelper.hpp"
 #include "../../AutoSyncGen/Inc/SyncManager.hpp"
@@ -114,6 +114,8 @@ int main()
 {
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> server;
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> client;
+
+	
 
 	ssvj::Val temp{ssvj::Obj{}};
 	temp["0"] = 10.f;
