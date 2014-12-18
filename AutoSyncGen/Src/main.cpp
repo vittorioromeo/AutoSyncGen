@@ -102,11 +102,6 @@ template<> struct LifetimeManager<TestEnemy>
 			return mUPtr.get() == mHandle;
 		});
 	}
-
-	inline void update(Handle mHandle)
-	{
-
-	}
 };
 
 
@@ -115,7 +110,7 @@ int main()
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> server;
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> client;
 
-	
+
 
 	ssvj::Val temp{ssvj::Obj{}};
 	temp["0"] = 10.f;

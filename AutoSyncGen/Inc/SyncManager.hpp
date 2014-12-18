@@ -74,12 +74,8 @@ namespace syn
 			template<typename T> inline void updateImpl(ID mID, const ssvj::Val& mVal)
 			{
 				SSVU_ASSERT(isPresent<T>(mID));
-
+				
 				auto& handle(getHandleFor<T>(mID));
-
-				// TODO: no need for this, just update from json
-				getLFManagerFor<T>().update(handle);
-
 				handle->setFromJson(mVal);
 			}
 
@@ -200,6 +196,7 @@ namespace syn
 				{				
 					for(auto i(0u); i < maxObjs; ++i)
 					{
+						// TODO: can be compile-time?
 						for(const auto& p : mDTD.toCreate) this->onReceivedPacketCreate(mIType, p.first, p.second);
 						for(auto i : mDTD.toRemove) this->onReceivedPacketRemove(mIType, i);
 						for(const auto& p : mDTD.toUpdate) this->onReceivedPacketUpdate(mIType, p.first, p.second);					
