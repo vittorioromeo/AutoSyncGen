@@ -20,9 +20,13 @@ It's also possible to automatically generate and serialize the difference betwee
 
 ---
 
+Depends on SSVUtils and SFML2.2.
+
+---
+
 Example usage:
 
-```
+```cpp
 // `Sphere` is a synchronizable object. 
 // The fields specified as template parameters of `syn::SyncObj` are 
 // synchronizable fields.
