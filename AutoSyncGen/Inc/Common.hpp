@@ -3,6 +3,8 @@
 
 #include <SSVUtils/Core/Core.hpp>
 #include <SSVUtils/Json/Json.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Network.hpp>
 
 namespace syn
 {
@@ -14,6 +16,9 @@ namespace syn
 	constexpr ssvu::SizeT jsonCreateIdx{0};
 	constexpr ssvu::SizeT jsonRemoveIdx{1};
 	constexpr ssvu::SizeT jsonUpdateIdx{2};
+
+	using IpAddress = sf::IpAddress;
+	using Port = unsigned short;
 }
 
 #endif

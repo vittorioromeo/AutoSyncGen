@@ -1,4 +1,5 @@
 #include "../../AutoSyncGen/Inc/Common.hpp"
+#include "../../AutoSyncGen/Inc/Networking.hpp"
 #include "../../AutoSyncGen/Inc/ObjBase.hpp"
 #include "../../AutoSyncGen/Inc/FieldProxy.hpp"
 #include "../../AutoSyncGen/Inc/SerializationHelper.hpp"	
@@ -84,12 +85,94 @@ template<> struct LifetimeManager<TestEnemy>
 	}
 };
 
-int main()
+class Session
 {
+	private:
+		enum class Role{Server, Client};
+
+		Role role;
+		syn::IpAddress ip;
+		syn::Port port;
+		sf::UdpSocket socket;
+
+		inline void selectRole()
+		{
+			while(true)
+			{
+				int choice{0};
+
+				ssvu::lo() 	<< "Select: \n"
+							<< "    1. Server\n" 
+							<< "    2. Client\n"  
+							<< std::endl;
+
+				std::cin >> choice;
+
+				if(choice == 1)
+				{
+					role = Role::Server;
+					ssvu::lo() << "Server selected\n";
+					break;
+				}
+				else if(choice == 2)
+				{
+					role = Role::Client;
+					ssvu::lo() << "Client selected\n";
+					break;
+				}
+				else
+				{
+					ssvu::lo() << "Invalid selection\n";
+					continue;
+				}
+			}
+		}
+
+		inline void selectData()
+		{
+			while(true)
+			{
+				// TODO: check validity
+				// TODO: display "sender" or "receiver"
+
+				ssvu::lo() << "Insert ip address: \n";
+				std::cin >> ip;
+
+				ssvu::lo() << "Insert port: \n";
+				std::cin >> port;
+
+				break;
+			}
+		}
+
+	public:
+		inline void start()
+		{
+			selectRole();
+			selectData();
+
+			if(socket.bind(port) != sf::Socket::Done)
+			{
+				throw std::runtime_error("Error binding socket");
+			}
+			else
+			{
+				ssvu::lo() << "Socket bound correctly to port " + ssvu::toStr(port) + "\n";
+			}
+		}
+};
+
+
+int main()
+{	
+	Session s;
+	s.start();
+
+	
+
+
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> server;
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> client;
-
-
 
 	ssvj::Val temp{ssvj::Obj{}};
 	temp["0"] = 10.f;
