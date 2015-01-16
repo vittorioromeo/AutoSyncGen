@@ -98,63 +98,80 @@ enum PacketStoC : PacketType
 	ConnectionDecline = 1,
 };
 
+/*
+inline sf::Packet& operator<<(sf::Packet& mP, const PacketType& mPT)	{ return mP << PacketType(mPT); }
+inline sf::Packet& operator>>(sf::Packet& mP, PacketType& mPT)			{ return mP >> reinterpret_cast<PacketType&>(mPT); }
+inline sf::Packet& operator<<(sf::Packet& mP, const PacketStoC& mPT)	{ return mP << PacketType(mPT); }
+inline sf::Packet& operator>>(sf::Packet& mP, PacketStoC& mPT)			{ return mP >> reinterpret_cast<PacketType&>(mPT); }
+inline sf::Packet& operator<<(sf::Packet& mP, const PacketCtoS& mPT)	{ return mP << PacketType(mPT); }
+inline sf::Packet& operator>>(sf::Packet& mP, PacketCtoS& mPT)			{ return mP >> reinterpret_cast<PacketType&>(mPT); }
+*/
+
 inline void fillPacket(sf::Packet&)
 {
 
 }
-template<typename T, typename... TArgs> inline void fillPacket(sf::Packet& mPacket, T&& mArg, TArgs&&... mArgs)
+template<typename T, typename... TArgs> inline void fillPacket(sf::Packet& mP, T&& mArg, TArgs&&... mArgs)
 {
-	mPacket << mArg;
-	fillPacket(mPacket, ssvu::fwd<TArgs>(mArgs)...);
+	mP << mArg;
+	fillPacket(mP, ssvu::fwd<TArgs>(mArgs)...);
 }
 
-template<typename TPacketType> class PacketHandler
+template<typename THost> class PacketHandler
 {
 	private:
-		using HandlerFunc = ssvu::Func<void(sf::Packet&)>;
-		std::map<TPacketType, HandlerFunc> funcs;
-		sf::Packet& buffer;
+		using HandlerFunc = ssvu::Func<void()>;
+		std::map<PacketType, HandlerFunc> funcs;
+		THost& host;
+
+		using RPT = typename THost::RPT;
+
+		inline auto& getRecvBuffer() noexcept { return host.recvBuffer; }
+		inline auto& debugLo() noexcept { return host.debugLo(); }
 
 	public:
-		inline PacketHandler(sf::Packet& mBuffer) : buffer{mBuffer} 
+		inline PacketHandler(THost& mHost) : host{mHost}
 		{ 
 
 		}
 
-		inline void handle(sf::Packet& mPacket)
+		inline void handle()
 		{
-			PacketType type{-1};
+			PacketType type;
 
 			try
 			{
-				mPacket >> type;
+				getRecvBuffer() >> type;
+				auto baseType(type);
 
-				auto itr(funcs.find(type));
+				auto itr(funcs.find(baseType));
 				if(itr == std::end(funcs))
 				{
-					ssvu::lo("PacketHandler") << "Can't handle packet of type: " << type << std::endl;
+					debugLo() << "Can't handle packet of type: " << type << std::endl;
 					return;
 				}
 
-				itr->second(mPacket);
+				itr->second();
 			}
 			catch(std::exception& mEx)
 			{
-				ssvu::lo("PacketHandler") << "Exception during packet handling: (" << type << ")\n" << mEx.what() << std::endl;
+				debugLo() << "Exception during packet handling: (" << type << ")\n" << mEx.what() << std::endl;
 			}
 			catch(...)
 			{
-				ssvu::lo("PacketHandler") << "Unknown exception during packet handling: (" << type << ")\n";
+				debugLo() << "Unknown exception during packet handling: (" << type << ")\n";
 			}
 		}
 
-		auto& operator[](TPacketType mType) { return funcs[mType]; }
+		auto& operator[](RPT mType) { return funcs[mType]; }
 };
 
 class ConsoleSessionController;
 
 template<typename TSPT, typename TRPT> class SessionHost
 {
+	template<typename> friend class PacketHandler;
+
 	public:	
 		using SPT = TSPT;
 		using RPT = TRPT;
@@ -164,6 +181,7 @@ template<typename TSPT, typename TRPT> class SessionHost
 		syn::IpAddress ip;
 		syn::Port port;
 		sf::UdpSocket socket;	
+		bool busy{false};
 
 		inline void tryBindSocket()
 		{
@@ -177,29 +195,67 @@ template<typename TSPT, typename TRPT> class SessionHost
 			}
 		}
 
-		ssvu::SizeT packetNext;
+		inline void receiveThread()
+		{
+			syn::IpAddress senderIp;
+			syn::Port senderPort;
+
+			while(true)
+			{
+				recvBuffer.clear();
+				if(socket.receive(recvBuffer, senderIp, senderPort) != sf::Socket::Done)
+				{
+					//debugLo() << "Error receiving packet\n";
+				}
+				else
+				{
+					debugLo() 	<< "Packet successfully received from: \n" 
+								<< "	" << senderIp << ":" << senderPort << "\n";
+
+					handler.handle();	
+				}
+			}
+		}
 
 	protected:
-		sf::Packet buffer;
+		sf::Packet sendBuffer, recvBuffer;
 		std::future<void> hostFuture;
-		PacketHandler<RPT> handler;
+		PacketHandler<SessionHost<TSPT, TRPT>> handler;
+
+		inline void sendTo(const syn::IpAddress& mIp, const syn::Port& mPort)
+		{
+			if(socket.send(sendBuffer, mIp, mPort) != sf::Socket::Done)
+			{
+				debugLo() << "Error sending packet to server\n";
+			}
+			else
+			{
+				debugLo() << "Successfully sent packet to server\n";
+			}
+		}	
 
 		template<SPT TType, typename... TArgs> inline void mkPacket(TArgs&&... mArgs)
 		{
-			buffer.clear();
-			buffer << static_cast<PacketType>(TType);
-			fillPacket(buffer, ssvu::fwd<TArgs>(mArgs)...);
+			sendBuffer.clear();
+			sendBuffer << static_cast<PacketType>(TType);
+			fillPacket(sendBuffer, ssvu::fwd<TArgs>(mArgs)...);
 		}	
 
+		inline void setBusy(bool mBusy) noexcept { busy = mBusy; }
+
 	public:
-		inline SessionHost(std::string mName, syn::Port mPort) : name{mName}, ip{syn::IpAddress::getLocalAddress()}, port{mPort}, handler{buffer}
+		inline SessionHost(std::string mName, syn::Port mPort) : name{mName}, ip{syn::IpAddress::getLocalAddress()}, port{mPort}, handler{*this}
 		{
 			socket.setBlocking(true);
+			tryBindSocket();
+			hostFuture = std::async(std::launch::async, [this]{ receiveThread(); });
 		}
 
 		inline const auto& getName() const noexcept { return name; }
 		inline const auto& getIp() const noexcept { return ip; }
 		inline const auto& getPort() const noexcept { return port; }
+
+		inline const auto& isBusy() const noexcept { return busy; }
 
 		inline auto debugLo() -> decltype(ssvu::lo(name))
 		{
@@ -208,18 +264,30 @@ template<typename TSPT, typename TRPT> class SessionHost
 		}
 };
 
-class SessionServer : public SessionHost<PacketStoC, PacketCtoS>
+using SessionServerBase = SessionHost<PacketStoC, PacketCtoS>;
+using SessionClientBase = SessionHost<PacketCtoS, PacketStoC>;
+
+class SessionServer : public SessionServerBase
 {
 	private:
 
 	public:
-		inline SessionServer(syn::Port mPort) : SessionHost{"Server", mPort} 
+		inline SessionServer(syn::Port mPort) : SessionServerBase{"Server", mPort} 
 		{
+			handler[RPT::ConnectionRequest] = [this]
+			{
+				debugLo() << "Connection request received\n";
+				debugLo() << "Accepting request\n";
 
+			};
+
+			setBusy(true);
 		}
 };
 
-class SessionClient : public SessionHost<PacketCtoS, PacketStoC>
+
+
+class SessionClient : public SessionClientBase
 {
 	public:
 		static constexpr int nullClientID{-1};
@@ -231,112 +299,44 @@ class SessionClient : public SessionHost<PacketCtoS, PacketStoC>
 		// Assigned from server after connection is accepted
 		int clientID{nullClientID};
 
+		template<SPT TType, typename... TArgs> inline void sendToServer(TArgs&&... mArgs)
+		{
+			mkPacket<TType>(ssvu::fwd<TArgs>(mArgs)...);
+			sendTo(serverIp, serverPort);
+		}	
+
 		inline void sendConnectionRequest()
 		{
-			mkPacket<SPT::ConnectionRequest>();
+			sendToServer<SPT::ConnectionRequest>();
 		}
 		
 	public:
 		inline SessionClient(syn::Port mPort, syn::IpAddress mServerIp, syn::Port mServerPort) 
-			: SessionHost{"Client", mPort}, serverIp{mServerIp}, serverPort{mServerPort}
+			: SessionClientBase{"Client", mPort}, serverIp{mServerIp}, serverPort{mServerPort}
 		{
-			handler[RPT::ConnectionAccept] = [this](sf::Packet& mP)
+			handler[RPT::ConnectionAccept] = [this]
 			{
 
 			};
-		}
 
-};
+			setBusy(true);
 
-class Session
-{
-	friend class ConsoleSessionController;
-
-	private:
-		enum class Role{Server, Client};
-
-		Role role;
-		syn::IpAddress ip;
-		syn::Port port;
-		sf::UdpSocket socket;
-
-		std::future<void> socketFuture;
-
-		static constexpr ssvu::SizeT bufferSize{2048};
-		std::array<char, 2048> buffer;
-
-		inline void tryBindSocket()
-		{
-			if(socket.bind(port) != sf::Socket::Done)
-			{
-				throw std::runtime_error("Error binding socket");
-			}
-			else
-			{
-				ssvu::lo() << "Socket successfully bound to port " + ssvu::toStr(port) + "\n";
-			}
-		}
-
-		inline void serverFutureImpl()
-		{
-			syn::IpAddress senderIp;
-			syn::Port senderPort;
-			ssvu::SizeT receivedSize;
-
-			while(true)
-			{
-				if(socket.receive(buffer.data(), bufferSize, receivedSize, senderIp, senderPort) != sf::Socket::Done)
+			auto xd = std::thread([this]
+			{	
+				while(true)
 				{
-				    ssvu::lo("Server") 	<< "Socket receive error: \n" 
-				  						<< "	Sender: " << senderIp << ":" << senderPort << "\n";
-
-				  	continue;
+					sendConnectionRequest();
+					std::this_thread::sleep_for(std::chrono::seconds(1));
 				}
-
-				ssvu::lo("Server") 	<< "Received " << receivedSize << " bytes from: \n" 
-				  					<< "	Sender: " << senderIp << ":" << senderPort << "\n";
-			}
+			});
+			xd.detach();
 		}
 
-		inline void clientFutureImpl()
-		{
-			while(true)
-			{
-
-			}
-		}
-
-		inline void startSocketFuture()
-		{
-			if(role == Role::Server)
-			{
-				socketFuture = std::async(std::launch::async,  [this]{ serverFutureImpl(); });
-			}
-			else
-			{
-				socketFuture = std::async(std::launch::async,  [this]{ clientFutureImpl(); });
-			}
-		}
-
-	
-
-	public:
-		inline Session()
-		{
-			socket.setBlocking(true);
-		}
-
-		inline void join()
-		{
-			socketFuture.get();
-		}	
 };
 
 class ConsoleSessionController
 {
 	private:
-		Session& session;
-
 		inline void selectRole()
 		{
 			while(true)
@@ -351,104 +351,81 @@ class ConsoleSessionController
 				std::cin >> choice;
 
 				if(choice == 0)
-				{
-					session.role = Session::Role::Server;
+				{					
 					ssvu::lo() << "Server selected\n";
-					break;
+					selectServer();	
+					return;
 				}
 				else if(choice == 1)
-				{
-					session.role = Session::Role::Client;
+				{					
 					ssvu::lo() << "Client selected\n";
-					break;
+					selectClient();
+					return;
 				}
-				else
-				{
-					ssvu::lo() << "Invalid selection\n";
-					continue;
-				}
+				
+				ssvu::lo() << "Invalid selection\n";
 			}
 		}
 
 		inline void selectServer()
 		{
-			while(true)
-			{
-				selectPort();
+			auto port = getInputPort();
+			
+			SessionServer server{port};
 
-				break;
+			while(server.isBusy())
+			{
+
 			}
 		}
 
 		inline void selectClient()
 		{
-			while(true)
-			{
-				selectIP();
-				selectPort();
+			auto port = getInputPort();
 
-				break;
+			ssvu::lo() << "Enter target server ip and port: \n";
+			auto serverIp = getInputIp();
+			auto serverPort = getInputPort();
+			
+			SessionClient client{port, serverIp, serverPort};
+
+			while(client.isBusy())
+			{
+
 			}
 		}
 
-		inline void selectIP()
+		inline syn::IpAddress getInputIp()
 		{
-			while(true)
-			{
-				// TODO: check validity
-				// TODO: display "sender" or "receiver"
+			syn::IpAddress result;
 
-				ssvu::lo() << "Insert ip address: \n";
-				std::cin >> session.ip;
+			ssvu::lo() << "Insert ip: \n";
+			std::cin >> result;
 
-				break;
-			}
+			return result;
 		}
 
-		inline void selectPort()
+		inline syn::Port getInputPort()
 		{
-			while(true)
-			{
-				// TODO: check validity
-				// TODO: display "sender" or "receiver"
+			syn::Port result;
 
-				ssvu::lo() << "Insert port: \n";
-				std::cin >> session.port;
+			ssvu::lo() << "Insert port: \n";
+			std::cin >> result;
 
-				break;
-			}
+			return result;
 		}
 
-	public:
-		inline ConsoleSessionController(Session& mSession) noexcept : session{mSession}
-		{
-
-		}
-
+	public:	
 		inline void start()
 		{
 			selectRole();
-			
-			if(session.role == Session::Role::Server)
-			{
-				selectServer();
-			}
-			else
-			{
-				selectClient();
-			}
-
-			session.tryBindSocket();
-			session.startSocketFuture();
 		}
 };
 
 
 int main()
 {	
-	Session s;
-	ConsoleSessionController cs{s};
-
+	ConsoleSessionController cs;
 	cs.start();
 
 	
@@ -482,8 +459,6 @@ int main()
 	ssvu::lo() << h1c->toJsonAll() << std::endl;
 
 	//ssvu::lo() << sizeof h1->x << std::endl;
-
-	s.join();
 
 	return 0;
 }
