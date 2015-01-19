@@ -6,7 +6,7 @@ namespace syn
 	template<typename> class SessionServer;
 	template<typename> class SessionClient;
 
-	namespace Internal
+	namespace Impl
 	{
 		template<typename TSettings, typename TSPT, typename TRPT, template<typename> class TDerivedBase> class SessionHost
 		{

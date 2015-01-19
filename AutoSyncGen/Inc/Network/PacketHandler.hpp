@@ -3,7 +3,7 @@
 
 namespace syn
 {
-	namespace Internal
+	namespace Impl
 	{
 		inline void fillPacket(Packet&) noexcept { }
 		template<typename T, typename... TArgs> inline void fillPacket(Packet& mP, T&& mArg, TArgs&&... mArgs)

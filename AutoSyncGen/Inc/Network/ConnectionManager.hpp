@@ -3,7 +3,7 @@
 
 namespace syn
 {
-	namespace Internal
+	namespace Impl
 	{
 		constexpr int maxSecondsUntilTimeout{5};
 

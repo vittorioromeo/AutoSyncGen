@@ -28,6 +28,7 @@ namespace syn
 		};
 	}
 
+	// TODO: optimization opportunities
 	inline Packet& operator<<(Packet& mP, const ssvj::Val& mX)		
 	{
 		return mP << mX.getWriteToStr<ssvj::WSMinified>();
@@ -40,11 +41,11 @@ namespace syn
 		return mP;
 	}
 
-	template<typename TManager> inline Packet& operator<<(Packet& mP, const Internal::Diff<TManager>& mX)	
+	template<typename TManager> inline Packet& operator<<(Packet& mP, const Impl::Diff<TManager>& mX)	
 	{ 
 	 	return mP << mX.toJson();
 	}
-	template<typename TManager> inline Packet& operator>>(Packet& mP, Internal::Diff<TManager>& mX)		
+	template<typename TManager> inline Packet& operator>>(Packet& mP, Impl::Diff<TManager>& mX)		
 	{ 
 		ssvj::Val data{};
 		mP >> data;

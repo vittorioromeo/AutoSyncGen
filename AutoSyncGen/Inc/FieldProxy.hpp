@@ -40,6 +40,7 @@ namespace syn
 	{
 		private:
 			// TODO: instead of storing a pointer/reference, use offsetof and crtp
+			// or use inheritance
 			TObj& syncObj;
 
 		public:

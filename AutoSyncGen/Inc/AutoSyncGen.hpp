@@ -4,5 +4,7 @@
 #include "../../AutoSyncGen/Inc/SerializationHelper.hpp"	
 #include "../../AutoSyncGen/Inc/SyncObj.hpp"
 #include "../../AutoSyncGen/Inc/ManagerHelper.hpp"
+#include "../../AutoSyncGen/Inc/DiffTypeData.hpp"
+#include "../../AutoSyncGen/Inc/Diff.hpp"
 #include "../../AutoSyncGen/Inc/SyncManager.hpp"
 #include "../../AutoSyncGen/Inc/Network/Network.hpp"

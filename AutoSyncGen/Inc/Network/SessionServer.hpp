@@ -3,19 +3,19 @@
 
 namespace syn
 {
-	template<typename TSettings> class SessionServer : public Internal::SessionServerBase<TSettings>
+	template<typename TSettings> class SessionServer : public Impl::SessionServerBase<TSettings>
 	{
-		friend Internal::SessionServerBase<TSettings>;
+		friend Impl::SessionServerBase<TSettings>;
 
 
 		public:
-			using BaseType = Internal::SessionServerBase<TSettings>;
+			using BaseType = Impl::SessionServerBase<TSettings>;
 			using SPT = typename BaseType::SPT;
 			using RPT = typename BaseType::RPT;
 			using Diff = typename BaseType::Diff;
 
 		private:
-			Internal::ConnectionManager cManager;
+			Impl::ConnectionManager cManager;
 
 			template<SPT TType, typename... TArgs> inline void sendToClient(CID mCID, TArgs&&... mArgs)
 			{
@@ -109,7 +109,7 @@ namespace syn
 			}
 
 		public:
-			inline SessionServer(syn::Port mPort) : Internal::SessionServerBase<TSettings>{"Server", mPort}
+			inline SessionServer(syn::Port mPort) : Impl::SessionServerBase<TSettings>{"Server", mPort}
 			{
 				this->setBusy(true);
 			}

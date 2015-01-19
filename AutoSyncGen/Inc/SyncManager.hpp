@@ -7,81 +7,9 @@
 
 namespace syn
 {
-	namespace Internal
-	{
-		struct DiffTypeData
-		{
-			std::map<ID, ssvj::Val> toCreate, toUpdate;
-			std::vector<ID> toRemove;
-
-			inline auto toJson() const
-			{
-				using namespace ssvj;
-
-				// TODO: better syntax in ssvj
-				Val result{Arr{}};
-				result.emplace(Obj{});
-				result.emplace(Obj{});
-				result.emplace(Obj{});
-
-				// TODO: better syntax in ssvj
-				auto& jCreate(result[jsonCreateIdx]);
-				auto& jRemove(result[jsonRemoveIdx]);
-				auto& jUpdate(result[jsonUpdateIdx]);
-
-				for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
-				for(const auto& x : toRemove) jRemove.emplace(x);
-				for(const auto& x : toUpdate) jUpdate[ssvu::toStr(x.first)] = x.second;
-
-				return result;
-			}
-
-			inline void initFromJson(const ssvj::Val& mX)
-			{
-				const auto& jCreate(mX[jsonCreateIdx]);
-				const auto& jRemove(mX[jsonRemoveIdx]);
-				const auto& jUpdate(mX[jsonUpdateIdx]);
-
-				for(const auto& x : jCreate.forObj()) toCreate[std::stoi(x.key)] = x.value;
-				for(const auto& x : jRemove.forArrAs<ID>()) toRemove.emplace_back(x);
-				for(const auto& x : jUpdate.forObj()) toUpdate[std::stoi(x.key)] = x.value;
-			}
-		};
-
-		template<typename TManager> struct Diff
-		{
-			using ObjBitset = typename TManager::ObjBitset;
-			using BitsetStorage = typename TManager::BitsetStorage;
-
-			BitsetStorage bitsetIDs;
-			ssvu::TplRepeat<DiffTypeData, TManager::typeCount> diffTypeDatas;
-
-			inline auto toJson() const
-			{
-				using namespace ssvj;
-
-				Val result{Arr{}};
-				result.emplace(Arr{}); // Bitset array
-				result.emplace(Arr{}); // Data array
-
-				for(const auto& b : bitsetIDs) result[0].emplace(b.to_string());
-				ssvu::tplFor([this, &result](const auto& mI){ result[1].emplace(mI.toJson()); }, diffTypeDatas);
-				return result;
-			}
-
-			inline void initFromJson(const ssvj::Val& mX)
-			{
-				using namespace ssvj;
-
-				for(auto i(0u); i < bitsetIDs.size(); ++i) bitsetIDs[i] = ObjBitset{mX[0][i].as<std::string>()};				
-				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mDTD){ mDTD.initFromJson(mX[1].as<Arr>()[mIdx]); }, diffTypeDatas);
-			}
-		};
-	}
-
 	template<template<typename> class TLFManager, typename... TTypes> class SyncManager
 	{
-		friend struct ManagerHelper;
+		friend struct syn::Impl::ManagerHelper;
 
 		public:
 			static constexpr SizeT typeCount{sizeof...(TTypes)};
@@ -90,7 +18,7 @@ namespace syn
 			template<typename T> using HandleFor = typename LFManagerFor<T>::Handle;
 			template<typename T> using HandleMapFor = std::map<ID, HandleFor<T>>;
 
-			using DiffType = Internal::Diff<SyncManager<TLFManager, TTypes...>>;
+			using DiffType = Impl::Diff<SyncManager<TLFManager, TTypes...>>;
 			using ObjBitset = std::bitset<maxObjs>;
 			using BitsetStorage = std::array<ObjBitset, typeCount>;
 
@@ -107,7 +35,6 @@ namespace syn
 			using MemFnCreate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
 			using MemFnRemove = void(SyncManager<TLFManager, TTypes...>::*)(ID);
 			using MemFnUpdate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
-
 
 			TplLFManagers lfManagers;
 			TplHandleMaps handleMaps;
@@ -161,7 +88,7 @@ namespace syn
 		public:
 			inline SyncManager()
 			{
-				ManagerHelper::initManager<SyncManager<TLFManager, TTypes...>, 0, TTypes...>(*this);
+				Impl::ManagerHelper::initManager<SyncManager<TLFManager, TTypes...>, 0, TTypes...>(*this);
 			}
 
 			template<typename T> inline static constexpr ID getTypeID() noexcept { return ssvu::TplIdxOf<T, std::tuple<TTypes...>>::value; }
@@ -261,8 +188,25 @@ namespace syn
 
 			inline auto getAllToDiff()
 			{
-				return getDiffWith(getNullBitsetStorage());
+				DiffType result;
+
+				result.bitsetIDs = bitsetIDs;
+				ssvu::tplForIdx([this, &result](auto mIType, auto& mI, auto& mDTD) mutable
+				{				
+					const auto& myBitset(bitsetIDs[mIType]);
+
+					for(auto i(0u); i < maxObjs; ++i)
+					{						
+						if(myBitset[i]) mDTD.toCreate[i] = mI[i]->toJsonAll();
+						if(myBitset[i]) mDTD.toRemove.emplace_back(i);
+						if(myBitset[i]) mDTD.toUpdate[i] = mI[i]->toJsonChanged();
+					}
+				}, handleMaps, result.diffTypeDatas);
+
+				return result;
 			}
+
+			
 	};
 }
 

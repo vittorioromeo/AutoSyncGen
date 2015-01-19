@@ -3,12 +3,12 @@
 
 namespace syn
 {
-	template<typename TSettings> class SessionClient : public Internal::SessionClientBase<TSettings>
+	template<typename TSettings> class SessionClient : public Impl::SessionClientBase<TSettings>
 	{
-		friend Internal::SessionClientBase<TSettings>;
+		friend Impl::SessionClientBase<TSettings>;
 
 		public:
-			using BaseType = Internal::SessionClientBase<TSettings>;
+			using BaseType = Impl::SessionClientBase<TSettings>;
 			using SPT = typename BaseType::SPT;
 			using RPT = typename BaseType::RPT;
 			using Diff = typename BaseType::Diff;
@@ -20,7 +20,7 @@ namespace syn
 			// Assigned from server after connection is accepted
 			CID cid{nullCID};
 
-			template<SPT TType, typename... TArgs> inline void sendToServerNoID(TArgs&&... mArgs)
+			template<SPT TType, typename... TArgs> inline void sendToServerNoCID(TArgs&&... mArgs)
 			{
 				SSVU_ASSERT(cid == nullCID);
 
@@ -60,7 +60,7 @@ namespace syn
 
 			inline void sendConnectionRequest()
 			{
-				sendToServerNoID<SPT::ConnectionRequest>();
+				sendToServerNoCID<SPT::ConnectionRequest>();
 			}
 
 			inline void sendPing()
@@ -114,11 +114,12 @@ namespace syn
 			
 		public:
 			inline SessionClient(syn::Port mPort, syn::IpAddress mServerIp, syn::Port mServerPort) 
-				: Internal::SessionClientBase<TSettings>{"Client", mPort},
+				: Impl::SessionClientBase<TSettings>{"Client", mPort},
 				serverIp{mServerIp}, serverPort{mServerPort}
 			{
 				this->setBusy(true);
 
+				// TODO: wat
 				auto xd = std::thread([this]
 				{	
 					while(true)
@@ -143,6 +144,7 @@ namespace syn
 						}
 					}
 				});
+
 				xd.detach();
 			}
 

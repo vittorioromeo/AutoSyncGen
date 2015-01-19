@@ -135,7 +135,7 @@ class ConsoleSessionController
 
 			while(server.isBusy())
 			{
-				
+
 			}
 		}
 
@@ -151,7 +151,7 @@ class ConsoleSessionController
 
 			while(client.isBusy())
 			{
-				
+
 			}
 		}
 
@@ -263,3 +263,6 @@ int main()
 	player.name = "goodbye";
 	ssvu::lo("JSON_CHANGED") << "\n" << player.toJsonChanged() << "\n";
 	*/
+
+
+// TODO: only send bitsets for sync 
