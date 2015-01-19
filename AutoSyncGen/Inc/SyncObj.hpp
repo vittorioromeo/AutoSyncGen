@@ -16,7 +16,7 @@ namespace syn
 			using TplFields = std::tuple<TArgs...>;
 
 		private:
-			static constexpr ssvu::SizeT fieldCount{sizeof...(TArgs)};
+			static constexpr SizeT fieldCount{sizeof...(TArgs)};
 			TplFields fields;
 			std::bitset<fieldCount> fieldFlags;
 

@@ -1,11 +1,4 @@
-#include "../../AutoSyncGen/Inc/Common.hpp"
-#include "../../AutoSyncGen/Inc/ObjBase.hpp"
-#include "../../AutoSyncGen/Inc/FieldProxy.hpp"
-#include "../../AutoSyncGen/Inc/SerializationHelper.hpp"	
-#include "../../AutoSyncGen/Inc/SyncObj.hpp"
-#include "../../AutoSyncGen/Inc/ManagerHelper.hpp"
-#include "../../AutoSyncGen/Inc/SyncManager.hpp"
-#include "../../AutoSyncGen/Inc/Network/Network.hpp"
+#include "../../AutoSyncGen/Inc/AutoSyncGen.hpp"
 
 #define SYN_PROXY(mIdx, mName) ProxyAt<mIdx> mName{get<mIdx>()}
 
@@ -85,6 +78,9 @@ template<> struct LifetimeManager<TestEnemy>
 	}
 };
 
+using SyncManagerType = syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy>;
+using Settings = syn::SessionSettings<SyncManagerType>;
+
 class ConsoleSessionController
 {
 	private:
@@ -97,6 +93,7 @@ class ConsoleSessionController
 				ssvu::lo() 	<< "Select: \n"
 							<< "    0. Server\n" 
 							<< "    1. Client\n"  
+							<< "    2. Exit\n"
 							<< std::endl;
 
 				std::cin >> choice;
@@ -107,10 +104,14 @@ class ConsoleSessionController
 					selectServer();	
 					return;
 				}
-				else if(choice == 1)
+				if(choice == 1)
 				{					
 					ssvu::lo() << "Client selected\n";
 					selectClient();
+					return;
+				}
+				if(choice == 2)
+				{					
 					return;
 				}
 				
@@ -120,9 +121,9 @@ class ConsoleSessionController
 
 		inline void selectServer()
 		{
-			auto port = getInputPort();
+			auto port = getInputPort("Insert port to listen onto: \n", 27015);
 			
-			syn::SessionServer server{port};
+			syn::SessionServer<Settings> server{port};
 
 			while(server.isBusy())
 			{
@@ -132,13 +133,13 @@ class ConsoleSessionController
 
 		inline void selectClient()
 		{
-			auto port = getInputPort();
+			auto port = getInputPort("Insert port to listen onto: \n", 27016);
 
 			ssvu::lo() << "Enter target server ip and port: \n";
-			auto serverIp = getInputIp();
-			auto serverPort = getInputPort();
+			auto serverIp = getInputIp("Insert target server ip: \n", syn::IpAddress{"127.0.0.1"});
+			auto serverPort = getInputPort("Insert target server port: \n", 27015);
 			
-			syn::SessionClient client{port, serverIp, serverPort};
+			syn::SessionClient<Settings> client{port, serverIp, serverPort};
 
 			while(client.isBusy())
 			{
@@ -146,23 +147,36 @@ class ConsoleSessionController
 			}
 		}
 
-		inline syn::IpAddress getInputIp()
+		template<typename T> inline int getChoice(const std::string& mMsg, const T& mDefault)
 		{
+			ssvu::lo() 	<< mMsg
+						<< "Choose: \n" 
+						<< "	0. Default (" << mDefault << ")\n"
+						<< "	1. Enter manually\n";
+
+			int choice{0};
+			std::cin >> choice;
+
+			return choice;
+		}
+
+		inline syn::IpAddress getInputIp(const std::string& mMsg, const syn::IpAddress& mDefault)
+		{
+			auto choice(getChoice(mMsg, mDefault));
+			if(choice == 0) return mDefault;
+
 			syn::IpAddress result;
-
-			ssvu::lo() << "Insert ip: \n";
 			std::cin >> result;
-
 			return result;
 		}
 
-		inline syn::Port getInputPort()
+		inline syn::Port getInputPort(const std::string& mMsg, const syn::Port& mDefault)
 		{
+			auto choice(getChoice(mMsg, mDefault));
+			if(choice == 0) return mDefault;
+
 			syn::Port result;
-
-			ssvu::lo() << "Insert port: \n";
 			std::cin >> result;
-
 			return result;
 		}
 

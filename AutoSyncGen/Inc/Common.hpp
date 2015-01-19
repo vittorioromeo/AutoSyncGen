@@ -8,17 +8,24 @@
 
 namespace syn
 {
-	using Idx = ssvu::SizeT;
-	using TypeIdx = ssvu::SizeT;
+	using SizeT = ssvu::SizeT;
+	using Idx = SizeT;
+	using TypeIdx = SizeT;
 	using ID = int;
-	constexpr ssvu::SizeT maxObjs{100};
+	using CID = int;
 
-	constexpr ssvu::SizeT jsonCreateIdx{0};
-	constexpr ssvu::SizeT jsonRemoveIdx{1};
-	constexpr ssvu::SizeT jsonUpdateIdx{2};
+	constexpr CID nullCID{-1};
+
+	constexpr SizeT maxObjs{100};
+	constexpr SizeT jsonCreateIdx{0};
+	constexpr SizeT jsonRemoveIdx{1};
+	constexpr SizeT jsonUpdateIdx{2};
 
 	using IpAddress = sf::IpAddress;
 	using Port = unsigned short;
+	using Packet = sf::Packet;
+	using UdpSocket = sf::UdpSocket;
+	using RevisionID = int;
 }
 
 #endif

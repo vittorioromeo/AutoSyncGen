@@ -1,0 +1,8 @@
+#include "../../AutoSyncGen/Inc/Common.hpp"
+#include "../../AutoSyncGen/Inc/ObjBase.hpp"
+#include "../../AutoSyncGen/Inc/FieldProxy.hpp"
+#include "../../AutoSyncGen/Inc/SerializationHelper.hpp"	
+#include "../../AutoSyncGen/Inc/SyncObj.hpp"
+#include "../../AutoSyncGen/Inc/ManagerHelper.hpp"
+#include "../../AutoSyncGen/Inc/SyncManager.hpp"
+#include "../../AutoSyncGen/Inc/Network/Network.hpp"

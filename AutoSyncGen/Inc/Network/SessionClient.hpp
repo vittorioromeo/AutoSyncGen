@@ -3,31 +3,36 @@
 
 namespace syn
 {
-	class SessionClient : public Internal::SessionClientBase
+	template<typename TSettings> class SessionClient : public Internal::SessionClientBase<TSettings>
 	{
-		friend Internal::SessionClientBase;
+		friend Internal::SessionClientBase<TSettings>;
 
-		private:			
-			syn::IpAddress serverIp;
-			syn::Port serverPort;
+		public:
+			using BaseType = Internal::SessionClientBase<TSettings>;
+			using SPT = typename BaseType::SPT;
+			using RPT = typename BaseType::RPT;
+
+		private:
+			IpAddress serverIp;
+			Port serverPort;
 
 			// Assigned from server after connection is accepted
-			int clientID{nullClientID};
+			CID cid{nullCID};
 
 			template<SPT TType, typename... TArgs> inline void sendToServerNoID(TArgs&&... mArgs)
 			{
-				SSVU_ASSERT(clientID == nullClientID);
+				SSVU_ASSERT(cid == nullCID);
 
-				mkPacket<TType>(ssvu::fwd<TArgs>(mArgs)...);
-				sendTo(serverIp, serverPort);
+				this->template mkPacket<TType>(ssvu::fwd<TArgs>(mArgs)...);
+				this->sendTo(serverIp, serverPort);
 			}	
 
 			template<SPT TType, typename... TArgs> inline void sendToServer(TArgs&&... mArgs)
 			{
-				SSVU_ASSERT(clientID != nullClientID);
+				SSVU_ASSERT(cid != nullCID);
 
-				mkPacket<TType>(clientID, ssvu::fwd<TArgs>(mArgs)...);
-				sendTo(serverIp, serverPort);
+				this->template mkPacket<TType>(cid, ssvu::fwd<TArgs>(mArgs)...);
+				this->sendTo(serverIp, serverPort);
 			}	
 
 			inline void handle(RPT mType)
@@ -40,6 +45,15 @@ namespace syn
 					case RPT::ConnectionDecline:
 						handleConnectionDecline();
 						return;					
+					case RPT::SyncRequestSatisfy:
+						handleSyncRequestSatisfy();
+						return;					
+					case RPT::SyncRequestUnneeded:
+						handleSyncRequestUnneeded();
+						return;					
+					case RPT::SyncRequestDecline:
+						handleSyncRequestDecline();
+						return;					
 				}
 			}
 
@@ -50,32 +64,47 @@ namespace syn
 
 			inline void sendPing()
 			{
-				debugLo() << "Sending ping\n";
+				this->debugLo() << "Sending ping\n";
 				sendToServer<SPT::Ping>();
 			}
 
 			inline void handleConnectionAccept()
 			{
-				auto id(popRecv<ClientID>());
-				auto msg(popRecv<std::string>()); 
+				auto id(this->template popRecv<CID>());
+				auto msg(this->template popRecv<std::string>()); 
 
-				debugLo() 	<< "Server accepted connection - my CID is " << id << "\n"
+				this->debugLo() 	<< "Server accepted connection - my CID is " << id << "\n"
 							<< "Server message: " << msg << "\n";
 
-				clientID = id;
+				cid = id;
 			}
 
 			inline void handleConnectionDecline()
 			{
 
 			}
+
+			inline void handleSyncRequestSatisfy()
+			{
+
+			}
+
+			inline void handleSyncRequestUnneeded()
+			{
+
+			}
+
+			inline void handleSyncRequestDecline()
+			{
+
+			}
 			
 		public:
 			inline SessionClient(syn::Port mPort, syn::IpAddress mServerIp, syn::Port mServerPort) 
-				: Internal::SessionClientBase{"Client", mPort},
+				: Internal::SessionClientBase<TSettings>{"Client", mPort},
 				serverIp{mServerIp}, serverPort{mServerPort}
 			{
-				setBusy(true);
+				this->setBusy(true);
 
 				auto xd = std::thread([this]
 				{	

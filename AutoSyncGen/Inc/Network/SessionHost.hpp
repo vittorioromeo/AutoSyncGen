@@ -3,33 +3,35 @@
 
 namespace syn
 {
-	class SessionServer;
-	class SessionClient;
-
-	constexpr int nullClientID{-1};
+	template<typename> class SessionServer;
+	template<typename> class SessionClient;
 
 	namespace Internal
 	{
-		template<typename TSPT, typename TRPT, typename TDerived> class SessionHost
+		template<typename TSettings, typename TSPT, typename TRPT, template<typename> class TDerivedBase> class SessionHost
 		{
 			public:	
 				using SPT = TSPT;
 				using RPT = TRPT;
+				using Settings = TSettings;
+				using Derived = TDerivedBase<Settings>;
+				using SyncManager = typename Settings::SyncManager;
+				using Diff = typename SyncManager::DiffType;
 
 			private:
 				std::string name;
-				syn::IpAddress ip;
-				syn::Port port;
-				sf::UdpSocket socket;	
+				IpAddress ip;
+				Port port;
+				UdpSocket socket;	
 				bool busy{false};
 
 				inline auto& getTD() noexcept
 				{
-					return reinterpret_cast<TDerived&>(*this);
+					return reinterpret_cast<Derived&>(*this);
 				}
 				inline const auto& getTD() const noexcept
 				{
-					return reinterpret_cast<const TDerived&>(*this);
+					return reinterpret_cast<const Derived&>(*this);
 				}
 
 				inline auto& getHandler() noexcept
@@ -51,7 +53,7 @@ namespace syn
 
 				inline void tryForwardReceivedPacket()
 				{
-					PacketType type;
+					PT::NType type;
 
 					try
 					{
@@ -73,6 +75,7 @@ namespace syn
 					while(true)
 					{
 						recvBuffer.clear();
+
 						if(socket.receive(recvBuffer, senderIp, senderPort) != sf::Socket::Done)
 						{
 							//debugLo() << "Error receiving packet\n";
@@ -88,12 +91,13 @@ namespace syn
 				}
 
 			protected:
-				sf::Packet sendBuffer, recvBuffer;
+				Packet sendBuffer, recvBuffer;
 				std::future<void> hostFuture;
-				syn::IpAddress senderIp;
-				syn::Port senderPort;
+				IpAddress senderIp;
+				Port senderPort;
+				SyncManager syncManager;
 
-				inline void sendTo(const syn::IpAddress& mIp, const syn::Port& mPort)
+				inline void sendTo(const IpAddress& mIp, const Port& mPort)
 				{
 					if(socket.send(sendBuffer, mIp, mPort) != sf::Socket::Done)
 					{
@@ -108,7 +112,7 @@ namespace syn
 				template<SPT TType, typename... TArgs> inline void mkPacket(TArgs&&... mArgs)
 				{
 					sendBuffer.clear();
-					sendBuffer << static_cast<PacketType>(TType);
+					sendBuffer << static_cast<PT::NType>(TType);
 					fillPacket(sendBuffer, ssvu::fwd<TArgs>(mArgs)...);
 				}	
 
@@ -122,7 +126,7 @@ namespace syn
 				}
 
 			public:
-				inline SessionHost(std::string mName, syn::Port mPort) : name{mName}, ip{syn::IpAddress::getLocalAddress()}, port{mPort}
+				inline SessionHost(std::string mName, syn::Port mPort) : name{mName}, ip{IpAddress::getLocalAddress()}, port{mPort}
 				{
 					socket.setBlocking(true);
 					tryBindSocket();
@@ -142,8 +146,8 @@ namespace syn
 				}
 		};
 
-		using SessionServerBase = SessionHost<PacketStoC, PacketCtoS, SessionServer>;
-		using SessionClientBase = SessionHost<PacketCtoS, PacketStoC, SessionClient>;
+		template<typename TSettings> using SessionServerBase = SessionHost<TSettings, PT::StoC, PT::CtoS, SessionServer>;
+		template<typename TSettings> using SessionClientBase = SessionHost<TSettings, PT::CtoS, PT::StoC, SessionClient>;
 	}	
 }
 

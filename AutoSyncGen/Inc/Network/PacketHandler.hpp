@@ -5,8 +5,8 @@ namespace syn
 {
 	namespace Internal
 	{
-		inline void fillPacket(sf::Packet&) noexcept { }
-		template<typename T, typename... TArgs> inline void fillPacket(sf::Packet& mP, T&& mArg, TArgs&&... mArgs)
+		inline void fillPacket(Packet&) noexcept { }
+		template<typename T, typename... TArgs> inline void fillPacket(Packet& mP, T&& mArg, TArgs&&... mArgs)
 		{
 			mP << mArg;
 			fillPacket(mP, ssvu::fwd<TArgs>(mArgs)...);

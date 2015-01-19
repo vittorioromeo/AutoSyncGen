@@ -7,19 +7,83 @@
 
 namespace syn
 {
+	namespace Internal
+	{
+		struct DiffTypeData
+		{
+			std::map<ID, ssvj::Val> toCreate, toUpdate;
+			std::vector<ID> toRemove;
+
+			inline auto toJson() const
+			{
+				using namespace ssvj;
+
+				// TODO: better syntax in ssvj
+				Val result{Arr{}};
+				result.emplace(Obj{});
+				result.emplace(Obj{});
+				result.emplace(Obj{});
+
+				// TODO: better syntax in ssvj
+				auto& jCreate(result[jsonCreateIdx]);
+				auto& jRemove(result[jsonRemoveIdx]);
+				auto& jUpdate(result[jsonUpdateIdx]);
+
+				for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
+				for(const auto& x : toRemove) jRemove.emplace(x);
+				for(const auto& x : toUpdate) jUpdate[ssvu::toStr(x.first)] = x.second;
+
+				return result;
+			}
+
+			inline void initFromJson(const ssvj::Val& mX)
+			{
+				const auto& jCreate(mX[jsonCreateIdx]);
+				const auto& jRemove(mX[jsonRemoveIdx]);
+				const auto& jUpdate(mX[jsonUpdateIdx]);
+
+				for(const auto& x : jCreate.forObj()) toCreate[std::stoi(x.key)] = x.value;
+				for(const auto& x : jRemove.forArrAs<ID>()) toRemove.emplace_back(x);
+				for(const auto& x : jUpdate.forObj()) toUpdate[std::stoi(x.key)] = x.value;
+			}
+		};
+
+		template<typename TManager> struct Diff
+		{
+			ssvu::TplRepeat<DiffTypeData, TManager::typeCount> diffTypeDatas;
+
+			inline auto toJson()
+			{
+				using namespace ssvj;
+
+				Val result{Arr{}};
+				ssvu::tplFor([this, &result](const auto& mI){ result.emplace(mI.toJson()); }, diffTypeDatas);
+				return result;
+			}
+
+			inline void initFromJson(const ssvj::Val& mX)
+			{
+				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mDTD){ mDTD.initFromJson(mX[mIdx]); }, diffTypeDatas);
+			}
+		};
+	}
+
 	template<template<typename> class TLFManager, typename... TTypes> class SyncManager
 	{
 		friend struct ManagerHelper;
 
 		public:
-			static constexpr ssvu::SizeT typeCount{sizeof...(TTypes)};
+			static constexpr SizeT typeCount{sizeof...(TTypes)};
 
 			template<typename T> using LFManagerFor = TLFManager<T>;
 			template<typename T> using HandleFor = typename LFManagerFor<T>::Handle;
 			template<typename T> using HandleMapFor = std::map<ID, HandleFor<T>>;
 
+			using DiffType = Internal::Diff<SyncManager<TLFManager, TTypes...>>;
+
 		private:
 			// TODO: current state id (always increasing, used in case something needs to be sent again) 
+			// RevisionID revisionID{0};
 
 			using TplLFManagers = std::tuple<LFManagerFor<TTypes>...>;
 			using TplHandleMaps = std::tuple<HandleMapFor<TTypes>...>;
@@ -32,6 +96,8 @@ namespace syn
 			using MemFnRemove = void(SyncManager<TLFManager, TTypes...>::*)(ID);
 			using MemFnUpdate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
 
+			using BitsetStorage = std::array<ObjBitset, typeCount>;
+
 			TplLFManagers lfManagers;
 			TplHandleMaps handleMaps;
 			TplIDs lastIDs;
@@ -40,7 +106,7 @@ namespace syn
 			std::array<MemFnRemove, typeCount> funcsRemove;
 			std::array<MemFnUpdate, typeCount> funcsUpdate;
 
-			std::array<ObjBitset, typeCount> bitsetIDs;
+			BitsetStorage bitsetIDs;
 
 			void testFn(int) { }
 
@@ -98,6 +164,8 @@ namespace syn
 			
 			template<typename T> inline auto& getHandleFor(ID mID) noexcept { return getHandleMapFor<T>()[mID]; }		
 
+			// inline const auto& getRevisionID() const noexcept { return revisionID; }
+
 			// TODO: rename?
 			template<typename T> inline auto serverCreate(const ssvj::Val& mVal)
 			{
@@ -105,10 +173,15 @@ namespace syn
 				(this->*funcsCreate[getTypeID<T>()])(createID, mVal);
 				return getHandleMapFor<T>()[createID];
 			}
-
+/*
 			inline auto getChanged(ID mIDType, ID mID)
 			{
 
+			}
+*/
+			inline auto getNullBitsetStorage()
+			{
+				return BitsetStorage{};
 			}
 
 			inline void onReceivedPacketCreate(ID mIDType, ID mID, const ssvj::Val& mVal)
@@ -126,56 +199,14 @@ namespace syn
 				(this->*funcsUpdate[mIDType])(mID, mVal);
 			}
 
-			struct Diff
+			inline auto getDiffWith(const BitsetStorage& mX)
 			{
-				struct DiffTypeData
-				{
-					std::map<ID, ssvj::Val> toCreate, toUpdate;
-					std::vector<ID> toRemove;
-
-					inline auto toJson() const
-					{
-						using namespace ssvj;
-
-						// TODO: better syntax in ssvj
-						Val result{Arr{}};
-						result.emplace(Obj{});
-						result.emplace(Obj{});
-						result.emplace(Obj{});
-
-						// TODO: better syntax in ssvj
-						auto& jCreate(result[jsonCreateIdx]);
-						auto& jRemove(result[jsonRemoveIdx]);
-						auto& jUpdate(result[jsonUpdateIdx]);
-
-						for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
-						for(const auto& x : toRemove) jRemove.emplace(x);
-						for(const auto& x : toUpdate) jUpdate[ssvu::toStr(x.first)] = x.second;
-
-						return result;
-					}
-				};
-
-				ssvu::TplRepeat<DiffTypeData, typeCount> diffTypeDatas;
-
-				inline auto toJson()
-				{
-					using namespace ssvj;
-
-					Val result{Arr{}};
-					ssvu::tplFor([this, &result](const auto& mI){ result.emplace(mI.toJson()); }, diffTypeDatas);
-					return result;
-				}
-			};
-
-			inline auto getDiffWith(const SyncManager& mX)
-			{
-				Diff result;
+				DiffType result;
 
 				ssvu::tplForIdx([this, &result, &mX](auto mIType, auto& mI, auto& mDTD) mutable
 				{				
 					const auto& myBitset(bitsetIDs[mIType]);
-					const auto& otherBitset(mX.bitsetIDs[mIType]);
+					const auto& otherBitset(mX[mIType]);
 
 					auto otherBitsetToCreate((~otherBitset) & myBitset);
 					auto otherBitsetToRemove((~myBitset) & otherBitset);
@@ -192,7 +223,12 @@ namespace syn
 				return result;
 			}
 
-			inline void applyDiff(const Diff& mX)
+			inline auto getDiffWith(const SyncManager& mX)
+			{
+				return getDiffWith(mX.bitsetIDs);
+			}
+
+			inline void applyDiff(const DiffType& mX)
 			{
 				ssvu::tplForIdx([this, &mX](auto mIType, auto& mI, auto& mDTD) mutable
 				{				
@@ -204,6 +240,11 @@ namespace syn
 						for(const auto& p : mDTD.toUpdate) this->onReceivedPacketUpdate(mIType, p.first, p.second);					
 					}
 				}, handleMaps, mX.diffTypeDatas);
+			}
+
+			inline auto getAllToJson()
+			{
+				return getDiffWith(getNullBitsetStorage());
 			}
 	};
 }

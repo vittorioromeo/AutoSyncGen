@@ -39,6 +39,7 @@ namespace syn
 	template<TypeIdx TI, typename TObj> class FieldProxy
 	{
 		private:
+			// TODO: instead of storing a pointer/reference, use offsetof and crtp
 			TObj& syncObj;
 
 		public:
