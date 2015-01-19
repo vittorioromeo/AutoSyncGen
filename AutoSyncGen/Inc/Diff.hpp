@@ -20,50 +20,6 @@ namespace syn
 {
 	namespace Impl
 	{
-		template<typename TManager> struct SnapshotTypeData
-		{
-			std::map<ID, ssvj::Val> items;
-
-			inline auto toJson() const
-			{
-				using namespace ssvj;
-
-				// TODO: better syntax in ssvj
-				Val result{Obj{}};			
-				for(const auto& x : items) result[ssvu::toStr(x.first)] = x.second;
-			
-				return result;
-			}
-
-			inline void initFromJson(const ssvj::Val& mX)
-			{
-					// TODO
-				// TODO 
-			}
-		};
-
-		template<typename TManager> struct Snapshot
-		{
-			using ObjBitset = typename TManager::ObjBitset;
-			using BitsetStorage = typename TManager::BitsetStorage;	
-
-			BitsetStorage bitsetIDs;			
-			ssvu::TplRepeat<DiffTypeData, TManager::typeCount> snapshotTypeDatas;
-
-			inline auto toJson() const
-			{
-				using namespace ssvj;
-
-				Val result{Arr{}};
-				result.emplace(Arr{}); // Bitset array
-				result.emplace(Arr{}); // Data array
-
-				for(const auto& b : bitsetIDs) result[0].emplace(b.to_string());
-				ssvu::tplFor([this, &result](const auto& mI){ result[1].emplace(mI.toJson()); }, snapshotTypeDatas);
-				return result;
-			}
-		};
-
 		template<typename TManager> struct Diff
 		{
 			using ObjBitset = typename TManager::ObjBitset;
