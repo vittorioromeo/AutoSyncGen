@@ -125,9 +125,17 @@ class ConsoleSessionController
 			
 			syn::SessionServer<Settings> server{port};
 
+			ssvj::Val temp{ssvj::Obj{}};
+			temp["0"] = 10.f;
+			temp["1"] = 25.f;
+			temp["2"] = 100;
+			temp["3"] = "banana";
+
+			auto h1(server.getSyncManager().serverCreate<TestPlayer>(temp));
+
 			while(server.isBusy())
 			{
-
+				
 			}
 		}
 
@@ -143,7 +151,7 @@ class ConsoleSessionController
 
 			while(client.isBusy())
 			{
-
+				
 			}
 		}
 
@@ -193,7 +201,9 @@ int main()
 	ConsoleSessionController cs;
 	cs.start();
 
-	
+
+
+	return 0;
 
 
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> server;

@@ -144,6 +144,8 @@ namespace syn
 					// TODO: ssvu::getNullLogStream(); for fake logs
 					return ssvu::lo(name);
 				}
+
+				inline auto& getSyncManager() noexcept { return syncManager; }
 		};
 
 		template<typename TSettings> using SessionServerBase = SessionHost<TSettings, PT::StoC, PT::CtoS, SessionServer>;

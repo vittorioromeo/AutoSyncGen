@@ -11,6 +11,7 @@ namespace syn
 			using BaseType = Internal::SessionClientBase<TSettings>;
 			using SPT = typename BaseType::SPT;
 			using RPT = typename BaseType::RPT;
+			using Diff = typename BaseType::Diff;
 
 		private:
 			IpAddress serverIp;
@@ -68,13 +69,19 @@ namespace syn
 				sendToServer<SPT::Ping>();
 			}
 
+			inline void sendSyncRequest()
+			{
+				this->debugLo() << "Sending sync request\n";
+				sendToServer<SPT::SyncRequest>(this->syncManager.getAllToDiff());
+			}
+
 			inline void handleConnectionAccept()
 			{
 				auto id(this->template popRecv<CID>());
 				auto msg(this->template popRecv<std::string>()); 
 
-				this->debugLo() 	<< "Server accepted connection - my CID is " << id << "\n"
-							<< "Server message: " << msg << "\n";
+				this->debugLo() << "Server accepted connection - my CID is " << id << "\n"
+								<< "Server message: " << msg << "\n";
 
 				cid = id;
 			}
@@ -86,7 +93,13 @@ namespace syn
 
 			inline void handleSyncRequestSatisfy()
 			{
+				auto diff(this->template popRecv<Diff>()); 
+				this->debugLo() << "Received diff \n"
+								<< diff.toJson() << "\n";
 
+				this->syncManager.applyDiff(diff);
+
+				this->debugLo() << "Diff applied\n";
 			}
 
 			inline void handleSyncRequestUnneeded()
@@ -113,9 +126,19 @@ namespace syn
 						sendConnectionRequest();
 						std::this_thread::sleep_for(std::chrono::seconds(1));
 
+						int i = 0;
 						while(true)
 						{
 							sendPing();
+
+							++i;
+
+							if(i == 4)
+							{
+								i = 0;
+								sendSyncRequest();
+							}
+
 							std::this_thread::sleep_for(std::chrono::seconds(1));
 						}
 					}

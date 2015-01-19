@@ -79,6 +79,16 @@ namespace syn
 			{
 				auto clientSnapshot(this->template popRecv<Diff>());
 
+				auto result(this->syncManager.getDiffWith(clientSnapshot));
+
+				this->debugLo()	<< "Calculating diff: \n" 
+ 								<< result.toJson() 
+ 								<< "\n";
+
+ 				sendToClient<SPT::SyncRequestSatisfy>(mCID, result);
+
+ 				this->debugLo() << "Sent diff \n";
+
 
 				/*auto revisionID(this->template popRecv<RevisionID>());
 

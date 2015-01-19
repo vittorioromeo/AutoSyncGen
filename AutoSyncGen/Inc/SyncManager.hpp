@@ -50,20 +50,31 @@ namespace syn
 
 		template<typename TManager> struct Diff
 		{
+			using ObjBitset = typename TManager::ObjBitset;
+			using BitsetStorage = typename TManager::BitsetStorage;
+
+			BitsetStorage bitsetIDs;
 			ssvu::TplRepeat<DiffTypeData, TManager::typeCount> diffTypeDatas;
 
-			inline auto toJson()
+			inline auto toJson() const
 			{
 				using namespace ssvj;
 
 				Val result{Arr{}};
-				ssvu::tplFor([this, &result](const auto& mI){ result.emplace(mI.toJson()); }, diffTypeDatas);
+				result.emplace(Arr{}); // Bitset array
+				result.emplace(Arr{}); // Data array
+
+				for(const auto& b : bitsetIDs) result[0].emplace(b.to_string());
+				ssvu::tplFor([this, &result](const auto& mI){ result[1].emplace(mI.toJson()); }, diffTypeDatas);
 				return result;
 			}
 
 			inline void initFromJson(const ssvj::Val& mX)
 			{
-				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mDTD){ mDTD.initFromJson(mX[mIdx]); }, diffTypeDatas);
+				using namespace ssvj;
+
+				for(auto i(0u); i < bitsetIDs.size(); ++i) bitsetIDs[i] = ObjBitset{mX[0][i].as<std::string>()};				
+				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mDTD){ mDTD.initFromJson(mX[1].as<Arr>()[mIdx]); }, diffTypeDatas);
 			}
 		};
 	}
@@ -80,6 +91,8 @@ namespace syn
 			template<typename T> using HandleMapFor = std::map<ID, HandleFor<T>>;
 
 			using DiffType = Internal::Diff<SyncManager<TLFManager, TTypes...>>;
+			using ObjBitset = std::bitset<maxObjs>;
+			using BitsetStorage = std::array<ObjBitset, typeCount>;
 
 		private:
 			// TODO: current state id (always increasing, used in case something needs to be sent again) 
@@ -89,14 +102,12 @@ namespace syn
 			using TplHandleMaps = std::tuple<HandleMapFor<TTypes>...>;
 			using TplIDs = ssvu::TplRepeat<ID, typeCount>;
 
-			using ObjBitset = std::bitset<maxObjs>;
 			//using TplBitset = ssvu::TplRepeat<ID, typeCount>;
 
 			using MemFnCreate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
 			using MemFnRemove = void(SyncManager<TLFManager, TTypes...>::*)(ID);
 			using MemFnUpdate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
 
-			using BitsetStorage = std::array<ObjBitset, typeCount>;
 
 			TplLFManagers lfManagers;
 			TplHandleMaps handleMaps;
@@ -203,6 +214,7 @@ namespace syn
 			{
 				DiffType result;
 
+				result.bitsetIDs = bitsetIDs;
 				ssvu::tplForIdx([this, &result, &mX](auto mIType, auto& mI, auto& mDTD) mutable
 				{				
 					const auto& myBitset(bitsetIDs[mIType]);
@@ -221,6 +233,11 @@ namespace syn
 				}, handleMaps, result.diffTypeDatas);
 
 				return result;
+			}
+
+			inline auto getDiffWith(const DiffType& mX)
+			{
+				return getDiffWith(mX.bitsetIDs);
 			}
 
 			inline auto getDiffWith(const SyncManager& mX)
@@ -242,7 +259,7 @@ namespace syn
 				}, handleMaps, mX.diffTypeDatas);
 			}
 
-			inline auto getAllToJson()
+			inline auto getAllToDiff()
 			{
 				return getDiffWith(getNullBitsetStorage());
 			}
