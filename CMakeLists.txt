@@ -7,6 +7,7 @@ include(SSVCMake)
 SSVCMake_setDefaults()
 SSVCMake_findSFML()
 SSVCMake_findExtlib(SSVUtils)
+SSVCMake_findExtlib(SSVStart)
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 SSVCMake_linkSFML()
