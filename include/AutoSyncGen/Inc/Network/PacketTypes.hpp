@@ -14,8 +14,9 @@ namespace syn
 
 
 			SyncRequest = 2,			// Request to sync data with server
+			SyncSatisfied = 3,			// TODO: implement (sucessfully syncronized with server)
 
-			Data = 3,
+			Data = 4,
 		};
 
 		enum class StoC : NType

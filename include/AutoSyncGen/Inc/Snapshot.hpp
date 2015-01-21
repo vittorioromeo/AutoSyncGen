@@ -80,7 +80,12 @@ namespace syn
 					{
 						if(diffBitsetToCreate[i]) mTDDiff.toCreate[i] = mTDCurrent.items[i];
 						if(diffBitsetToRemove[i]) mTDDiff.toRemove.emplace_back(i);
-						if(diffBitsetToUpdate[i]) mTDDiff.toUpdate[i] = Snapshot<TManager>::getJsonDiff(mTDCurrent.items.at(i), mTDOther.items.at(i));
+						if(diffBitsetToUpdate[i])
+						{
+							auto objDiff(Snapshot<TManager>::getJsonDiff(mTDCurrent.items.at(i), mTDOther.items.at(i)));
+
+							if(!(objDiff.template as<ssvj::Obj>()).empty()) mTDDiff.toUpdate[i] = objDiff;
+						}
 					}
 				}, typeDatas, mX.typeDatas, result.typeDatas);
 
