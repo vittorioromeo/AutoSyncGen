@@ -10,8 +10,8 @@ namespace syn
 		struct ConnectionData
 		{
 			CID cid;
-			syn::IpAddress ip;
-			syn::Port port;
+			IpAddress ip;
+			Port port;
 			int secondsUntilTimeout;
 		};
 
@@ -32,7 +32,7 @@ namespace syn
 
 						while(busy)
 						{
-							toDisconnect.clear();	
+							toDisconnect.clear();
 
 							for(auto& p : connections)
 							{
@@ -73,7 +73,7 @@ namespace syn
 
 				inline bool has(CID mCID) const noexcept
 				{
-					return connections.find(mCID) != std::end(connections); 
+					return connections.find(mCID) != std::end(connections);
 				}
 
 				inline auto& operator[](CID mCID) noexcept
@@ -86,8 +86,8 @@ namespace syn
 				{
 					SSVU_ASSERT(has(mCID));
 					connections[mCID].secondsUntilTimeout = maxSecondsUntilTimeout;
-				}	
-		};	
+				}
+		};
 	}
 }
 

@@ -138,12 +138,7 @@ enum class DP_CtoS : int
 	EditMsg = 1
 };
 
-inline syn::Packet& operator<<(syn::Packet& mP, const DP_StoC& mX)	{ return mP << static_cast<int>(mX); return mP; }
-inline syn::Packet& operator>>(syn::Packet& mP, DP_StoC& mX)		{ int temp; mP >> temp; mX = static_cast<DP_StoC>(temp); return mP; }
-
-inline syn::Packet& operator<<(syn::Packet& mP, const DP_CtoS& mX)	{ return mP << static_cast<int>(mX); }
-inline syn::Packet& operator>>(syn::Packet& mP, DP_CtoS& mX)		{ int temp; mP >> temp; mX = static_cast<DP_CtoS>(temp); return mP; }
-
+using namespace syn;
 
 using SyncManagerType = syn::SyncManager<LifetimeManager, Message>;
 using Settings = syn::SessionSettings<SyncManagerType>;

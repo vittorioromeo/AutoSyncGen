@@ -32,7 +32,22 @@ namespace syn
 			Data = 5
 		};
 	}
+}
 
+template<typename T> inline auto operator<<(syn::Packet& mP, const T& mX) noexcept
+	-> ssvu::EnableIf<ssvu::isEnum<ssvu::RemoveAll<T>>(), syn::Packet&>
+{
+	return mP << reinterpret_cast<const ssvu::Underlying<T>&>(mX);
+}
+
+template<typename T> inline auto operator>>(syn::Packet& mP, T& mX) noexcept
+	-> ssvu::EnableIf<ssvu::isEnum<ssvu::RemoveAll<T>>(), syn::Packet&>
+{
+	return mP >> reinterpret_cast<ssvu::Underlying<T>&>(mX);
+}
+
+namespace syn
+{
 	// TODO: optimization opportunities
 	inline Packet& operator<<(Packet& mP, const ssvj::Val& mX)
 	{
