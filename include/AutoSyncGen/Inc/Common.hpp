@@ -4,6 +4,7 @@
 #include <SSVUtils/Core/Core.hpp>
 #include <SSVUtils/Json/Json.hpp>
 #include <SSVUtils/Delegate/Delegate.hpp>
+#include <SSVUtils/MemoryManager/MemoryManager.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 

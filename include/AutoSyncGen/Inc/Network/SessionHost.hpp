@@ -142,7 +142,7 @@ namespace syn
 
 				inline auto debugLo() -> decltype(ssvu::lo(name))
 				{
-					// TODO: ssvu::getNullLogStream(); for fake logs
+					// return ssvu::loNull(name);
 					return ssvu::lo(name);
 				}
 

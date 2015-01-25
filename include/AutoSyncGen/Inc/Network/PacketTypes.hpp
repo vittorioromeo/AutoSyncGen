@@ -12,11 +12,10 @@ namespace syn
 			ConnectionRequest = 0,		// Request to establish a connection to the server
 			Ping = 1,					// Ping to avoid timing out with the server
 
-
 			SyncRequest = 2,			// Request to sync data with server
 			SyncSatisfied = 3,			// TODO: implement (sucessfully syncronized with server)
 
-			Data = 4,
+			Data = 4,					// Generic user data
 		};
 
 		enum class StoC : NType
@@ -24,12 +23,11 @@ namespace syn
 			ConnectionAccept = 0,		// Accept a requested client connection, assigning the client a CID
 			ConnectionDecline = 1,		// Decline a client's requested connection
 
-
 			SyncRequestSatisfy = 2,		// Satisfy sync request (if the client's revision is behind)
 			SyncRequestUnneeded = 3,	// Sync not needed (client has the same revision as the server)
 			SyncRequestDecline = 4,		// Sync request declined (overload/technical issue)
 
-			Data = 5
+			Data = 5,					// Generic user data
 		};
 	}
 }
@@ -84,15 +82,6 @@ namespace syn
 		mX.initFromJson(data);
 		return mP;
 	}
-
-	/*
-	inline Packet& operator<<(Packet& mP, const PT::NType& mPT)	{ return mP << PT::NType(mPT); }
-	inline Packet& operator>>(Packet& mP, PT::NType& mPT)		{ return mP >> reinterpret_cast<PT::NType&>(mPT); }
-	inline Packet& operator<<(Packet& mP, const PT::StoC& mPT)	{ return mP << PT::NType(mPT); }
-	inline Packet& operator>>(Packet& mP, PT::StoC& mPT)		{ return mP >> reinterpret_cast<PT::NType&>(mPT); }
-	inline Packet& operator<<(Packet& mP, const PT::CtoS& mPT)	{ return mP << PT::NType(mPT); }
-	inline Packet& operator>>(Packet& mP, PT::CtoS& mPT)		{ return mP >> reinterpret_cast<PT::NType&>(mPT); }
-	*/
 }
 
 #endif

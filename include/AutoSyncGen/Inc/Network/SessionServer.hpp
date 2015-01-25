@@ -15,7 +15,7 @@ namespace syn
 			using Snapshot = typename BaseType::Snapshot;
 
 		private:
-			Impl::ConnectionManager cManager;
+			Impl::ClientHandlerManager cManager;
 
 			template<SPT TType, typename... TArgs> inline void sendToClient(CID mCID, TArgs&&... mArgs)
 			{
@@ -28,8 +28,8 @@ namespace syn
 				this->template mkPacket<TType>(ssvu::fwd<TArgs>(mArgs)...);
 
 
-				const auto& connection(cManager[mCID]);
-				this->sendTo(connection.ip, connection.port);
+				const auto& ch(cManager[mCID]);
+				this->sendTo(ch->getIp(), ch->getPort());
 			}
 
 			inline void handle(RPT mType)
@@ -69,7 +69,7 @@ namespace syn
 				this->debugLo() << "Connection request received\n";
 				this->debugLo() << "Accepting request\n";
 
-				auto cid(cManager.create(this->senderIp, this->senderPort).cid);
+				auto cid(cManager.acceptClient(this->senderIp, this->senderPort).getCID());
 				sendConnectionAccept(cid);
 			}
 
