@@ -91,7 +91,7 @@ namespace syn
 				Impl::ManagerHelper::initManager<SyncManager<TLFManager, TTypes...>, 0, TTypes...>(*this);
 			}
 
-			template<typename T> inline static constexpr ID getTypeID() noexcept { return ssvu::TplIdxOf<T, std::tuple<TTypes...>>::value; }
+			template<typename T> inline static constexpr ID getTypeID() noexcept { return ssvu::getTplIdxOf<T, std::tuple<TTypes...>>(); }
 
 			// TODO: ID pool, recycle deleted IDs
 			template<typename T> inline ID getFirstFreeID() noexcept { return std::get<getTypeID<T>()>(lastIDs)++; }
