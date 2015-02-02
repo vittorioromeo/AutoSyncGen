@@ -75,12 +75,12 @@ namespace syn
 
 	template<typename T> struct IsFieldProxy
 	{
-		using Type = std::false_type;
+		using Type = ssvu::FalseT;
 	};
 
 	template<TypeIdx TI, typename TObj> struct IsFieldProxy<FieldProxy<TI, TObj>>
 	{
-		using Type = std::true_type;
+		using Type = ssvu::TrueT;
 	};
 
 	DEFINE_SIMPLE_SYNCFIELDPROXY_OPERATION(+)
