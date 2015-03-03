@@ -78,7 +78,6 @@ namespace syn
 
 			inline void handlePing(CID mCID)
 			{
-				ssvu::lo() << "ping receiver"  << std::endl;
 				cManager.pingReceived(mCID);
 			}
 

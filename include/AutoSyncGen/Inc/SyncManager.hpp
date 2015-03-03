@@ -55,7 +55,7 @@ namespace syn
 
 			template<typename T> inline void createImpl(ID mID, const ssvj::Val& mVal)
 			{
-				SSVU_ASSERT(!isPresent<T>(mID)); // TODO: this fires after sending msg and receiving because the function is called twice ???
+				SSVU_ASSERT(!isPresent<T>(mID));
 
 				setPresent<T>(mID, true);
 
