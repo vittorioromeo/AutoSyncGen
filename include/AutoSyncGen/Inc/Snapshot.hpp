@@ -24,7 +24,7 @@ namespace syn
 
 			inline static auto getJsonDiff(const ssvj::Val& mX, const ssvj::Val& mY)
 			{
-				ssvj::Val result{ssvj::Obj{}};
+				auto result(ssvj::mkObj());
 				ObjBitset xFieldFlags{mX[jsonFieldFlagsKey].as<ssvj::Str>()};
 
 				for(auto i(0u); i < xFieldFlags.size(); ++i)
@@ -40,12 +40,11 @@ namespace syn
 
 			inline auto toJson() const
 			{
-				using namespace ssvj;
-
-				// TODO: better ssvj syntax?
-				Val result{Arr{}};
-				result.emplace(Arr{}); // Bitset array
-				result.emplace(Arr{}); // Data array
+				auto result(ssvj::mkArr
+				(
+					ssvj::mkArr(), // Bitset array
+					ssvj::mkArr() // Data array
+				));
 
 				// TODO: bitset serialization in ssvj
 				for(const auto& b : bitsetIDs) result[0].emplace(b.to_string());

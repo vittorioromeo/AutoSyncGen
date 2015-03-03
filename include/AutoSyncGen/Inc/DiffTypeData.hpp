@@ -16,13 +16,7 @@ namespace syn
 
 			inline auto toJson() const
 			{
-				using namespace ssvj;
-
-				// TODO: better syntax in ssvj
-				Val result{Arr{}};
-				result.emplace(Obj{});
-				result.emplace(Obj{});
-				result.emplace(Obj{});
+				auto result(ssvj::mkArr(ssvj::mkObj(), ssvj::mkObj(), ssvj::mkObj()));
 
 				// TODO: better syntax in ssvj
 				auto& jCreate(result[jsonCreateIdx]);
@@ -39,16 +33,16 @@ namespace syn
 			inline void initFromJson(const ssvj::Val& mX)
 			{
 				toCreate.clear();
-				toUpdate.clear();
 				toRemove.clear();
+				toUpdate.clear();
 
 				const auto& jCreate(mX[jsonCreateIdx]);
-				const auto& jRemove(mX[jsonRemoveIdx]);
 				const auto& jUpdate(mX[jsonUpdateIdx]);
+				const auto& jRemove(mX[jsonRemoveIdx]);
 
 				for(const auto& x : jCreate.forObj()) toCreate[std::stoi(x.key)] = x.value;
-				for(const auto& x : jRemove.forArrAs<ID>()) toRemove.emplace_back(x);
 				for(const auto& x : jUpdate.forObj()) toUpdate[std::stoi(x.key)] = x.value;
+				for(const auto& x : jRemove.forArrAs<ID>()) toRemove.emplace_back(x);
 			}
 		};
 	}

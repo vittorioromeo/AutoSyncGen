@@ -15,12 +15,8 @@ namespace syn
 
 			inline auto toJson() const
 			{
-				using namespace ssvj;
-
-				// TODO: better syntax in ssvj
-				Val result{Obj{}};
+				auto result(ssvj::mkObj());
 				for(const auto& x : items) result[ssvu::toStr(x.first)] = x.second;
-
 				return result;
 			}
 

@@ -14,7 +14,7 @@
 	}
 
 #define ENABLEIF_IS_SYNCFIELDPROXY(mType) \
-	ssvu::EnableIf<typename IsFieldProxy<ssvu::RemoveAll<mType>>::Type{}>* = nullptr
+	ssvu::EnableIf<typename IsFieldProxy<ssvu::RmAll<mType>>::Type{}>* = nullptr
 
 #define SIMPLE_SYNCFIELDPROXY_OPERATION_TEMPLATE() \
 	template<typename T, typename TP, ENABLEIF_IS_SYNCFIELDPROXY(TP)>
@@ -44,7 +44,7 @@ namespace syn
 			TObj& syncObj;
 
 		public:
-			using Type = typename ssvu::RemoveRef<decltype(syncObj)>::template TypeAt<TI>;
+			using Type = typename ssvu::RmRef<decltype(syncObj)>::template TypeAt<TI>;
 
 			inline FieldProxy(TObj& mSyncObj) noexcept : syncObj{mSyncObj}
 			{

@@ -30,10 +30,7 @@ namespace syn
 
 			inline auto toJson() const
 			{
-				using namespace ssvj;
-
-				Val result{Arr{}};
-
+				auto result(ssvj::mkArr());
 				ssvu::tplFor([this, &result](const auto& mI){ result.emplace(mI.toJson()); }, typeDatas);
 				return result;
 			}

@@ -1,3 +1,5 @@
+#include <SSVUtils/Test/Test.hpp>
+#include <SSVUtils/Tests/Tests.hpp>
 #include "../../AutoSyncGen/Inc/AutoSyncGen.hpp"
 
 #define SYN_PROXY(mIdx, mName) ProxyAt<mIdx> mName{get<mIdx>()}
@@ -42,7 +44,7 @@ template<> struct LifetimeManager<TestPlayer>
 
 	inline Handle create()
 	{
-		storage.emplace_back(ssvu::makeUPtr<TestPlayer>());
+		storage.emplace_back(ssvu::mkUPtr<TestPlayer>());
 		return storage.back().get();
 	}
 
@@ -65,7 +67,7 @@ template<> struct LifetimeManager<TestEnemy>
 
 	inline Handle create()
 	{
-		storage.emplace_back(ssvu::makeUPtr<TestEnemy>());
+		storage.emplace_back(ssvu::mkUPtr<TestEnemy>());
 		return storage.back().get();
 	}
 
@@ -114,7 +116,7 @@ template<> struct LifetimeManager<Message>
 
 	inline Handle create()
 	{
-		storage.emplace_back(ssvu::makeUPtr<Message>());
+		storage.emplace_back(ssvu::mkUPtr<Message>());
 		return storage.back().get();
 	}
 
@@ -188,7 +190,7 @@ class ConsoleSessionController
 			syn::SessionServer<Settings> server{port};
 
 			/*
-			ssvj::Val temp{ssvj::Obj{}};
+			auto temp(ssvj::mkObj());
 			temp["0"] = 10.f;
 			temp["1"] = 25.f;
 			temp["2"] = 100;
@@ -214,7 +216,7 @@ class ConsoleSessionController
 
 					int id{lastID++};
 
-					ssvj::Val temp{ssvj::Obj{}};
+					auto temp(ssvj::mkObj());
 					temp["0"] = id;
 					temp["1"] = author;
 					temp["2"] = msg;
@@ -258,13 +260,13 @@ class ConsoleSessionController
 				if(type == DP_StoC::DisplayMsg)
 				{
 					int id;
-					std::string author;
+					std::string author_msg;
 					std::string msg;
 
-					mP >> id >> author >> msg;
+					mP >> id >> author_msg >> msg;
 
 					ssvu::lo("MSG")	<< "ID: " << id << "\n"
-									<< "Author: " << author << "\n"
+									<< "Author: " << author_msg << "\n"
 									<< msg << "\n\n";
 				}
 			};
@@ -369,6 +371,8 @@ class ConsoleSessionController
 
 int main()
 {
+	SSVUT_RUN();
+
 	ConsoleSessionController cs;
 	cs.start();
 
@@ -380,7 +384,7 @@ int main()
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> server;
 	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> client;
 
-	ssvj::Val temp{ssvj::Obj{}};
+	auto temp(ssvj::mkObj());
 	temp["0"] = 10.f;
 	temp["1"] = 25.f;
 	temp["2"] = 100;

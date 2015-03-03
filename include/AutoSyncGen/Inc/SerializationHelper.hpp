@@ -17,7 +17,7 @@ namespace syn
 
 				if(mVal.has(key))
 				{
-					mField = mVal[key].template as<ssvu::RemoveAll<decltype(mField)>>();
+					mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
 				}
 
 			}, mObj.fields);
@@ -25,7 +25,7 @@ namespace syn
 
 		inline static auto getAllToJson(const TObj& mObj)
 		{
-			ssvj::Val result{ssvj::Obj{}};
+			auto result(ssvj::mkObj());
 
 			// TODO: serialize bitset
 			result[jsonFieldFlagsKey] = mObj.fieldFlags.to_string();
@@ -42,7 +42,7 @@ namespace syn
 
 		inline static auto getChangedToJson(const TObj& mObj)
 		{
-			ssvj::Val result{ssvj::Obj{}};
+			auto result(ssvj::mkObj());
 
 			// TODO: serialize bitset, code repetition
 			result[jsonFieldFlagsKey] = mObj.fieldFlags.to_string();
