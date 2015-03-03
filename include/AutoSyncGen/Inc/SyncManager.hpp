@@ -28,8 +28,8 @@ namespace syn
 
 		private:
 
-			using TplLFManagers = std::tuple<LFManagerFor<TTypes>...>;
-			using TplHandleMaps = std::tuple<HandleMapFor<TTypes>...>;
+			using TplLFManagers = ssvu::Tpl<LFManagerFor<TTypes>...>;
+			using TplHandleMaps = ssvu::Tpl<HandleMapFor<TTypes>...>;
 			using TplIDs = ssvu::TplRepeat<ID, typeCount>;
 
 			using MemFnCreate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
@@ -55,7 +55,8 @@ namespace syn
 
 			template<typename T> inline void createImpl(ID mID, const ssvj::Val& mVal)
 			{
-				SSVU_ASSERT(!isPresent<T>(mID));
+				SSVU_ASSERT(!isPresent<T>(mID)); // TODO: this fires after sending msg and receiving because the function is called twice ???
+
 				setPresent<T>(mID, true);
 
 				auto& handle(getHandleFor<T>(mID));
@@ -91,7 +92,7 @@ namespace syn
 				Impl::ManagerHelper::initManager<SyncManager<TLFManager, TTypes...>, 0, TTypes...>(*this);
 			}
 
-			template<typename T> inline static constexpr ID getTypeID() noexcept { return ssvu::getTplIdxOf<T, std::tuple<TTypes...>>(); }
+			template<typename T> inline static constexpr ID getTypeID() noexcept { return ssvu::getTplIdxOf<T, ssvu::Tpl<TTypes...>>(); }
 
 			// TODO: ID pool, recycle deleted IDs
 			template<typename T> inline ID getFirstFreeID() noexcept { return std::get<getTypeID<T>()>(lastIDs)++; }
@@ -139,7 +140,7 @@ namespace syn
 			{
 				ssvu::tplForIdx([this, &mX](auto mIType, auto& mTD) mutable
 				{
-					for(auto i(0u); i < maxObjs; ++i)
+					//for(auto i(0u); i < maxObjs; ++i)
 					{
 						// TODO: can be compile-time?
 						for(const auto& p : mTD.toCreate) this->onReceivedPacketCreate(mIType, p.first, p.second);

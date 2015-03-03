@@ -26,12 +26,12 @@ namespace syn
 
 				// TODO: better syntax in ssvj
 				auto& jCreate(result[jsonCreateIdx]);
-				auto& jRemove(result[jsonRemoveIdx]);
 				auto& jUpdate(result[jsonUpdateIdx]);
+				auto& jRemove(result[jsonRemoveIdx]);
 
 				for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
-				for(const auto& x : toRemove) jRemove.emplace(x);
 				for(const auto& x : toUpdate) jUpdate[ssvu::toStr(x.first)] = x.second;
+				for(const auto& x : toRemove) jRemove.emplace(x);
 
 				return result;
 			}

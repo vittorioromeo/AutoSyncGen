@@ -57,7 +57,8 @@ namespace syn
 				{
 					//std::lock_guard<std::mutex> lg{mtxHandleCollection};
 
-					auto ch(clientHandlers.create());
+					auto& ch(clientHandlers.create());
+					clientHandlers.refresh();
 					chAvailable.emplace_back(&ch);
 				}
 

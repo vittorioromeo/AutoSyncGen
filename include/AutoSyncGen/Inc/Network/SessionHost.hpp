@@ -102,11 +102,11 @@ namespace syn
 				{
 					if(socket.send(sendBuffer, mIp, mPort) != sf::Socket::Done)
 					{
-						debugLo() << "Error sending packet to server\n";
+						debugLo() << "Error sending packet\n";
 					}
 					else
 					{
-						debugLo() << "Successfully sent packet to server\n";
+						debugLo() << "Successfully sent packet\n";
 					}
 				}
 

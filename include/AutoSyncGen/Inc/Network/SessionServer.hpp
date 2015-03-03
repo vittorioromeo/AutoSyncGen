@@ -61,6 +61,9 @@ namespace syn
 					case RPT::Data:
 						this->onDataReceived(cid, this->recvBuffer);
 						return;
+					case RPT::SyncSatisfied:
+						// TODO
+						return;
 				}
 			}
 
@@ -75,6 +78,7 @@ namespace syn
 
 			inline void handlePing(CID mCID)
 			{
+				ssvu::lo() << "ping receiver"  << std::endl;
 				cManager.pingReceived(mCID);
 			}
 

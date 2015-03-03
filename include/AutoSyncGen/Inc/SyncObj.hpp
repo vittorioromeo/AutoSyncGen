@@ -13,7 +13,7 @@ namespace syn
 		template<typename> friend struct SerializationHelper;
 
 		public:
-			using TplFields = std::tuple<TArgs...>;
+			using TplFields = ssvu::Tpl<TArgs...>;
 
 		private:
 			static constexpr SizeT fieldCount{sizeof...(TArgs)};
@@ -21,7 +21,7 @@ namespace syn
 			std::bitset<fieldCount> fieldFlags;
 
 		public:
-			template<TypeIdx TI> using TypeAt = std::tuple_element_t<TI, decltype(fields)>;
+			template<TypeIdx TI> using TypeAt = ssvu::TplElem<TI, decltype(fields)>;
 			template<TypeIdx TI> using ProxyAt = FieldProxy<TI, SyncObj<TArgs...>>;
 
 		private:
@@ -33,7 +33,7 @@ namespace syn
 			inline void resetFlags() noexcept { fieldFlags.reset(); }
 
 			inline void setFromJson(const ssvj::Val& mX) { SerializationHelper<SyncObj>::setFromJson(mX, *this); }
-			
+
 			inline auto toJsonAll() 	{ return SerializationHelper<SyncObj>::getAllToJson(*this); }
 			inline auto toJsonChanged()	{ return SerializationHelper<SyncObj>::getChangedToJson(*this); }
 	};

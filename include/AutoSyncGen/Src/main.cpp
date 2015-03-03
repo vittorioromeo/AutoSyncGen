@@ -200,7 +200,7 @@ class ConsoleSessionController
 			//std::map<int, Message*> messages;
 			int lastID{0};
 
-			server.onDataReceived += [&server, &lastID](syn::CID mCID, syn::Packet& mP)
+			server.onDataReceived += [&server, &lastID](syn::CID /* TODO mCID */, syn::Packet& mP)
 			{
 				DP_CtoS type;
 				mP >> type;
