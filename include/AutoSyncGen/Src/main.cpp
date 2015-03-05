@@ -216,10 +216,12 @@ class ConsoleSessionController
 
 					int id{lastID++};
 
-					auto temp(ssvj::mkObj());
-					temp["0"] = id;
-					temp["1"] = author;
-					temp["2"] = msg;
+					auto temp(ssvj::mkObj
+					({
+						{"0", id},
+						{"1", author},
+						{"2", msg}
+					}));
 
 					server.getSyncManager().serverCreate<Message>(temp);
 
@@ -441,3 +443,4 @@ int main()
 
 
 // TODO: only send bitsets for sync
+// TODO: small sfml gui to display text/logs

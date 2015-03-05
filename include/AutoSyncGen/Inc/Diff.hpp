@@ -37,8 +37,6 @@ namespace syn
 
 			inline void initFromJson(const ssvj::Val& mX)
 			{
-				using namespace ssvj;
-
 				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mTD){ mTD.initFromJson(mX[mIdx]); }, typeDatas);
 			}
 		};

@@ -54,10 +54,8 @@ namespace syn
 
 			inline void initFromJson(const ssvj::Val& mX)
 			{
-				using namespace ssvj;
-
 				for(auto i(0u); i < bitsetIDs.size(); ++i) bitsetIDs[i] = ObjBitset{mX[0][i].as<std::string>()};
-				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mTD){ mTD.initFromJson(mX[1].as<Arr>()[mIdx]); }, typeDatas);
+				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mTD){ mTD.initFromJson(mX[1][mIdx]); }, typeDatas);
 			}
 
 			inline auto getDiffWith(const Snapshot& mX)
@@ -83,7 +81,7 @@ namespace syn
 						{
 							auto objDiff(Snapshot<TManager>::getJsonDiff(mTDCurrent.items.at(i), mTDOther.items.at(i)));
 
-							if(!(objDiff.template as<ssvj::Obj>()).empty()) mTDDiff.toUpdate[i] = objDiff;
+							if(!objDiff.isEmptyObj()) mTDDiff.toUpdate[i] = objDiff;
 						}
 					}
 				}, typeDatas, mX.typeDatas, result.typeDatas);

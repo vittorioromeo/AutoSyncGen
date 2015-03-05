@@ -16,9 +16,9 @@ namespace syn
 
 			inline auto toJson() const
 			{
+				// TODO: better syntax in ssvj ?
 				auto result(ssvj::mkArr(ssvj::mkObj(), ssvj::mkObj(), ssvj::mkObj()));
 
-				// TODO: better syntax in ssvj
 				auto& jCreate(result[jsonCreateIdx]);
 				auto& jUpdate(result[jsonUpdateIdx]);
 				auto& jRemove(result[jsonRemoveIdx]);
