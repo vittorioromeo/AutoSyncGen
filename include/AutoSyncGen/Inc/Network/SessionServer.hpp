@@ -25,7 +25,7 @@ namespace syn
 					return;
 				}
 
-				this->template mkPacket<TType>(ssvu::fwd<TArgs>(mArgs)...);
+				this->template mkPacket<TType>(FWD(mArgs)...);
 
 
 				const auto& ch(cManager[mCID]);
@@ -126,7 +126,7 @@ namespace syn
 
 			template<typename... TArgs> inline void sendDataToClient(CID mCID, TArgs&&... mArgs)
 			{
-				sendToClient<SPT::Data>(mCID, ssvu::fwd<TArgs>(mArgs)...);
+				sendToClient<SPT::Data>(mCID, FWD(mArgs)...);
 			}
 	};
 }

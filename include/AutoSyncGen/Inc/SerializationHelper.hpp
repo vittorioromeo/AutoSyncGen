@@ -33,7 +33,7 @@ namespace syn
 			ssvu::tplForIdx([&result, &mObj](auto mIdx, auto&& mField)
 			{
 				auto key(ssvu::toStr(mIdx));
-				result[key] = ssvu::fwd<decltype(mField)>(mField);
+				result[key] = FWD(mField);
 
 			}, mObj.fields);
 
@@ -52,7 +52,7 @@ namespace syn
 				if(mObj.fieldFlags[mIdx])
 				{
 					auto key(ssvu::toStr(mIdx));
-					result[key] = ssvu::fwd<decltype(mField)>(mField);
+					result[key] = FWD(mField);
 				}
 
 			}, mObj.fields);

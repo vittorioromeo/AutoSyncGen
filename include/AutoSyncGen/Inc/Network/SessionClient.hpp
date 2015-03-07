@@ -24,7 +24,7 @@ namespace syn
 			{
 				SSVU_ASSERT(cid == nullCID);
 
-				this->template mkPacket<TType>(ssvu::fwd<TArgs>(mArgs)...);
+				this->template mkPacket<TType>(FWD(mArgs)...);
 				this->sendTo(serverIp, serverPort);
 			}
 
@@ -32,7 +32,7 @@ namespace syn
 			{
 				SSVU_ASSERT(cid != nullCID);
 
-				this->template mkPacket<TType>(cid, ssvu::fwd<TArgs>(mArgs)...);
+				this->template mkPacket<TType>(cid, FWD(mArgs)...);
 				this->sendTo(serverIp, serverPort);
 			}
 
@@ -155,7 +155,7 @@ namespace syn
 
 			template<typename... TArgs> inline void sendDataToServer(TArgs&&... mArgs)
 			{
-				sendToServer<SPT::Data>(ssvu::fwd<TArgs>(mArgs)...);
+				sendToServer<SPT::Data>(FWD(mArgs)...);
 			}
 	};
 }

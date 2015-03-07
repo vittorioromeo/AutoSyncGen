@@ -106,7 +106,7 @@ namespace syn
 			// TODO: rename?
 			/*template<typename T> inline auto& serverCreate2()
 			{
-				T data(ssvu::fwd<TArgs>(mArgs)...);
+				T data(FWD(mArgs)...);
 				return serverCreate<T>(data.toJsonAll());
 			}*/
 			template<typename T> inline auto serverCreate(const ssvj::Val& mVal)

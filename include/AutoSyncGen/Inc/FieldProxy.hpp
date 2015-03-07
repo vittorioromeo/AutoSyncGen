@@ -6,10 +6,10 @@
 #define DEFINE_SIMPLE_SYNCFIELDPROXY_MUTABLE_OPERATION(mOp) \
 	template<typename T> \
 	inline auto& operator mOp (T&& mX) \
-	noexcept(noexcept(std::declval<FieldProxy<TI, TObj>>().get() mOp ssvu::fwd<T>(mX))) \
+	noexcept(noexcept(std::declval<FieldProxy<TI, TObj>>().get() mOp FWD(mX))) \
 	{ \
 		this->syncObj.template setBitAt<TI>(); \
-		this->get() mOp ssvu::fwd<T>(mX); \
+		this->get() mOp FWD(mX); \
 		return *this; \
 	}
 
@@ -20,9 +20,9 @@
 	template<typename T, typename TP, ENABLEIF_IS_SYNCFIELDPROXY(TP)>
 
 #define SIMPLE_SYNCFIELDPROXY_OPERATION_BODY(mOp) \
-	noexcept(noexcept(ssvu::fwd<TP>(mP).get() mOp ssvu::fwd<T>(mX))) \
+	noexcept(noexcept(FWD(mP).get() mOp FWD(mX))) \
 	{ \
-		return ssvu::fwd<TP>(mP).get() mOp ssvu::fwd<T>(mX); \
+		return FWD(mP).get() mOp FWD(mX); \
 	}
 
 #define DEFINE_SIMPLE_SYNCFIELDPROXY_OPERATION(mOp) \
@@ -55,7 +55,7 @@ namespace syn
 				noexcept(std::is_nothrow_assignable<Type, T>())
 			{
 				auto& field(syncObj.template getFieldAt<TI>());
-				field = ssvu::fwd<T>(mX);
+				field = FWD(mX);
 				syncObj.template setBitAt<TI>();
 				return field;
 			}

@@ -114,7 +114,7 @@ namespace syn
 				{
 					sendBuffer.clear();
 					sendBuffer << static_cast<PT::NType>(TType);
-					fillPacket(sendBuffer, ssvu::fwd<TArgs>(mArgs)...);
+					fillPacket(sendBuffer, FWD(mArgs)...);
 				}
 
 				inline void setBusy(bool mBusy) noexcept { busy = mBusy; }

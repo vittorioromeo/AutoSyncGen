@@ -9,7 +9,7 @@ namespace syn
 		template<typename T, typename... TArgs> inline void fillPacket(Packet& mP, T&& mArg, TArgs&&... mArgs)
 		{
 			mP << mArg;
-			fillPacket(mP, ssvu::fwd<TArgs>(mArgs)...);
+			fillPacket(mP, FWD(mArgs)...);
 		}
 
 		/*template<typename THost> class PacketHandler
@@ -26,7 +26,7 @@ namespace syn
 
 			public:
 				inline PacketHandler(THost& mHost) : host{mHost}
-				{ 
+				{
 
 				}
 
