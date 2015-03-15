@@ -26,14 +26,8 @@ namespace syn
 				UdpSocket socket;
 				bool busy{false};
 
-				inline auto& getTD() noexcept
-				{
-					return reinterpret_cast<Derived&>(*this);
-				}
-				inline const auto& getTD() const noexcept
-				{
-					return reinterpret_cast<const Derived&>(*this);
-				}
+				inline auto& getTD() noexcept { return ssvu::castUp<Derived>(*this); }
+				inline const auto& getTD() const noexcept { return ssvu::castUp<Derived>(*this); }
 
 				inline auto& getHandler() noexcept
 				{
@@ -59,7 +53,7 @@ namespace syn
 					try
 					{
 						recvBuffer >> type;
-						getTD().handle(static_cast<RPT>(type));
+						getTD().handle(ssvu::toEnum<RPT>(type));
 					}
 					catch(std::exception& mEx)
 					{
@@ -113,7 +107,7 @@ namespace syn
 				template<SPT TType, typename... TArgs> inline void mkPacket(TArgs&&... mArgs)
 				{
 					sendBuffer.clear();
-					sendBuffer << static_cast<PT::NType>(TType);
+					sendBuffer << ssvu::castEnum(TType);
 					fillPacket(sendBuffer, FWD(mArgs)...);
 				}
 

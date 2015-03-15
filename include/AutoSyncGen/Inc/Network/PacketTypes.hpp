@@ -35,13 +35,15 @@ namespace syn
 template<typename T> inline auto operator<<(syn::Packet& mP, const T& mX) noexcept
 	-> ssvu::EnableIf<ssvu::isEnum<ssvu::RmAll<T>>(), syn::Packet&>
 {
-	return mP << reinterpret_cast<const ssvu::Underlying<T>&>(mX);
+	return mP << ssvu::castEnum(mX);
 }
 
 template<typename T> inline auto operator>>(syn::Packet& mP, T& mX) noexcept
 	-> ssvu::EnableIf<ssvu::isEnum<ssvu::RmAll<T>>(), syn::Packet&>
 {
-	return mP >> reinterpret_cast<ssvu::Underlying<T>&>(mX);
+	// TODO: avoid this reinterpret_cast somehow
+	mP >> reinterpret_cast<ssvu::Underlying<T>&>(mX);
+	return mP;
 }
 
 namespace syn
