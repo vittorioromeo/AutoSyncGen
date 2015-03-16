@@ -5,6 +5,7 @@
 #include <SSVUtils/Json/Json.hpp>
 #include <SSVUtils/Delegate/Delegate.hpp>
 #include <SSVUtils/MemoryManager/MemoryManager.hpp>
+#include <SSVStart/SSVStart.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 

@@ -32,23 +32,10 @@ namespace syn
 	}
 }
 
-template<typename T> inline auto operator<<(syn::Packet& mP, const T& mX) noexcept
-	-> ssvu::EnableIf<ssvu::isEnum<ssvu::RmAll<T>>(), syn::Packet&>
-{
-	return mP << ssvu::castEnum(mX);
-}
-
-template<typename T> inline auto operator>>(syn::Packet& mP, T& mX) noexcept
-	-> ssvu::EnableIf<ssvu::isEnum<ssvu::RmAll<T>>(), syn::Packet&>
-{
-	// TODO: avoid this reinterpret_cast somehow
-	mP >> reinterpret_cast<ssvu::Underlying<T>&>(mX);
-	return mP;
-}
-
 namespace syn
 {
 	// TODO: optimization opportunities
+	// TODO: move to ssvs utils
 	inline Packet& operator<<(Packet& mP, const ssvj::Val& mX)
 	{
 		return mP << mX.getWriteToStr<ssvj::WSMinified>();
