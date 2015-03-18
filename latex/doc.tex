@@ -1,0 +1,157 @@
+\documentclass{report}
+\usepackage{minted}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{etoolbox}
+\usepackage{lipsum}
+\usepackage{graphicx}
+
+\graphicspath{ {res/} }
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+
+\begin{document}
+	\begin{titlepage}
+
+		\center
+
+		\textsc{\LARGE Universita' degli Studi di Messina}\\[1.5cm] 
+		\textsc{\Large Networking course project}\\[0.5cm] 
+
+		\HRule \\[0.4cm]
+		{ \huge \bfseries AutoSyncGen}\\[0.1cm]
+
+		{\large \today}
+		\HRule \\[1.5cm]
+		 
+		\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+		\emph{Author:}\\
+		Vittorio \textsc{Romeo} % Your name
+		\end{flushleft}
+		\end{minipage}
+		~
+		\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+		\emph{Professors:} \\
+		Antonio \textsc{Puliafito}
+
+		Giovanni \textsc{Merlino}
+		\end{flushright}
+		\end{minipage}\\[4cm]
+
+		\vfill
+
+		\begin{minipage}{\linewidth}
+		    \centering
+		    \begin{minipage}{0.35\linewidth}
+		        \begin{figure}[H]
+		          	\center
+		            \includegraphics[width=3cm, height=3cm]{logounime}
+		            
+		            http://unime.it
+		        \end{figure}
+		    \end{minipage}
+		    \hspace{0.27\linewidth}
+		    \begin{minipage}{0.35\linewidth}
+		        \begin{figure}[H]
+		            \center
+		            \includegraphics[width=3cm, height=3cm]{logovee}
+		            
+		            http://vittorioromeo.info
+		        \end{figure}
+		    \end{minipage}
+		\end{minipage}\\[3cm]
+	\end{titlepage}
+
+
+	\pagenumbering{gobble}
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+	
+	\chapter{Introduction}
+		\section{Problem}
+		
+		\section{Solution}
+		
+		\section{Technologies used}
+	
+	\newpage
+
+	\chapter{Network module}
+		\section{SFML}
+
+		\section{Packets}
+			\subsection{Packet types}
+				\subsubsection{CtoS enumeration}
+				\subsubsection{StoC enumeration}
+			
+			\subsection{Packet handling}
+
+		\section{SessionHost}
+			\subsection{SessionServer}
+				\subsubsection{ConnectionManager}
+				\subsubsection{ClientHandler}
+			
+			\subsection{SessionClient}
+
+	\newpage
+
+	\chapter{Synchronization module}
+		\section{ssvu}
+
+		\section{SerializationHelper}
+
+		\section{SyncObj}
+			\subsection{Fields}
+				\subsubsection{Field tuple}
+				\subsubsection{Field flags}
+				\subsubsection{FieldProxy}
+		
+		\section{Snapshot}
+			\subsection{SnapshotTypeData}
+				\subsubsection{Item map}
+			
+		\section{Diff}
+			\subsection{DiffTypeData}
+				\subsubsection{toCreate map}
+
+				\subsubsection{toUpdate map}
+
+				\subsubsection{toRemove vector}
+		
+		\section{LifetimeManager}
+
+		\section{SyncManager}
+			\subsection{Lifetime managers tuple}
+
+			\subsection{Handle maps tuple}
+
+			\subsection{Object management functions}
+
+	\newpage
+
+	\chapter{Example application: synchronized chat}
+		\section{Data structures}
+			\subsection{Message}
+
+		\section{Lifetime manager specialization}
+			\subsection{Pointers as handles}
+			
+			\subsection{create}
+
+			\subsection{remove}
+
+		\section{Application packet types}
+			\subsection{Server to client}
+
+			\subsection{Client to server}
+
+		\section{ConsoleSessionController}
+			\subsection{Server role}
+
+			\subsection{Client role}
+		
+	\newpage
+
+\end{document}

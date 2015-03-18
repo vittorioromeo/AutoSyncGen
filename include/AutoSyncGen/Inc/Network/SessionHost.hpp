@@ -29,10 +29,10 @@ namespace syn
 				inline auto& getTD() noexcept { return ssvu::castUp<Derived>(*this); }
 				inline const auto& getTD() const noexcept { return ssvu::castUp<Derived>(*this); }
 
-				inline auto& getHandler() noexcept
+				/*inline auto& getHandler() noexcept
 				{
 					return getTD().handler;
-				}
+				}*/
 
 				inline void tryBindSocket()
 				{

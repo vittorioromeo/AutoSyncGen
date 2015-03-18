@@ -1,0 +1,50 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Problem}{1}
+\contentsline {section}{\numberline {1.2}Solution}{1}
+\contentsline {section}{\numberline {1.3}Technologies used}{1}
+\contentsline {chapter}{\numberline {2}Network module}{2}
+\contentsline {section}{\numberline {2.1}SFML}{2}
+\contentsline {section}{\numberline {2.2}Packets}{2}
+\contentsline {subsection}{\numberline {2.2.1}Packet types}{2}
+\contentsline {subsubsection}{CtoS enumeration}{2}
+\contentsline {subsubsection}{StoC enumeration}{2}
+\contentsline {subsection}{\numberline {2.2.2}Packet handling}{2}
+\contentsline {section}{\numberline {2.3}SessionHost}{2}
+\contentsline {subsection}{\numberline {2.3.1}SessionServer}{2}
+\contentsline {subsubsection}{ConnectionManager}{2}
+\contentsline {subsubsection}{ClientHandler}{2}
+\contentsline {subsection}{\numberline {2.3.2}SessionClient}{2}
+\contentsline {chapter}{\numberline {3}Synchronization module}{3}
+\contentsline {section}{\numberline {3.1}ssvu}{4}
+\contentsline {section}{\numberline {3.2}SerializationHelper}{4}
+\contentsline {section}{\numberline {3.3}SyncObj}{4}
+\contentsline {subsection}{\numberline {3.3.1}Fields}{4}
+\contentsline {subsubsection}{Field tuple}{4}
+\contentsline {subsubsection}{Field flags}{4}
+\contentsline {subsubsection}{FieldProxy}{4}
+\contentsline {section}{\numberline {3.4}Snapshot}{4}
+\contentsline {subsection}{\numberline {3.4.1}SnapshotTypeData}{4}
+\contentsline {subsubsection}{Item map}{4}
+\contentsline {section}{\numberline {3.5}Diff}{4}
+\contentsline {subsection}{\numberline {3.5.1}DiffTypeData}{4}
+\contentsline {subsubsection}{toCreate map}{4}
+\contentsline {subsubsection}{toUpdate map}{4}
+\contentsline {subsubsection}{toRemove vector}{4}
+\contentsline {section}{\numberline {3.6}LifetimeManager}{4}
+\contentsline {section}{\numberline {3.7}SyncManager}{4}
+\contentsline {subsection}{\numberline {3.7.1}Lifetime managers tuple}{4}
+\contentsline {subsection}{\numberline {3.7.2}Handle maps tuple}{4}
+\contentsline {subsection}{\numberline {3.7.3}Object management functions}{4}
+\contentsline {chapter}{\numberline {4}Example application: synchronized chat}{5}
+\contentsline {section}{\numberline {4.1}Data structures}{5}
+\contentsline {subsection}{\numberline {4.1.1}Message}{5}
+\contentsline {section}{\numberline {4.2}Lifetime manager specialization}{5}
+\contentsline {subsection}{\numberline {4.2.1}Pointers as handles}{5}
+\contentsline {subsection}{\numberline {4.2.2}create}{5}
+\contentsline {subsection}{\numberline {4.2.3}remove}{5}
+\contentsline {section}{\numberline {4.3}Application packet types}{5}
+\contentsline {subsection}{\numberline {4.3.1}Server to client}{5}
+\contentsline {subsection}{\numberline {4.3.2}Client to server}{5}
+\contentsline {section}{\numberline {4.4}ConsoleSessionController}{5}
+\contentsline {subsection}{\numberline {4.4.1}Server role}{5}
+\contentsline {subsection}{\numberline {4.4.2}Client role}{5}
