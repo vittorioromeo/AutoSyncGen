@@ -77,9 +77,7 @@ namespace syn
 						}
 						else
 						{
-							debugLo() 	<< "Packet successfully received from: \n"
-										<< "	" << senderIp << ":" << senderPort << "\n";
-
+							debugLo() << "Packet successfully received from: " << senderIp << ":" << senderPort << "\n";
 							tryForwardReceivedPacket();
 						}
 					}
@@ -131,7 +129,6 @@ namespace syn
 				inline const auto& getName() const noexcept { return name; }
 				inline const auto& getIp() const noexcept { return ip; }
 				inline const auto& getPort() const noexcept { return port; }
-
 				inline const auto& isBusy() const noexcept { return busy; }
 
 				inline auto debugLo() -> decltype(ssvu::lo(name))

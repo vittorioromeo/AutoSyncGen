@@ -2,88 +2,6 @@
 #include <SSVUtils/Tests/Tests.hpp>
 #include "../../AutoSyncGen/Inc/AutoSyncGen.hpp"
 
-#define SYN_PROXY(mIdx, mName) ProxyAt<mIdx> mName{get<mIdx>()}
-/*
-struct TestPlayer : syn::SyncObj
-<
-	float,			// X
-	float,			// Y
-	int,			// Health
-	std::string		// Name
->
-{
-	public:
-		SYN_PROXY(0, x);
-		SYN_PROXY(1, y);
-		SYN_PROXY(2, health);
-		SYN_PROXY(3, name);
-};
-
-struct TestEnemy : syn::SyncObj
-<
-	float,		// X
-	float,		// Y
-	int			// Health
->
-{
-	public:
-		SYN_PROXY(0, x);
-		SYN_PROXY(1, y);
-		SYN_PROXY(2, health);
-};
-
-template<typename T> struct LifetimeManager;
-
-template<> struct LifetimeManager<TestPlayer>
-{
-	using Handle = TestPlayer*;
-
-	inline Handle getNullHandle() noexcept { return nullptr; }
-
-	std::vector<ssvu::UPtr<TestPlayer>> storage;
-
-	inline Handle create()
-	{
-		storage.emplace_back(ssvu::mkUPtr<TestPlayer>());
-		return storage.back().get();
-	}
-
-	inline void remove(Handle mHandle)
-	{
-		ssvu::eraseRemoveIf(storage, [this, mHandle](const auto& mUPtr)
-		{
-			return mUPtr.get() == mHandle;
-		});
-	}
-};
-
-template<> struct LifetimeManager<TestEnemy>
-{
-	using Handle = TestEnemy*;
-
-	inline Handle getNullHandle() noexcept { return nullptr; }
-
-	std::vector<ssvu::UPtr<TestEnemy>> storage;
-
-	inline Handle create()
-	{
-		storage.emplace_back(ssvu::mkUPtr<TestEnemy>());
-		return storage.back().get();
-	}
-
-	inline void remove(Handle mHandle)
-	{
-		ssvu::eraseRemoveIf(storage, [this, mHandle](const auto& mUPtr)
-		{
-			return mUPtr.get() == mHandle;
-		});
-	}
-};
-
-using SyncManagerType = syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy>;
-using Settings = syn::SessionSettings<SyncManagerType>;
-*/
-
 struct Message : syn::SyncObj
 <
 	int,			// messageID
@@ -94,14 +12,6 @@ struct Message : syn::SyncObj
 	SYN_PROXY(0, messageID);
 	SYN_PROXY(1, author);
 	SYN_PROXY(2, contents);
-/*
-	inline Message(int mMessageID, const std::string& mAuthor, const std::string& mContents)
-	{
-		messageID = mMessageID;
-		author = mAuthor;
-		contents = mContents;
-	}
-*/
 };
 
 template<typename> struct LifetimeManager;
@@ -148,19 +58,27 @@ using Settings = syn::SessionSettings<SyncManagerType>;
 class ConsoleSessionController
 {
 	private:
+		template<typename T> inline auto safeCin()
+		{
+			T temp;
+			std::cin >> temp;
+			std::cin.clear();
+			std::cin.ignore(10000, '\n');
+
+			return temp;
+		}
+
 		inline void selectRole()
 		{
 			while(true)
 			{
-				int choice{-1};
-
-				ssvu::lo() 	<< "Select: \n"
+				ssvu::lo()	<< "Select: \n"
 							<< "    0. Server\n"
 							<< "    1. Client\n"
 							<< "    2. Exit\n"
 							<< std::endl;
 
-				std::cin >> choice;
+				auto choice(safeCin<int>());
 
 				if(choice == 0)
 				{
@@ -189,17 +107,6 @@ class ConsoleSessionController
 
 			syn::SessionServer<Settings> server{port};
 
-			/*
-			auto temp(ssvj::mkObj());
-			temp["0"] = 10.f;
-			temp["1"] = 25.f;
-			temp["2"] = 100;
-			temp["3"] = "banana";
-*/
-
-//			auto h1(server.getSyncManager().serverCreate<TestPlayer>(temp));
-
-			//std::map<int, Message*> messages;
 			int lastID{0};
 
 			server.onDataReceived += [&server, &lastID](syn::CID /* TODO mCID */, syn::Packet& mP)
@@ -223,10 +130,8 @@ class ConsoleSessionController
 						{"2", msg}
 					}));
 
-					server.getSyncManager().serverCreate<Message>(temp);
-
-					//auto handle(server.getSyncManager().serverCreate2<Message>(id, author, msg));
-					//messages[id] = handle;
+					auto handle(server.getSyncManager().serverCreate<Message>(temp));
+					server.debugLo() << "Message received |> " << *(handle->author) << ": " << *(handle->contents) << "\n";
 				}
 				else if(type == DP_CtoS::EditMsg)
 				{
@@ -248,10 +153,8 @@ class ConsoleSessionController
 			auto serverIp = getInputIp("Insert target server ip: \n", syn::IpAddress{"127.0.0.1"});
 			auto serverPort = getInputPort("Insert target server port: \n", 27015);
 
-
-			std::string author;
 			ssvu::lo() << "Enter your name: \n";
-			std::cin >> author;
+			auto clientName(safeCin<std::string>());
 
 			syn::SessionClient<Settings> client{port, serverIp, serverPort};
 			client.onDataReceived += [](syn::Packet& mP)
@@ -262,27 +165,26 @@ class ConsoleSessionController
 				if(type == DP_StoC::DisplayMsg)
 				{
 					int id;
-					std::string author_msg;
+					std::string author;
 					std::string msg;
 
-					mP >> id >> author_msg >> msg;
+					mP >> id >> author >> msg;
 
 					ssvu::lo("MSG")	<< "ID: " << id << "\n"
-									<< "Author: " << author_msg << "\n"
+									<< "Author: " << author << "\n"
 									<< msg << "\n\n";
 				}
 			};
 
 			while(client.isBusy())
 			{
-				int choice;
 				ssvu::lo()	<< "Choose: \n"
 							<< "0. New message\n"
 							<< "1. Edit message\n"
-							<< "2. Show local msg\n"
+							<< "2. Show local data\n"
 							<< "3. Disconnect\n";
 
-				std::cin >> choice;
+				auto choice(safeCin<int>());
 
 				if(choice == 0)
 				{
@@ -291,7 +193,7 @@ class ConsoleSessionController
 					ssvu::lo() << "Enter message: \n";
 					std::cin >> msg;
 
-					client.sendDataToServer(DP_CtoS::SendMsg, author, msg);
+					client.sendDataToServer(DP_CtoS::SendMsg, clientName, msg);
 
 					continue;
 				}
@@ -307,7 +209,7 @@ class ConsoleSessionController
 					ssvu::lo() << "Enter message: \n";
 					std::cin >> msg;
 
-					client.sendDataToServer(DP_CtoS::EditMsg, author, msg, id);
+					client.sendDataToServer(DP_CtoS::EditMsg, clientName, msg, id);
 
 					continue;
 				}
@@ -315,32 +217,21 @@ class ConsoleSessionController
 				if(choice == 2)
 				{
 					ssvu::lo() << client.getSyncManager().getSnapshot().toJson() << "\n\n";
-
-
 					continue;
 				}
 
-				if(choice == 3)
-				{
-					// TODO:
-
-
-					break;
-				}
+				if(choice == 3) break;
 			}
 		}
 
 		template<typename T> inline int getChoice(const std::string& mMsg, const T& mDefault)
 		{
-			ssvu::lo() 	<< mMsg
+			ssvu::lo()	<< mMsg
 						<< "Choose: \n"
 						<< "	0. Default (" << mDefault << ")\n"
 						<< "	1. Enter manually\n";
 
-			int choice{0};
-			std::cin >> choice;
-
-			return choice;
+			return safeCin<int>();
 		}
 
 		inline syn::IpAddress getInputIp(const std::string& mMsg, const syn::IpAddress& mDefault)
@@ -375,72 +266,9 @@ int main()
 {
 	SSVUT_RUN();
 
-	ConsoleSessionController cs;
-	cs.start();
-
-
-
-	return 0;
-
-/*
-	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> server;
-	syn::SyncManager<LifetimeManager, TestPlayer, TestEnemy> client;
-
-	auto temp(ssvj::mkObj());
-	temp["0"] = 10.f;
-	temp["1"] = 25.f;
-	temp["2"] = 100;
-	temp["3"] = "banana";
-
-	auto h1(server.serverCreate<TestPlayer>(temp));
-
-	ssvu::lo() << server.getDiffWith(client).toJson() << std::endl;
-	//ssvu::lo() << client.getDiffWith(server) << std::endl;
-
-	//client.serverCreate<TestPlayer>();
-	//ssvu::lo() << server.getDiffWith(client).toJson() << std::endl;
-
-	//h1->x = 100;
-	//ssvu::lo() << server.getDiffWith(client).toJson() << std::endl;
-
-	client.applyDiff(server.getDiffWith(client));
-	ssvu::lo() << server.getDiffWith(client).toJson() << std::endl;
-
-	auto h1c(client.getHandleFor<TestPlayer>(0));
-
-	ssvu::lo() << h1c->toJsonAll() << std::endl;
-
-	//ssvu::lo() << sizeof h1->x << std::endl;
-*/
+	ConsoleSessionController{}.start();
 	return 0;
 }
-
-
-	/*
-	TestPlayer player;
-	player.x = 10.f;
-	player.y = 15.f + player.x;
-	player.health = 100;
-	player.name = "hello";
-
-	ssvu::lo("JSON_ALL") << "\n" << player.toJsonAll() << "\n";
-	ssvu::lo("JSON_CHANGED") << "\n" << player.toJsonChanged() << "\n";
-
-	player.resetFlags();
-	ssvu::lo("JSON_CHANGED") << "\n" << player.toJsonChanged() << "\n";
-
-	player.resetFlags();
-	player.y = 33.f;
-	player.health -= 11;
-	if(player.health > 40) player.health /= 2;
-	ssvu::lo("JSON_CHANGED") << "\n" << player.toJsonChanged() << "\n";
-
-	player.resetFlags();
-	player.x = 11.f;
-	player.name = "goodbye";
-	ssvu::lo("JSON_CHANGED") << "\n" << player.toJsonChanged() << "\n";
-	*/
-
 
 // TODO: only send bitsets for sync
 // TODO: small sfml gui to display text/logs

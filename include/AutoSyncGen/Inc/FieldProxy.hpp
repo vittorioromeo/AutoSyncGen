@@ -71,6 +71,9 @@ namespace syn
 
 			inline auto& operator->() noexcept { return &get(); }
 			inline const auto& operator->() const noexcept { return &get(); }
+
+			inline auto& operator*() noexcept { return get(); }
+			inline const auto& operator*() const noexcept { return get(); }
 	};
 
 	template<typename T> struct IsFieldProxy
@@ -102,5 +105,7 @@ namespace syn
 #undef SIMPLE_SYNCFIELDPROXY_OPERATION_TEMPLATE
 #undef SIMPLE_SYNCFIELDPROXY_OPERATION_BODY
 #undef DEFINE_SIMPLE_SYNCFIELDPROXY_OPERATION
+
+#define SYN_PROXY(mIdx, mName) ProxyAt<mIdx> mName{get<mIdx>()}
 
 #endif
