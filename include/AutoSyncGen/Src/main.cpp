@@ -26,8 +26,7 @@ template<> struct LifetimeManager<Message>
 
 	inline Handle create()
 	{
-		storage.emplace_back(ssvu::mkUPtr<Message>());
-		return storage.back().get();
+		return &ssvu::getEmplaceUPtr<Message>(storage);
 	}
 
 	inline void remove(Handle mHandle)
@@ -109,7 +108,7 @@ class ConsoleSessionController
 
 			int lastID{0};
 
-			server.onDataReceived += [&server, &lastID](syn::CID /* TODO mCID */, syn::Packet& mP)
+			server.onDataReceived += [&server, &lastID](syn::CID mCID, syn::Packet& mP)
 			{
 				DP_CtoS type;
 				mP >> type;
@@ -131,7 +130,7 @@ class ConsoleSessionController
 					}));
 
 					auto handle(server.getSyncManager().serverCreate<Message>(temp));
-					server.debugLo() << "Message received |> " << *(handle->author) << ": " << *(handle->contents) << "\n";
+					server.debugLo() << "Message from (" << mCID << "): << " << handle->author.view() << ": " << handle->contents.view() << " >>\n";
 				}
 				else if(type == DP_CtoS::EditMsg)
 				{
@@ -179,19 +178,17 @@ class ConsoleSessionController
 			while(client.isBusy())
 			{
 				ssvu::lo()	<< "Choose: \n"
-							<< "0. New message\n"
-							<< "1. Edit message\n"
-							<< "2. Show local data\n"
-							<< "3. Disconnect\n";
+							<< "    0. New message\n"
+							<< "    1. Edit message\n"
+							<< "    2. Show local data\n"
+							<< "    3. Disconnect\n";
 
 				auto choice(safeCin<int>());
 
 				if(choice == 0)
 				{
-					std::string msg;
-
 					ssvu::lo() << "Enter message: \n";
-					std::cin >> msg;
+					auto msg(safeCin<std::string>());
 
 					client.sendDataToServer(DP_CtoS::SendMsg, clientName, msg);
 
@@ -200,14 +197,11 @@ class ConsoleSessionController
 
 				if(choice == 1)
 				{
-					int id;
-					std::string msg;
-
 					ssvu::lo() << "Enter message ID: \n";
-					std::cin >> id;
+					auto id(safeCin<int>());
 
 					ssvu::lo() << "Enter message: \n";
-					std::cin >> msg;
+					auto msg(safeCin<std::string>());
 
 					client.sendDataToServer(DP_CtoS::EditMsg, clientName, msg, id);
 
@@ -239,9 +233,7 @@ class ConsoleSessionController
 			auto choice(getChoice(mMsg, mDefault));
 			if(choice == 0) return mDefault;
 
-			syn::IpAddress result;
-			std::cin >> result;
-			return result;
+			return safeCin<syn::IpAddress>();
 		}
 
 		inline syn::Port getInputPort(const std::string& mMsg, const syn::Port& mDefault)
@@ -249,9 +241,7 @@ class ConsoleSessionController
 			auto choice(getChoice(mMsg, mDefault));
 			if(choice == 0) return mDefault;
 
-			syn::Port result;
-			std::cin >> result;
-			return result;
+			return safeCin<syn::Port>();
 		}
 
 	public:

@@ -7,6 +7,7 @@ namespace syn
 {
 	namespace Impl
 	{
+		/// @brief Base polymorphic class for `Obj`.
 		class ObjBase
 		{
 			public:

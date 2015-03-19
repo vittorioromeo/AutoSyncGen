@@ -73,11 +73,11 @@ namespace syn
 
 						if(socket.receive(recvBuffer, senderIp, senderPort) != sf::Socket::Done)
 						{
-							//debugLo() << "Error receiving packet\n";
+							// debugLo() << "Error receiving packet\n";
 						}
 						else
 						{
-							debugLo() << "Packet successfully received from: " << senderIp << ":" << senderPort << "\n";
+							// debugLo() << "Packet successfully received from: " << senderIp << ":" << senderPort << "\n";
 							tryForwardReceivedPacket();
 						}
 					}
@@ -98,7 +98,7 @@ namespace syn
 					}
 					else
 					{
-						debugLo() << "Successfully sent packet\n";
+						//debugLo() << "Successfully sent packet\n";
 					}
 				}
 

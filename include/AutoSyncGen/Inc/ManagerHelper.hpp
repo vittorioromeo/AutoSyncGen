@@ -9,20 +9,17 @@ namespace syn
 	{
 		struct ManagerHelper
 		{
-			template<typename TManager, TypeIdx>
-			inline static void initManager(TManager&)
-			{
+			template<typename, TypeIdx> inline static void initManager(TManager&) { }
 
-			}
-
+			/// @brief Initializes the manager's runtime dispatch function arrays.
 			template<typename TManager, TypeIdx TI, typename T, typename... TTypes>
-			inline static void initManager(TManager& mManager)
+			inline static void initManager(TManager& mX)
 			{
-				mManager.funcsCreate[TI] = &TManager::template createImpl<T>;
-				mManager.funcsRemove[TI] = &TManager::template removeImpl<T>;
-				mManager.funcsUpdate[TI] = &TManager::template updateImpl<T>;
+				mX.funcsCreate[TI] = &TManager::template createImpl<T>;
+				mX.funcsRemove[TI] = &TManager::template removeImpl<T>;
+				mX.funcsUpdate[TI] = &TManager::template updateImpl<T>;
 
-				initManager<TManager, TI + 1, TTypes...>(mManager);
+				initManager<TManager, TI + 1, TTypes...>(mX);
 			}
 		};
 	}

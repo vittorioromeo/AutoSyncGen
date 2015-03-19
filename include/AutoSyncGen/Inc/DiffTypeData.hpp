@@ -9,11 +9,13 @@ namespace syn
 {
 	namespace Impl
 	{
+		/// @brief Class representing the diff for a specific type managed by the `SyncManager`.
 		struct DiffTypeData
 		{
 			std::map<ID, ssvj::Val> toCreate, toUpdate;
 			std::vector<ID> toRemove;
 
+			/// @brief Returns a json value representing the diff type data.
 			inline auto toJson() const
 			{
 				// TODO: better syntax in ssvj ?
@@ -30,6 +32,7 @@ namespace syn
 				return result;
 			}
 
+			/// @brief Initializes the diff type data from a json value `mX`.
 			inline void initFromJson(const ssvj::Val& mX)
 			{
 				toCreate.clear();
@@ -43,6 +46,12 @@ namespace syn
 				for(const auto& x : jCreate.forObj()) toCreate[std::stoi(x.key)] = x.value;
 				for(const auto& x : jUpdate.forObj()) toUpdate[std::stoi(x.key)] = x.value;
 				for(const auto& x : jRemove.forArrAs<ID>()) toRemove.emplace_back(x);
+			}
+
+			/// @brief Returns true if the diff type data is empty.
+			inline bool isEmpty() const noexcept
+			{
+				return toCreate.empty() && toUpdate.empty() && toRemove.empty();
 			}
 		};
 	}

@@ -88,10 +88,12 @@ namespace syn
 				// TODO: only create snapshot if required (cache snapshot)
 				auto serverSnapshot(this->syncManager.getSnapshot());
 				auto result(serverSnapshot.getDiffWith(clientSnapshot));
+				auto resultJson(result.toJson());
 
-				this->debugLo()	<< "Calculating diff: \n"
-								<< result.toJson()
-								<< "\n";
+				this->debugLo()	<< "Calculating diff:\n";
+
+				if(result.isEmpty()) this->debugLo() << "empty\n";
+				else this->debugLo() << resultJson << "\n";
 
 				sendToClient<SPT::SyncRequestSatisfy>(mCID, result);
 

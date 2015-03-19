@@ -68,13 +68,13 @@ namespace syn
 
 			inline void sendPing()
 			{
-				this->debugLo() << "Sending ping\n";
+				//this->debugLo() << "Sending ping\n";
 				sendToServer<SPT::Ping>();
 			}
 
 			inline void sendSyncRequest()
 			{
-				this->debugLo() << "Sending sync request\n";
+				this->debugLo() << "Sending sync request...\n";
 				sendToServer<SPT::SyncRequest>(this->syncManager.getSnapshot());
 			}
 
@@ -97,12 +97,23 @@ namespace syn
 			inline void handleSyncRequestSatisfy()
 			{
 				auto diff(this->template popRecv<Diff>());
-				this->debugLo() << "Received diff \n"
-								<< diff.toJson() << "\n";
+				auto diffJson(diff.toJson());
+
+
+
+				if(diff.isEmpty())
+				{
+					this->debugLo() << "Received empty diff\n";
+				}
+				else
+				{
+					this->debugLo() << "Received diff\n"
+									<< diffJson  << "\n";
+				}
 
 				this->syncManager.applyDiff(diff);
 
-				this->debugLo() << "Diff applied\n";
+				// this->debugLo() << "Diff applied\n";
 			}
 
 			inline void handleSyncRequestUnneeded()

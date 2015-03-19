@@ -9,8 +9,6 @@ namespace syn
 	{
 		inline static void setFromJson(const ssvj::Val& mVal, TObj& mObj)
 		{
-			// TODO: set dirty bits or not?
-
 			ssvu::tplForIdx([&mVal, &mObj](auto mIdx, auto& mField)
 			{
 				auto key(ssvu::toStr(mIdx));
@@ -18,6 +16,7 @@ namespace syn
 				if(mVal.has(key))
 				{
 					mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
+					mObj.unsetBitAt(mIdx);
 				}
 
 			}, mObj.fields);
@@ -40,7 +39,7 @@ namespace syn
 			return result;
 		}
 
-		inline static auto getChangedToJson(const TObj& mObj)
+		inline static auto getDirtyToJson(const TObj& mObj)
 		{
 			auto result(ssvj::mkObj());
 

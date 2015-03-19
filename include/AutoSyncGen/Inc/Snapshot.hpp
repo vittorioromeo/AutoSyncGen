@@ -12,6 +12,7 @@ namespace syn
 {
 	namespace Impl
 	{
+		/// @brief Class representing the snapshot of the entire state of the `SyncManager`.
 		template<typename TManager> struct Snapshot
 		{
 			using ObjBitset = typename TManager::ObjBitset;
