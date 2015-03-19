@@ -12,59 +12,106 @@ namespace syn
 		friend struct syn::Impl::ManagerHelper;
 
 		public:
+			/// @brief Count of the types managed by this `SyncManager`.
 			static constexpr SizeT typeCount{sizeof...(TTypes)};
 
+			/// @brief Lifetime manager for the type `T`.
 			template<typename T> using LFManagerFor = TLFManager<T>;
+
+			/// @brief Handle for the type `T`.
 			template<typename T> using HandleFor = typename LFManagerFor<T>::Handle;
+
+			/// @brief Handle map for the type `T`.
 			template<typename T> using HandleMapFor = std::map<ID, HandleFor<T>>;
 
+			/// @brief Type of this manager.
 			using ThisType = SyncManager<TLFManager, TTypes...>;
+
+			/// @brief Type of snapshot.
 			using SnapshotType = Impl::Snapshot<ThisType>;
+
+			/// @brief Type of diff.
 			using DiffType = Impl::Diff<ThisType>;
+
+			/// @brief Type of bitset that keeps track of alive objects.
 			using ObjBitset = std::bitset<maxObjs>;
 
 			// TODO: tuple?
+			/// @brief Type of bitset storage per type.
 			using BitsetStorage = std::array<ObjBitset, typeCount>;
 
 		private:
-
+			/// @brief Type of lifetime managers tuple.
 			using TplLFManagers = ssvu::Tpl<LFManagerFor<TTypes>...>;
+
+			/// @brief Type of handle maps tuple.
 			using TplHandleMaps = ssvu::Tpl<HandleMapFor<TTypes>...>;
+
+			/// @brief Type of ID per type tuple.
 			using TplIDs = ssvu::TplRepeat<ID, typeCount>;
 
-			using MemFnCreate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
-			using MemFnRemove = void(SyncManager<TLFManager, TTypes...>::*)(ID);
-			using MemFnUpdate = void(SyncManager<TLFManager, TTypes...>::*)(ID, const ssvj::Val&);
+			/// @brief Type of member function that creates objects.
+			using MemFnCreate = void(ThisType::*)(ID, const ssvj::Val&);
 
+			/// @brief Type of member function that removes objects.
+			using MemFnRemove = void(ThisType::*)(ID);
+
+			/// @brief Type of member function that updates objects.
+			using MemFnUpdate = void(ThisType::*)(ID, const ssvj::Val&);
+
+			/// @brief Tuple containing all the lifetime managers.
 			TplLFManagers lfManagers;
+
+			/// @brief Tuple containing the handle maps.
 			TplHandleMaps handleMaps;
+
+			/// @brief Tuple containing the last ID for every type.
 			TplIDs lastIDs;
 
+			/// @brief Array containing the creation functions per type.
 			std::array<MemFnCreate, typeCount> funcsCreate;
+
+			/// @brief Array containing the removal functions per type.
 			std::array<MemFnRemove, typeCount> funcsRemove;
+
+			/// @brief Array containing the update functions per type.
 			std::array<MemFnUpdate, typeCount> funcsUpdate;
 
+			/// @brief Array contaning the alive/dead bitset for per type.
 			BitsetStorage bitsetIDs;
 
-			void testFn(int) { }
-
+			/// @brief Returns the alive/dead bitset for type `T`.
 			template<typename T> inline auto& getBitsetFor() noexcept { return bitsetIDs[getTypeID<T>()]; }
+
+			/// @brief Returns the alive/dead bitset for type `T`. (const version)
 			template<typename T> inline const auto& getBitsetFor() const noexcept { return bitsetIDs[getTypeID<T>()]; }
+
+			/// @brief Returns true if the object `mID` of type `T` is alive.
 			template<typename T> inline bool isPresent(ID mID) const noexcept { return getBitsetFor<T>()[mID]; }
+
+			/// @brief Sets the alive/dead for the object `mID` of type `T`.
 			template<typename T> inline void setPresent(ID mID, bool mX) noexcept { getBitsetFor<T>()[mID] = mX; }
 
+			/// @brief Creates an object of type `T` with id `mID` from the json value `mVal`.
 			template<typename T> inline void createImpl(ID mID, const ssvj::Val& mVal)
 			{
+				// Creating an already-existing object should never happen.
 				SSVU_ASSERT(!isPresent<T>(mID));
 
+				// Sets the bit of the new object to alive.
 				setPresent<T>(mID, true);
 
+				// Creates an empty handle...
 				auto& handle(getHandleFor<T>(mID));
+
+				// ...and sets it to a newly created handle from the lifetime manager.
 				handle = getLFManagerFor<T>().create();
 
+				// Initializes the contents of the handle from json.
 				handle->setFromJson(mVal);
 
-				getHandleMapFor<T>()[mID] = handle;
+
+				// getHandleMapFor<T>()[mID] = handle;
 			}
 			template<typename T> inline void removeImpl(ID mID)
 			{

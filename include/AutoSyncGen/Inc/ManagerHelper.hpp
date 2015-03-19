@@ -9,7 +9,7 @@ namespace syn
 	{
 		struct ManagerHelper
 		{
-			template<typename, TypeIdx> inline static void initManager(TManager&) { }
+			template<typename TManager, TypeIdx> inline static void initManager(TManager&) { }
 
 			/// @brief Initializes the manager's runtime dispatch function arrays.
 			template<typename TManager, TypeIdx TI, typename T, typename... TTypes>
