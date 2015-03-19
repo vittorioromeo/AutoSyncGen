@@ -99,13 +99,7 @@ namespace syn
 				auto diff(this->template popRecv<Diff>());
 				auto diffJson(diff.toJson());
 
-
-
-				if(diff.isEmpty())
-				{
-					this->debugLo() << "Received empty diff\n";
-				}
-				else
+				if(!diff.isEmpty())
 				{
 					this->debugLo() << "Received diff\n"
 									<< diffJson  << "\n";

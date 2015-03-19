@@ -134,7 +134,19 @@ class ConsoleSessionController
 				}
 				else if(type == DP_CtoS::EditMsg)
 				{
+					std::string author;
+					int id;
+					std::string msg;
 
+					mP >> author >> id >> msg;
+
+					ssvu::lo("ID") << id << std::endl;
+					ssvu::lo("MSG") << msg << std::endl;
+
+					auto& sm(server.getSyncManager());
+
+					LifetimeManager<Message>::Handle h(sm.getHandleFor<Message>(id));
+					h->contents.edit() = msg;
 				}
 			};
 
@@ -203,7 +215,7 @@ class ConsoleSessionController
 					ssvu::lo() << "Enter message: \n";
 					auto msg(safeCin<std::string>());
 
-					client.sendDataToServer(DP_CtoS::EditMsg, clientName, msg, id);
+					client.sendDataToServer(DP_CtoS::EditMsg, clientName, id, msg);
 
 					continue;
 				}

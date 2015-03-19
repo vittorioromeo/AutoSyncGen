@@ -25,6 +25,7 @@ namespace syn
 				auto& jUpdate(result[jsonUpdateIdx]);
 				auto& jRemove(result[jsonRemoveIdx]);
 
+				// TODO: faster int to str in ssvu
 				for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
 				for(const auto& x : toUpdate) jUpdate[ssvu::toStr(x.first)] = x.second;
 				for(const auto& x : toRemove) jRemove.emplace(x);

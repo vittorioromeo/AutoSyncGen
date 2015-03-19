@@ -26,14 +26,26 @@ namespace syn
 			inline static auto getJsonDiff(const ssvj::Val& mX, const ssvj::Val& mY)
 			{
 				auto result(ssvj::mkObj());
-				ObjBitset xFieldFlags{mX[jsonFieldFlagsKey].as<ssvj::Str>()};
 
-				for(auto i(0u); i < xFieldFlags.size(); ++i)
+				auto xBitsStr(mX[jsonFieldFlagsKey].as<ssvj::Str>());
+				// auto yBitsStr(mY[jsonFieldFlagsKey].as<ssvj::Str>());
+
+				// ssvu::lo("XBITS") << xBitsStr << "\n";
+				// ssvu::lo("YBITS") << yBitsStr << "\n";
+
+				ObjBitset xFieldFlags{xBitsStr};
+				// ObjBitset yFieldFlags{yBitsStr};
+
+				auto toUp(xFieldFlags);
+
+				for(auto i(0u); i < toUp.size(); ++i)
 				{
-					if(!xFieldFlags[i])	continue;
+					if(!toUp[i]) continue;
 
 					std::string iStr{ssvu::toStr(i)};
-					result[iStr] = mY[iStr];
+					if(mX[iStr] == mY[iStr]) continue;
+
+					result[iStr] = mX[iStr];
 				}
 
 				return result;
@@ -81,6 +93,10 @@ namespace syn
 						if(diffBitsetToUpdate[i])
 						{
 							auto objDiff(Snapshot<TManager>::getJsonDiff(mTDCurrent.items.at(i), mTDOther.items.at(i)));
+
+							//ssvu::lo("CURRN") << mTDCurrent.toJson() << "\n";
+							//ssvu::lo("OTHER") << mTDOther.toJson() << "\n";
+							//ssvu::lo() << "OBJDIFF" << objDiff << "\n\n";
 
 							if(!objDiff.isEmptyObj()) mTDDiff.toUpdate[i] = objDiff;
 						}

@@ -26,7 +26,7 @@ namespace syn
 			inline auto& edit() noexcept
 			{
 				setDirtyBit();
-				return view();
+				return syncObj.template getFieldAt<TI>();
 			}
 
 			/// @brief Returns a const reference to the underlying field.
