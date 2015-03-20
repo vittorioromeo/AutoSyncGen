@@ -430,6 +430,7 @@
                 \subsubsection{ClientHandlerManager}
 
                     The \emph{ClientHandlerManager} manages memory and functionality of \emph{ClientHandler} instances.
+                    
                     A \emph{ssvu::MonoRecycler} is used to store the handlers on the heap and recycle their memory.
                     The manager also stores two vector of pointers to client handlers: one with non-busy handlers, and one with busy handlers.
                     The lists are periodically checked by an extra thread to remove timed-out client handlers and to accept new connections.
@@ -489,32 +490,150 @@
             
             \subsection{SessionClient}
 
-                The \emph{SessionClient} CTRP derivation of \emph{SessionHost} does not require any particular additional data structure. The only additions, compared to the \emph{SessionHost} base class, are the IP and Port of the currentserver.
+                The \emph{SessionClient} CTRP derivation of \emph{SessionHost} does not require any particular additional data structure. The only additions, compared to the \emph{SessionHost} base class, are the IP and Port of the current server.
 
     \newpage
 
     \chapter{Synchronization module}
-        \section{ssvu}
-
-        \section{SerializationHelper}
 
         \section{SyncObj}
-            \subsection{Fields}
+            The \emph{SyncObj} class represents a synchronizable data structure. 
+            It is composed of synchronizable fields that automatically get serialized/deserialized and sent/received by the \emph{SyncManager}.
+
+            \emph{SyncObj} is a template class that derives from a polymorphic base class. 
+            It takes a variadic amount of template arguments that are the types of the fields stored by the \emph{SyncObj}.
+
+            Json is currently used for serialization/deserialization of objects. 
+            The code architecture makes it easy to implement and use alternative serialization methods.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    template
+    <
+        // Variadic type list of field types.
+        typename... TArgs
+    > 
+    class SyncObj : public Impl::ObjBase
+    {
+        public:
+            // Type of the tuple of fields.
+            using TplFields = ssvu::Tpl<TArgs...>;
+
+        private:
+            // Count of fields.
+            static constexpr SizeT fieldCount{sizeof...(TArgs)};
+
+            // Tuple of fields.
+            TplFields fields;
+
+            // Dirty/clean bits for the fields.
+            std::bitset<fieldCount> fieldFlags;
+
+        public:
+            // Type of the field at index `TI`.
+            template<TypeIdx TI> using TypeAt = ssvu::TplElem<TI, decltype(fields)>;
+
+            // Type of the field proxy at index `TI`.
+            template<TypeIdx TI> using ProxyAt = FieldProxy<TI, SyncObj<TArgs...>>;
+
+        private:
+            // Non-const reference to the field at index `TI`.
+            template<TypeIdx TI> auto& getFieldAt() noexcept;
+
+            // Sets the bit at index `TI` to true.
+            template<TypeIdx TI> void setBitAt() noexcept;
+
+            // Sets the bit at index `mI` to false.
+            void unsetBitAt(TypeIdx mI) noexcept;
+
+        public:
+            // Returns a proxy for the field at index `TI`.
+            template<TypeIdx TI> auto get() noexcept;
+
+            // Sets the object state from an `mX` json value.
+            void setFromJson(const ssvj::Val& mX);
+
+            // Serializes all the fields to json.
+            auto toJsonAll();
+
+            // Serializes all dirty fields to json.
+            auto toJsonDirty();
+    };
+\end{minted}
+
+            \subsection{Fields}                
+
                 \subsubsection{Field tuple}
+
+                    The field are stored in an \emph{std::tuple}, generated at compile-time from the passed variadic type list.
+
                 \subsubsection{Field flags}
+
+                    Every field has a corresponding bit that keeps track of whether it has been modified or not. 
+                    This bit is used to quickly determine the fields that have to be sent again from the server, that were changed since the last sent revision.
+
+                    The bits are stored in a \emph{std::bitset} generated at compile-time with size equal to the number of fields.
+
                 \subsubsection{FieldProxy}
-        
+
+                    The \emph{FieldProxy} class is a convenient abstraction to help the developer get and set synchronizable object fields.
+
+                    Since the fields are stored into a tuple, it is impossible to assign a name to them, unlike traditional C++ structs and classes.
+                    The \emph{FieldProxy} abstraction allows the developer to use a name to refer to synchronizable fields.
+
+                    It also automatically sets the corresponding field \emph{dirty bit} to true when the underlying data is modified.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    template
+    <
+        // Index of the field in the tuple.
+        TypeIdx TI, 
+
+        // Type of attached `SyncObj`.
+        typename TObj
+    > 
+    class FieldProxy
+    {
+        private:
+            // Reference to the attached object.
+            TObj& syncObj;
+
+        public:
+            // Constructs the `FieldProxy` from a reference to its parent object.
+            FieldProxy(TObj& mSyncObj) noexcept;
+
+            // Returns a non-const reference to the underlying field, and sets the dirty bit.
+            auto& edit() noexcept;
+
+            // Returns a const reference to the underlying field.
+            const auto& view() const noexcept;
+    };
+\end{minted}
+
         \section{Snapshot}
+
+            A \emph{Snapshot} is a complete representation of the current synchronizable state.
+
             \subsection{SnapshotTypeData}
-                \subsubsection{Item map}
+
+                A \emph{Snapshot} is composed of \emph{SnapshotTypeData} objects. 
+                Every single type data object represents the synchronization state for a specific type.
+
+                \subsubsection{`items` map}
             
         \section{Diff}
+
+            A \emph{Diff} is a representation of the difference between two snapshot instances.
+
             \subsection{DiffTypeData}
-                \subsubsection{toCreate map}
 
-                \subsubsection{toUpdate map}
+                A \emph{Diff} is composed of \emph{DiffTypeData} objects. 
+                Every single type data object represents the synchronization difference for a specific type.
 
-                \subsubsection{toRemove vector}
+                \subsubsection{`toCreate` map}
+
+                \subsubsection{`toUpdate` map}
+
+                \subsubsection{`toRemove` vector}
         
         \section{LifetimeManager}
 

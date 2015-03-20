@@ -13,38 +13,38 @@
 \contentsline {subsection}{\numberline {2.3.1}SessionServer}{9}
 \contentsline {subsubsection}{ClientHandler}{9}
 \contentsline {subsubsection}{ClientHandlerManager}{9}
-\contentsline {subsection}{\numberline {2.3.2}SessionClient}{9}
-\contentsline {chapter}{\numberline {3}Synchronization module}{10}
-\contentsline {section}{\numberline {3.1}ssvu}{11}
-\contentsline {section}{\numberline {3.2}SerializationHelper}{11}
-\contentsline {section}{\numberline {3.3}SyncObj}{11}
-\contentsline {subsection}{\numberline {3.3.1}Fields}{11}
-\contentsline {subsubsection}{Field tuple}{11}
-\contentsline {subsubsection}{Field flags}{11}
-\contentsline {subsubsection}{FieldProxy}{11}
-\contentsline {section}{\numberline {3.4}Snapshot}{11}
-\contentsline {subsection}{\numberline {3.4.1}SnapshotTypeData}{11}
-\contentsline {subsubsection}{Item map}{11}
-\contentsline {section}{\numberline {3.5}Diff}{11}
-\contentsline {subsection}{\numberline {3.5.1}DiffTypeData}{11}
-\contentsline {subsubsection}{toCreate map}{11}
-\contentsline {subsubsection}{toUpdate map}{11}
-\contentsline {subsubsection}{toRemove vector}{11}
-\contentsline {section}{\numberline {3.6}LifetimeManager}{11}
-\contentsline {section}{\numberline {3.7}SyncManager}{11}
-\contentsline {subsection}{\numberline {3.7.1}Lifetime managers tuple}{11}
-\contentsline {subsection}{\numberline {3.7.2}Handle maps tuple}{11}
-\contentsline {subsection}{\numberline {3.7.3}Object management functions}{11}
-\contentsline {chapter}{\numberline {4}Example application: synchronized chat}{12}
-\contentsline {section}{\numberline {4.1}Data structures}{12}
-\contentsline {subsection}{\numberline {4.1.1}Message}{12}
-\contentsline {section}{\numberline {4.2}Lifetime manager specialization}{12}
-\contentsline {subsection}{\numberline {4.2.1}Pointers as handles}{12}
-\contentsline {subsection}{\numberline {4.2.2}create}{12}
-\contentsline {subsection}{\numberline {4.2.3}remove}{12}
-\contentsline {section}{\numberline {4.3}Application packet types}{12}
-\contentsline {subsection}{\numberline {4.3.1}Server to client}{12}
-\contentsline {subsection}{\numberline {4.3.2}Client to server}{12}
-\contentsline {section}{\numberline {4.4}ConsoleSessionController}{12}
-\contentsline {subsection}{\numberline {4.4.1}Server role}{12}
-\contentsline {subsection}{\numberline {4.4.2}Client role}{12}
+\contentsline {subsection}{\numberline {2.3.2}SessionClient}{11}
+\contentsline {chapter}{\numberline {3}Synchronization module}{12}
+\contentsline {section}{\numberline {3.1}ssvu}{13}
+\contentsline {section}{\numberline {3.2}SerializationHelper}{13}
+\contentsline {section}{\numberline {3.3}SyncObj}{13}
+\contentsline {subsection}{\numberline {3.3.1}Fields}{13}
+\contentsline {subsubsection}{Field tuple}{13}
+\contentsline {subsubsection}{Field flags}{13}
+\contentsline {subsubsection}{FieldProxy}{13}
+\contentsline {section}{\numberline {3.4}Snapshot}{13}
+\contentsline {subsection}{\numberline {3.4.1}SnapshotTypeData}{13}
+\contentsline {subsubsection}{Item map}{13}
+\contentsline {section}{\numberline {3.5}Diff}{13}
+\contentsline {subsection}{\numberline {3.5.1}DiffTypeData}{13}
+\contentsline {subsubsection}{toCreate map}{13}
+\contentsline {subsubsection}{toUpdate map}{13}
+\contentsline {subsubsection}{toRemove vector}{13}
+\contentsline {section}{\numberline {3.6}LifetimeManager}{13}
+\contentsline {section}{\numberline {3.7}SyncManager}{13}
+\contentsline {subsection}{\numberline {3.7.1}Lifetime managers tuple}{13}
+\contentsline {subsection}{\numberline {3.7.2}Handle maps tuple}{13}
+\contentsline {subsection}{\numberline {3.7.3}Object management functions}{13}
+\contentsline {chapter}{\numberline {4}Example application: synchronized chat}{14}
+\contentsline {section}{\numberline {4.1}Data structures}{14}
+\contentsline {subsection}{\numberline {4.1.1}Message}{14}
+\contentsline {section}{\numberline {4.2}Lifetime manager specialization}{14}
+\contentsline {subsection}{\numberline {4.2.1}Pointers as handles}{14}
+\contentsline {subsection}{\numberline {4.2.2}create}{14}
+\contentsline {subsection}{\numberline {4.2.3}remove}{14}
+\contentsline {section}{\numberline {4.3}Application packet types}{14}
+\contentsline {subsection}{\numberline {4.3.1}Server to client}{14}
+\contentsline {subsection}{\numberline {4.3.2}Client to server}{14}
+\contentsline {section}{\numberline {4.4}ConsoleSessionController}{14}
+\contentsline {subsection}{\numberline {4.4.1}Server role}{14}
+\contentsline {subsection}{\numberline {4.4.2}Client role}{14}
