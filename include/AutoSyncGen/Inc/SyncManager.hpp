@@ -212,8 +212,6 @@ namespace syn
 
 				return result;
 			}
-
-
 	};
 }
 

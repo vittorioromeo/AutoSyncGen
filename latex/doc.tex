@@ -503,7 +503,7 @@
             \emph{SyncObj} is a template class that derives from a polymorphic base class. 
             It takes a variadic amount of template arguments that are the types of the fields stored by the \emph{SyncObj}.
 
-            Json is currently used for serialization/deserialization of objects. 
+            JSON is currently used for serialization/deserialization of objects. 
             The code architecture makes it easy to implement and use alternative serialization methods.
 
 \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
@@ -571,7 +571,7 @@
                     Every field has a corresponding bit that keeps track of whether it has been modified or not. 
                     This bit is used to quickly determine the fields that have to be sent again from the server, that were changed since the last sent revision.
 
-                    The bits are stored in a \emph{std::bitset} generated at compile-time with size equal to the number of fields.
+                    The bits are stored in a \emph{std::bitset}, generated at compile-time with size equal to the number of fields.
 
                 \subsubsection{FieldProxy}
 
@@ -613,36 +613,314 @@
 
             A \emph{Snapshot} is a complete representation of the current synchronizable state.
 
+            The \emph{Snapshot} stores the state of all types of objects, separating them by type in appropriate data structures.
+            It also stores a bitset for every object type, where the \emph{n-th} bit represents the state of the \emph{n-th} object of a specific type (0 for \emph{dead}, 1 for \emph{alive}).
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // Class representing the snapshot of the entire state of the `SyncManager`.
+    template<typename TManager> struct Snapshot
+    {
+        // Alive/dead bitset storage per object type.
+        BitsetStorage bitsetIDs;
+
+        // Tuple that stores a snapshot type data for every synchronizable type.
+        ssvu::TplRepeat<TypeData, TManager::typeCount> typeDatas;
+
+        // Serializes the snapshot to JSON.
+        auto toJson() const;
+
+        // Initializes the snapshot from JSON.
+        void initFromJson(const ssvj::Val& mX);
+
+        // Returns the difference between this snapshot and `mX`.
+        auto getDiffWith(const Snapshot& mX);
+    };
+\end{minted}
+
             \subsection{SnapshotTypeData}
 
                 A \emph{Snapshot} is composed of \emph{SnapshotTypeData} objects. 
                 Every single type data object represents the synchronization state for a specific type.
 
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // Class representing the snapshot for a specific synchronizable type.
+    struct SnapshotTypeData
+    {
+        // Items contained in the snapshot type data.
+        std::map<ID, ssvj::Val> items;
+
+        // Serializes the snapshot type data to JSON.
+        auto toJson() const;
+
+        // Initializes the snapshot type data from JSON.
+        void initFromJson(const ssvj::Val& mX);
+    };
+\end{minted}
+    
                 \subsubsection{`items` map}
+
+                    The \emph{items} map simply contains all the objects of a specific type, serialized to JSON.
+                    The keys are the unique IDs of the objects, the values are their JSON representation.
             
         \section{Diff}
 
             A \emph{Diff} is a representation of the difference between two snapshot instances.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // Class representing a diff for all the types handled by the `SyncManager`.
+    template<typename TManager> struct Diff
+    {
+        // Tuple containing the diff type data for every synchronizable type.
+        ssvu::TplRepeat<TypeData, TManager::typeCount> typeDatas;
+
+        // Serializes the diff to a JSON value.
+        auto toJson() const;
+
+        // Initializes the diff from a JSON value.
+        void initFromJson(const ssvj::Val& mX);
+
+        // Returns true if there is no difference between snapshots.
+        bool isEmpty() const noexcept;
+    };
+\end{minted}
 
             \subsection{DiffTypeData}
 
                 A \emph{Diff} is composed of \emph{DiffTypeData} objects. 
                 Every single type data object represents the synchronization difference for a specific type.
 
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // Class representing the diff for a specific type managed by the `SyncManager`.
+    struct DiffTypeData
+    {
+        // Map of objects that have been created since last snapshot.
+        std::map<ID, ssvj::Val> toCreate;
+
+        // Map of objects that have been updated since last snapshot.
+        std::map<ID, ssvj::Val> toUpdate;
+        
+        // Vector of objects that have been removed since last snapshot.
+        std::vector<ID> toRemove;
+
+        // Serializes the diff type data to JSON.
+        auto toJson() const;
+
+        // Initializes the data from JSON.
+        void initFromJson(const ssvj::Val& mX);
+
+        // Returns true if there are no differences.
+        bool isEmpty() const noexcept;
+    };
+\end{minted}
+
                 \subsubsection{`toCreate` map}
+
+                    The \emph{toCreate} map stores all the objects of a specific type that have been created since the last snapshot.
+                    The keys are the unique IDs of the objects, the values are their JSON representation.
 
                 \subsubsection{`toUpdate` map}
 
+                    The \emph{toUpdate} map stores all the objects of a specific type that have been modified since the last snapshot.
+                    The keys are the unique IDs of the objects, the values are their JSON difference representation.
+
                 \subsubsection{`toRemove` vector}
+
+                    The \emph{toRemove} vector stores all the unique IDs of objects of a specific type that have been deleted since the last snapshot.
+                    No JSON values are required, since the objects will be completely removed from the synchronization manager.
         
         \section{LifetimeManager}
 
+            In order to allow maximum flexibility in object storage, a \emph{LifetimeManager<T>} template class specialization must be provided to decide how to allocate/deallocate memory for the synchronizable objects, and how to refer to specific objects through \emph{handles}.
+
+            Here's an example of an user-defined \emph{LifetimeManager}, for the type \emph{Message}.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}    
+    // `LifetimeManager` specialization for `Message`.
+    template<> struct LifetimeManager<Message>
+    {
+        // Required typedef of the handle used by the `SyncManager`.
+        using Handle = Message*;
+
+        // Required function that returns a null handle.
+        Handle getNullHandle() noexcept;
+
+        // Required function that creates an object and returns an handle to it.
+        Handle create();
+
+        // Required function that removes an object attached to a specific handle.
+        void remove(Handle mHandle);
+        
+        // ...user data...
+    };
+\end{minted}
+
         \section{SyncManager}
+
+            The \emph{SyncManager} is the core of the AutoSyncGen library. 
+            The \emph{SyncManager} is a template class that takes a variadic list of unique synchronizable types and creates the appropriate synchronization data-structures for them at compile time.
+
+            Every object has a specific \emph{type ID}, which corresponds to the position of the type in the passed variadic list, and a \emph{unique ID} per instance.
+
+            An instance of the \emph{SyncManager} is used both in the client and in the server code. The manager can serialize its entire state and serialize differences between the current state and the previous state.
+
+            Serialized difference data structures received from the server can be applied to the client's \emph{SyncManager} to synchronize its state.
+
+            The manager also contains data structures and convenient functions to retrieve an handle to an alive object by unique ID, or check the state of a specific object.
+
             \subsection{Lifetime managers tuple}
+
+                Creation and destruction of objects is defined in \emph{LifetimeManager<T>} specializations, by the user of AutoSyncGen.
+                During instantiation of the \emph{SyncManager}, a tuple containing an instance of the specializations, per type, is generated at compile-time.
+
+                When creating or destroying an object after applying a \emph{Diff} or explicitly modifying the state from the server, the appropriate \emph{LifetimeManager} implementation will be used.
 
             \subsection{Handle maps tuple}
 
+                It may be necessary to retrieve an object of a specific type through its unique ID. The current implementation of \emph{SyncManager} offers this possibility to the user through key-value maps, where the key is the unique ID of the object and the value is an handle to the object itself.
+
+                It is guaranteed that the unique IDs of the objects are synchronized between client and server.
+
             \subsection{Object management functions}
+
+                Since objects need to be created, removed and updated at run-time, when the \emph{Diff} instance is received, some dispatch data structures need to be created to make sure the correct constructors/destructors are called.
+
+                This is done through the compile-time generation of three \emph{std::array} of member function pointers, that point to implicit specialization of templatized creation/removal/update member functions of the \emph{SyncManager} itself.
+
+                This way, explicit polymorphic type erasure a-la \emph{std::function} is avoided, to optimize run-time performance and memory usage.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}    
+    template
+    <
+        // LifetimeManager template template parameter.
+        template<typename> class TLFManager, 
+
+        // Variadic list of synchronizable types.
+        typename... TTypes
+    > 
+    class SyncManager
+    {
+        public:
+            // Count of the types managed by this `SyncManager`.
+            static constexpr SizeT typeCount{sizeof...(TTypes)};
+
+            // Lifetime manager for the type `T`.
+            template<typename T> using LFManagerFor = TLFManager<T>;
+
+            // Handle for the type `T`.
+            template<typename T> using HandleFor = typename LFManagerFor<T>::Handle;
+
+            // Handle map for the type `T`.
+            template<typename T> using HandleMapFor = std::map<ID, HandleFor<T>>;
+
+            // Type of this manager.
+            using ThisType = SyncManager<TLFManager, TTypes...>;
+
+            // Type of snapshot.
+            using SnapshotType = Impl::Snapshot<ThisType>;
+
+            // Type of diff.
+            using DiffType = Impl::Diff<ThisType>;
+
+            // Type of bitset that keeps track of alive objects.
+            using ObjBitset = std::bitset<maxObjs>;
+
+            // Type of alive/dead bitset storage per type.
+            using BitsetStorage = std::array<ObjBitset, typeCount>;
+
+        private:
+            // Type of lifetime managers tuple.
+            using TplLFManagers = ssvu::Tpl<LFManagerFor<TTypes>...>;
+
+            // Type of handle maps tuple.
+            using TplHandleMaps = ssvu::Tpl<HandleMapFor<TTypes>...>;
+
+            // Type of next available ID-per-type tuple.
+            using TplIDs = ssvu::TplRepeat<ID, typeCount>;
+
+            // Type of member function that creates objects.
+            using MemFnCreate = void(ThisType::*)(ID, const ssvj::Val&);
+
+            // Type of member function that removes objects.
+            using MemFnRemove = void(ThisType::*)(ID);
+
+            // Type of member function that updates objects.
+            using MemFnUpdate = void(ThisType::*)(ID, const ssvj::Val&);
+
+            // Tuple containing all the lifetime managers.
+            TplLFManagers lfManagers;
+
+            // Tuple containing the handle maps.
+            TplHandleMaps handleMaps;
+
+            // Tuple containing the last ID for every type.
+            TplIDs lastIDs;
+
+            // Array containing the creation functions per type.
+            std::array<MemFnCreate, typeCount> funcsCreate;
+
+            // Array containing the removal functions per type.
+            std::array<MemFnRemove, typeCount> funcsRemove;
+
+            // Array containing the update functions per type.
+            std::array<MemFnUpdate, typeCount> funcsUpdate;
+
+            // Array contaning the alive/dead bitset for per type.
+            BitsetStorage bitsetIDs;
+
+            // Returns the alive/dead bitset for type `T`.
+            template<typename T> const auto& getBitsetFor() const noexcept;
+
+            // Returns true if the object `mID` of type `T` is alive.
+            template<typename T> bool isAlive(ID mID) const noexcept;
+
+            // Sets the alive/dead for the object `mID` of type `T`.
+            template<typename T> void setAlive(ID mID, bool mX) noexcept;
+
+            // Creates an object of type `T` with id `mID` from the JSON value `mVal`.
+            // Member function pointers in `funcsCreate` point to instantiations of
+            // this template member function.
+            template<typename T> void createImpl(ID mID, const ssvj::Val& mVal);
+
+            // Removes an object of type `T` with id `mID` from the JSON value `mVal`.
+            // Member function pointers in `funcsRemove` point to instantiations of
+            // this template member function.
+            template<typename T> void removeImpl(ID mID);
+            
+            // Updates an object of type `T` with id `mID` from the JSON value `mVal`.
+            // Member function pointers in `funcsUpdate` point to instantiations of
+            // this template member function.
+            template<typename T> void updateImpl(ID mID, const ssvj::Val& mVal);
+
+        public:
+            // Returns the unique type ID for the type `T`.
+            template<typename T> static constexpr ID getTypeID() noexcept;
+
+            // Returns the first available unique ID for the type `T`.
+            template<typename T> ID getFirstFreeID() noexcept;
+
+            // Returns a new null handle for the type `T`.
+            template<typename T> auto getNullHandleFor() noexcept;
+            
+            // Returns a reference for the `LifetimeManager` for the type `T`.
+            template<typename T> auto& getLFManagerFor() noexcept;
+
+            // Returns a the ID<->Handle map for the type `T`.
+            template<typename T> auto& getHandleMapFor() noexcept;
+
+            // Returns a new handle for the object of type `T` with ID `mID`.
+            template<typename T> auto& getHandleFor(ID mID) noexcept;
+
+            // Explicitly creates an object of type `T`. 
+            // Intended to be used only from the server.
+            template<typename T> auto serverCreate(const ssvj::Val& mVal);
+
+            // Applies a `Diff` to the current state.
+            void applyDiff(const DiffType& mX);
+
+            // Returns the current state of the manager as a `Snapshot`.
+            auto getSnapshot();
+    };
+\end{minted}
 
     \newpage
 
