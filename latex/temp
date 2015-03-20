@@ -1,0 +1,109 @@
+// `SessionHost` is a CRTP template class, to allow compile-time generation 
+// of appropriate data structures.
+template
+<
+    // `struct` containing global synchronization settings.
+    typename TSettings, 
+    
+    // Type of sent packets.
+    typename TSPT, 
+    
+    // Type of received packets.
+    typename TRPT, 
+
+    // CRTP (curiously recurring template pattern) derived type.
+    template<typename> class TDerivedBase
+> 
+class SessionHost
+{
+    // Typedefs of data structures that depend on the template parameters.
+    public:
+        // CRTP type.
+        using Derived = TDerivedBase<Settings>;
+
+        // Packet types.
+        using SPT = TSPT;
+        using RPT = TRPT;
+    
+        // Synchronization classes.
+        using Settings = TSettings;
+        using SyncManager = typename Settings::SyncManager;
+        using Diff = typename SyncManager::DiffType;
+        using Snapshot = typename SyncManager::SnapshotType;
+
+    private:
+        // Name of the host.
+        std::string name;
+        
+        // IP address of the host.
+        IpAddress ip;
+
+        // Port the host is listening on.
+        Port port;
+
+        // UDP socket of the host.
+        UdpSocket socket;
+
+        // Status of the host.
+        bool busy{false};
+
+        // Tries binding the socket to the specified port.
+        void tryBindSocket();    
+
+        // Tries forwarding the received packets to the underlying 
+        // client/server implementation.
+        void tryForwardReceivedPacket();
+        
+        // Function running in the "receive" thread, which keeps track
+        // of the data receiving buffer and of the socket state.
+        void receiveThread();
+
+    protected:
+        // Buffers that store received data and data that will be sent.
+        Packet sendBuffer, recvBuffer;
+
+        // `void` future offering a RAII wrapper for the host's thread.
+        std::future<void> hostFuture;
+
+        // IP of the sender of the last received data.
+        IpAddress senderIp;
+        
+        // Port of the sender of the last received data.
+        Port senderPort;
+        
+        // Synchronization manager.
+        SyncManager syncManager;
+
+        // Sends the content of the send buffer to the specified host.
+        void sendTo(const IpAddress& mIp, const Port& mPort);
+
+        // Builds a packet from a variadic argument list.
+        template<SPT TType, typename... TArgs> void mkPacket(TArgs&&... mArgs);
+
+        // Sets the state of the host.
+        void setBusy(bool mBusy) noexcept { busy = mBusy; }
+
+        // Pops data of type `T` from the receive buffer.
+        template<typename T> auto popRecv();
+
+    public:
+        // Constructs the host using a specified name and port.
+        // This function tries to bind the socket and start the dedicated thread.
+        SessionHost(std::string mName, syn::Port mPort);
+
+        // Getters.
+        const auto& getName() const noexcept;
+        const auto& getIp() const noexcept;
+        const auto& getPort() const noexcept;
+        const auto& isBusy() const noexcept;
+        auto& getSyncManager() noexcept;
+};
+
+// Template typedef for the base `SessionHost` used by servers.
+template<typename TSettings> 
+using SessionServerBase = SessionHost<TSettings, PT::StoC, PT::CtoS, SessionServer>;
+
+// Template typedef for the base `SessionHost` used by clients.
+template<typename TSettings> 
+using SessionClientBase = SessionHost<TSettings, PT::CtoS, PT::StoC, SessionClient>;
+

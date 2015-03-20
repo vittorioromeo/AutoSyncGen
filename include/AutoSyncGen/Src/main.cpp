@@ -2,33 +2,45 @@
 #include <SSVUtils/Tests/Tests.hpp>
 #include "../../AutoSyncGen/Inc/AutoSyncGen.hpp"
 
+/// @brief Synchronizable data structure representing a chat message.
 struct Message : syn::SyncObj
 <
+	// The fields types are passed as a variadic type list.
+
 	int,			// messageID
 	std::string,	// author
 	std::string		// contents
 >
 {
+	// Field proxies are generated via macros for convenience.
+
 	SYN_PROXY(0, messageID);
 	SYN_PROXY(1, author);
 	SYN_PROXY(2, contents);
 };
 
+// Forward declaration of the lifetime manager template class.
 template<typename> struct LifetimeManager;
 
+/// @brief `LifetimeManager` specialization for `Message`.
 template<> struct LifetimeManager<Message>
 {
+	/// @brief Type of the handle used by the `SyncManager`.
 	using Handle = Message*;
 
+	/// @brief Required function that returns a null handle.
 	inline Handle getNullHandle() noexcept { return nullptr; }
 
+	/// @brief Internal memory storage for `Message` instances.
 	std::vector<ssvu::UPtr<Message>> storage;
 
+	/// @brief Required function that creates an object and returns an handle to it.
 	inline Handle create()
 	{
 		return &ssvu::getEmplaceUPtr<Message>(storage);
 	}
 
+	/// @brief Required function that removes an object attached to a specific handle.
 	inline void remove(Handle mHandle)
 	{
 		ssvu::eraseRemoveIf(storage, [this, mHandle](const auto& mUPtr)
@@ -38,11 +50,13 @@ template<> struct LifetimeManager<Message>
 	}
 };
 
+/// @brief Custom unique types for server-to-client chat packets.
 enum class DP_StoC : int
 {
 	DisplayMsg = 0
 };
 
+/// @brief Custom unique types for client-to-server chat packets.
 enum class DP_CtoS : int
 {
 	SendMsg = 0,
@@ -51,22 +65,27 @@ enum class DP_CtoS : int
 
 using namespace syn;
 
+// Type of `SyncManager` used for the chat application.
 using SyncManagerType = syn::SyncManager<LifetimeManager, Message>;
+
+// Default settings for the `SyncManager`.
 using Settings = syn::SessionSettings<SyncManagerType>;
 
+/// @brief Helper function that gets a value from console input.
+template<typename T> inline auto safeCin()
+{
+	T temp;
+	std::cin >> temp;
+	std::cin.clear();
+	std::cin.ignore(10000, '\n');
+
+	return temp;
+}
+
+/// @brief Console responsive GUI to control the chat.
 class ConsoleSessionController
 {
 	private:
-		template<typename T> inline auto safeCin()
-		{
-			T temp;
-			std::cin >> temp;
-			std::cin.clear();
-			std::cin.ignore(10000, '\n');
-
-			return temp;
-		}
-
 		inline void selectRole()
 		{
 			while(true)
@@ -85,12 +104,14 @@ class ConsoleSessionController
 					selectServer();
 					return;
 				}
+
 				if(choice == 1)
 				{
 					ssvu::lo() << "Client selected\n";
 					selectClient();
 					return;
 				}
+
 				if(choice == 2)
 				{
 					return;
@@ -115,9 +136,7 @@ class ConsoleSessionController
 
 				if(type == DP_CtoS::SendMsg)
 				{
-					std::string author;
-					std::string msg;
-
+					std::string author, msg;
 					mP >> author >> msg;
 
 					int id{lastID++};
@@ -134,14 +153,10 @@ class ConsoleSessionController
 				}
 				else if(type == DP_CtoS::EditMsg)
 				{
-					std::string author;
+					std::string author, msg;
 					int id;
-					std::string msg;
 
 					mP >> author >> id >> msg;
-
-					ssvu::lo("ID") << id << std::endl;
-					ssvu::lo("MSG") << msg << std::endl;
 
 					auto& sm(server.getSyncManager());
 
@@ -152,7 +167,15 @@ class ConsoleSessionController
 
 			while(server.isBusy())
 			{
+				ssvu::lo()	<< "Choose: \n"
+							<< "    0. Shutdown server\n";
 
+				auto choice(safeCin<int>());
+
+				if(choice == 0)
+				{
+					return;
+				}
 			}
 		}
 
@@ -271,6 +294,3 @@ int main()
 	ConsoleSessionController{}.start();
 	return 0;
 }
-
-// TODO: only send bitsets for sync
-// TODO: small sfml gui to display text/logs

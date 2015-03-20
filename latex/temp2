@@ -1,0 +1,123 @@
+constexpr int maxSecondsUntilTimeout{5};
+
+class ClientHandler
+{
+	private:
+		// Connect client ID. 
+		// Assigned by the server.
+		CID cid{nullCID};
+
+		// IP and Port of the client.
+		IpAddress ip;
+		Port port;
+
+		// Seconds until the client is timed out.
+		int secondsUntilTimeout;
+		
+		// State of the client handler.
+		bool busy{false};
+
+	public:
+		// 
+		void bindToClient(CID mCID, const IpAddress& mIp, const Port& mPort);
+
+		void unbindFromClient();
+
+		const auto& getCID() const noexcept;
+		const auto& getIp() const noexcept;
+		const auto& getPort() const noexcept;
+};
+
+class ClientHandlerManager
+{
+	private:
+		CID nextCID{0};
+		ssvu::MonoManager<ClientHandler> clientHandlers;
+		std::vector<ClientHandler*> chAvailable, chBusy;
+		std::map<CID, ClientHandler*> chMap;
+		std::future<void> timeoutFuture;
+		std::vector<CID> toDisconnect;
+		bool busy{true};
+
+		//std::mutex mtxHandleCollection;
+
+		void createClientHandler()
+		{
+			//std::lock_guard<std::mutex> lg{mtxHandleCollection};
+
+			auto& ch(clientHandlers.create());
+			clientHandlers.refresh();
+			chAvailable.emplace_back(&ch);
+		}
+
+		void runTimeout()
+		{
+			while(busy)
+			{
+				for(auto c : chBusy)
+				{
+					--(c->secondsUntilTimeout);
+
+					if(c->secondsUntilTimeout == 0)
+						c->unbindFromClient();
+				}
+
+				std::this_thread::sleep_for(std::chrono::seconds(1));
+			}
+		}
+
+	public:
+		ClientHandlerManager()
+		{
+			timeoutFuture = std::async(std::launch::async, [this]{ runTimeout(); });
+		}
+
+		~ClientHandlerManager()
+		{
+			busy = false;
+		}
+
+		auto& acceptClient(const IpAddress& mIp, const Port& mPort)
+		{
+			auto cidToUse(nextCID++);
+
+			toDisconnect.clear();
+
+			for(auto c : chBusy)
+				if(!c->busy)
+				{
+					chAvailable.emplace_back(c);
+					toDisconnect.emplace_back(c->cid);
+				}
+
+			ssvu::eraseRemoveIf(chBusy, [](const auto& mC){ return !mC->busy; });
+			for(auto iId : toDisconnect) chMap.erase(iId);
+
+			if(chAvailable.empty()) createClientHandler();
+
+			auto ch(chAvailable.back());
+			chAvailable.pop_back();
+
+			ch->bindToClient(cidToUse, mIp, mPort);
+			chMap[cidToUse] = ch;
+
+			return *ch;
+		}
+
+		bool has(CID mCID) const noexcept
+		{
+			return chMap.find(mCID) != std::end(chMap);
+		}
+
+		auto& operator[](CID mCID) noexcept
+		{
+			SSVU_ASSERT(has(mCID));
+			return chMap[mCID];
+		}
+
+		void pingReceived(CID mCID) noexcept
+		{
+			SSVU_ASSERT(has(mCID));
+			chMap[mCID]->secondsUntilTimeout = maxSecondsUntilTimeout;
+		}
+};
