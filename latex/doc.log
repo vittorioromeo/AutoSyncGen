@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.3.6)  20 MAR 2015 15:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.3.6)  20 MAR 2015 16:32
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -467,32 +467,103 @@ runsystem(rm doc.out.pyg)...executed.
 
 runsystem(rm doc.pyg)...executed.
 
- [17]
-Chapter 4.
-[18
+\openout3 = `doc.pyg'.
 
-] (./doc.aux) ) 
+runsystem(pygmentize -l cpp -f latex -F tokenmerge  -F gobble:n=2    -P mathesc
+ape      -P linenos -P "verboptions= ,numbersep=5pt,frame=lines,framesep=2mm" -
+o doc.out.pyg doc.pyg)...executed.
+
+ (./doc.out.pyg
+[17] [18] [19])
+runsystem(rm doc.out.pyg)...executed.
+
+runsystem(rm doc.pyg)...executed.
+
+ [20]
+Chapter 4.
+\openout3 = `doc.pyg'.
+
+runsystem(pygmentize -l cpp -f latex -F tokenmerge  -F gobble:n=2    -P mathesc
+ape      -P linenos -P "verboptions= ,numbersep=5pt,frame=lines,framesep=2mm" -
+o doc.out.pyg doc.pyg)...executed.
+
+(./doc.out.pyg)
+runsystem(rm doc.out.pyg)...executed.
+
+runsystem(rm doc.pyg)...executed.
+
+\openout3 = `doc.pyg'.
+
+runsystem(pygmentize -l cpp -f latex -F tokenmerge  -F gobble:n=2    -P mathesc
+ape      -P linenos -P "verboptions= ,numbersep=5pt,frame=lines,framesep=2mm" -
+o doc.out.pyg doc.pyg)...executed.
+
+ (./doc.out.pyg [21
+
+])
+runsystem(rm doc.out.pyg)...executed.
+
+runsystem(rm doc.pyg)...executed.
+
+\openout3 = `doc.pyg'.
+
+runsystem(pygmentize -l cpp -f latex -F tokenmerge  -F gobble:n=2    -P mathesc
+ape      -P linenos -P "verboptions= ,numbersep=5pt,frame=lines,framesep=2mm" -
+o doc.out.pyg doc.pyg)...executed.
+
+ (./doc.out.pyg [22])
+runsystem(rm doc.out.pyg)...executed.
+
+runsystem(rm doc.pyg)...executed.
+
+
+<res/screen1.png, id=92, 430.60875pt x 226.8475pt>
+File: res/screen1.png Graphic file (type png)
+ <use res/screen1.png>
+Package pdftex.def Info: res/screen1.png used on input line 1040.
+(pdftex.def)             Requested size: 234.8775pt x 123.73846pt.
+
+<res/screen2.png, id=93, 421.575pt x 312.16624pt>
+File: res/screen2.png Graphic file (type png)
+ <use res/screen2.png>
+Package pdftex.def Info: res/screen2.png used on input line 1054.
+(pdftex.def)             Requested size: 234.8775pt x 173.92117pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1060
+.
+(/usr/share/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1060.
+
+ [23 <./res/screen1.png>]
+[24 <./res/screen2.png>] (./doc.aux) ) 
 Here is how much of TeX's memory you used:
- 3465 strings out of 493108
- 46512 string characters out of 6140726
+ 3501 strings out of 493108
+ 47079 string characters out of 6140726
  220391 words of memory out of 5000000
- 6839 multiletter control sequences out of 15000+600000
+ 6862 multiletter control sequences out of 15000+600000
  8603 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,10n,37p,787b,429s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/
-share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmtt10.pfb>
-Output written on doc.pdf (20 pages, 191715 bytes).
+</usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
+sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on doc.pdf (26 pages, 220267 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 138 PDF objects out of 1000 (max. 8388607)
+ 93 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

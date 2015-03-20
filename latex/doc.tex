@@ -93,7 +93,7 @@
             Here's an example of a synchronizable data structure defined using the AutoSyncGen library.
 
             \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
-    /// @brief Synchronizable data structure representing a chat message.
+    // Synchronizable data structure representing a chat message.
     struct Message : syn::SyncObj
     <
         // The fields types are passed as a variadic type list.
@@ -114,7 +114,7 @@
             A shorter (but more preprocessor-heavy) construct can be used, which reduces code repetition.
 
             \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
-    /// @brief Synchronizable data structure representing a chat message.
+    // Synchronizable data structure representing a chat message.
     SYN_DEFINE_SYNCOBJ
     (
         // Name of data structure.
@@ -925,26 +925,147 @@
     \newpage
 
     \chapter{Example application: synchronized chat}
+
+        The current version of the \emph{AutoSyncGen} library comes with a very simple example application to show basic functionality of the library.
+
+        The application is a \emph{client-server chat} with persistent message history.
+        Clients can connect to the server, send messages and edit existing messages.
+        Clients maintain their state synchronized with the server thanks to periodic synchronization requests.
+
         \section{Data structures}
+
             \subsection{Message}
 
-        \section{Lifetime manager specialization}
-            \subsection{Pointers as handles}
-            
-            \subsection{create}
+                The \emph{Message} data structure is a simple synchronizable object containing an unique ID for the message, the name of the author and the contents of the message.
 
-            \subsection{remove}
+            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // Synchronizable data structure representing a chat message.
+    struct Message : syn::SyncObj
+    <
+        int,            // messageID
+        std::string,    // author
+        std::string     // contents
+    >
+    {
+        SYN_PROXY(0, messageID);
+        SYN_PROXY(1, author);
+        SYN_PROXY(2, contents);
+    };
+            \end{minted}                
+
+        \section{Lifetime manager specialization}
+
+            To allow creation, removal and update of \emph{Message} instances, a lifetime manager specialization must be provided.
+            In this case, the specialization uses heap-allocation and raw pointers as handles for simplicity.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // `LifetimeManager` specialization for `Message`.
+    template<> struct LifetimeManager<Message>
+    {
+        // Type of the handle used by the `SyncManager`.
+        using Handle = Message*;
+
+        // Required function that returns a null handle.
+        Handle getNullHandle() noexcept 
+        { 
+            // Since raw pointers are being used, `nullptr` will be
+            // our null handle.
+            return nullptr; 
+        }
+
+        // Required function that creates an object and returns an handle to it.
+        Handle create()
+        {
+            // To create a object, we simply use `std::make_unique` and
+            // emplace the resultant `std::unique_ptr` in the `storage`
+            // vector. Afterwards, we just return a raw pointer to the
+            // newly created object.
+            return &ssvu::getEmplaceUPtr<Message>(storage);
+        }
+
+        // Required function that removes an object attached to a specific handle.
+        void remove(Handle mHandle)
+        {
+            // To deallocate and destroy a message, we simply look for the
+            // message with the same handle in the `storage`, then remove 
+            // it. Since it's being allocated using `std::unique_ptr`, its
+            // memory will be automatically released.
+            ssvu::eraseRemoveIf(storage, [this, mHandle](const auto& mUPtr)
+            {
+                return mUPtr.get() == mHandle;
+            });
+        }
+        
+        // Internal memory storage for `Message` instances.
+        std::vector<ssvu::UPtr<Message>> storage;
+    };
+\end{minted}        
 
         \section{Application packet types}
-            \subsection{Server to client}
 
-            \subsection{Client to server}
+            The example application defines some custom packet types for client-server communication.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    // Custom unique types for server-to-client chat packets.
+    enum class DP_StoC : int
+    {
+        // Send a specific message to the client.
+        DisplayMsg = 0
+    };
+
+    // Custom unique types for client-to-server chat packets.
+    enum class DP_CtoS : int
+    {
+        // Send a message to the server.
+        SendMsg = 0,
+
+        // Edit a message on the server.
+        EditMsg = 1
+    };
+\end{minted}        
 
         \section{ConsoleSessionController}
+            
+            The console is used to control the chat application. 
+            Interaction with the user is handled thanks to the \emph{stdin} input stream.
+            Information is displayed to the user via teh \emph{stdout} output stream.
+
+            When the application is started, the role of the current process can be chosen.
+
             \subsection{Server role}
+
+                \begin{figure}[h]
+                \caption{Example of the chat application being ran in server mode.}
+                \centering
+                \includegraphics[width=0.5\textwidth]{screen1}
+                \end{figure}
+
+                When the application is running in server mode, the only possible user command is the shutdown of the application itself.
+                Everything else is handled automatically.
+
+                Information is displayed on sent/received data and client connections/disconnections.
+
 
             \subsection{Client role}
         
+                \begin{figure}[h]
+                \caption{Example of the chat application being ran in client mode.}
+                \centering
+                \includegraphics[width=0.5\textwidth]{screen2}
+                \end{figure}
+
+                When the application is running in client mode, after successfully connecting to the server, the user can interact in several ways.
+
+                \begin{itemize}
+                  \item Messages can be created and sent to the server.
+                  \item A request to edit an existing message on the server can be sent.
+                  \item The current local state of the client can be displayed.
+                \end{itemize}
+
+                
+
     \newpage
+
+    HOW TO GET, COSE, GITHUB, WEBSITE, DEPENDENCIES
 
 \end{document}

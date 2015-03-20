@@ -33,16 +33,11 @@
 \contentsline {subsection}{\numberline {3.5.1}Lifetime managers tuple}{17}
 \contentsline {subsection}{\numberline {3.5.2}Handle maps tuple}{17}
 \contentsline {subsection}{\numberline {3.5.3}Object management functions}{17}
-\contentsline {chapter}{\numberline {4}Example application: synchronized chat}{18}
-\contentsline {section}{\numberline {4.1}Data structures}{18}
-\contentsline {subsection}{\numberline {4.1.1}Message}{18}
-\contentsline {section}{\numberline {4.2}Lifetime manager specialization}{18}
-\contentsline {subsection}{\numberline {4.2.1}Pointers as handles}{18}
-\contentsline {subsection}{\numberline {4.2.2}create}{18}
-\contentsline {subsection}{\numberline {4.2.3}remove}{18}
-\contentsline {section}{\numberline {4.3}Application packet types}{18}
-\contentsline {subsection}{\numberline {4.3.1}Server to client}{18}
-\contentsline {subsection}{\numberline {4.3.2}Client to server}{18}
-\contentsline {section}{\numberline {4.4}ConsoleSessionController}{18}
-\contentsline {subsection}{\numberline {4.4.1}Server role}{18}
-\contentsline {subsection}{\numberline {4.4.2}Client role}{18}
+\contentsline {chapter}{\numberline {4}Example application: synchronized chat}{21}
+\contentsline {section}{\numberline {4.1}Data structures}{21}
+\contentsline {subsection}{\numberline {4.1.1}Message}{21}
+\contentsline {section}{\numberline {4.2}Lifetime manager specialization}{21}
+\contentsline {section}{\numberline {4.3}Application packet types}{22}
+\contentsline {section}{\numberline {4.4}ConsoleSessionController}{23}
+\contentsline {subsection}{\numberline {4.4.1}Server role}{23}
+\contentsline {subsection}{\numberline {4.4.2}Client role}{23}
