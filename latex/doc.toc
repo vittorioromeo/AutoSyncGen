@@ -11,8 +11,8 @@
 \contentsline {subsection}{\numberline {2.2.2}Packet handling}{6}
 \contentsline {section}{\numberline {2.3}SessionHost}{6}
 \contentsline {subsection}{\numberline {2.3.1}SessionServer}{9}
-\contentsline {subsubsection}{ConnectionManager}{9}
 \contentsline {subsubsection}{ClientHandler}{9}
+\contentsline {subsubsection}{ClientHandlerManager}{9}
 \contentsline {subsection}{\numberline {2.3.2}SessionClient}{9}
 \contentsline {chapter}{\numberline {3}Synchronization module}{10}
 \contentsline {section}{\numberline {3.1}ssvu}{11}

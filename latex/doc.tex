@@ -392,13 +392,104 @@
 
                     A \emph{ClientHandler} instance is created and managed for every client connected to the server.
 
-                    
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    class ClientHandler
+    {
+        private:
+            // Connect client ID. 
+            // Assigned by the server.
+            CID cid{nullCID};
+
+            // IP and Port of the client.
+            IpAddress ip;
+            Port port;
+
+            // Seconds until the client is timed out.
+            int secondsUntilTimeout;
+            
+            // State of the client handler.
+            bool busy{false};
+
+        public:
+            // Assumes the handler is not busy and binds it to a client with a
+            // specific client ID, IP and Port.
+            void bindToClient(CID mCID, const IpAddress& mIp, const Port& mPort);
+
+            // Unbinds the handler from the client connection.
+            void unbindFromClient();
+
+            // Getters
+            const auto& getCID() const noexcept;
+            const auto& getIp() const noexcept;
+            const auto& getPort() const noexcept;
+    };
+\end{minted}
+
+                    Client handlers are stored and managed in the \emph{ClientHandlerManager} class, of which the server has an instance.
 
                 \subsubsection{ClientHandlerManager}
+
+                    The \emph{ClientHandlerManager} manages memory and functionality of \emph{ClientHandler} instances.
+                    A \emph{ssvu::MonoRecycler} is used to store the handlers on the heap and recycle their memory.
+                    The manager also stores two vector of pointers to client handlers: one with non-busy handlers, and one with busy handlers.
+                    The lists are periodically checked by an extra thread to remove timed-out client handlers and to accept new connections.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+    class ClientHandlerManager
+    {
+        private:
+            // Next available unique client ID. 
+            CID nextCID{0};
+
+            // Memory management and recycling data structure for `ClientHandler` instances.
+            ssvu::MonoManager<ClientHandler> clientHandlers;
+
+            // Vector of non-busy client handlers.
+            std::vector<ClientHandler*> chAvailable
+            
+            // Vector of busy client handlers.
+            std::vector<ClientHandler*> chBusy;
+            
+            // Map of client handlers, by client ID.
+            std::map<CID, ClientHandler*> chMap;
+
+            // `void` future that wraps the thread which checks timeouts for client handlers.
+            std::future<void> timeoutFuture;
+
+            // Vector of client handler IDs that need to be disconnected.
+            std::vector<CID> toDisconnect;
+
+            // State of the client handler manager.
+            bool busy{true};
+
+            // Creates a client handler instance from the `MonoManager`
+            // and inserts it into the available vector.
+            void createClientHandler();
+            
+            // Method ran in the timeout thread.
+            // Periodically checks if clients have timed out.
+            void runTimeout();
+
+        public: 
+            // Accepts a new client connection.
+            // Uses an existing free handler, if available, otherwise allocates a new one.
+            // Also removes all handlers that have to be disconnected and updates the ID map.
+            auto& acceptClient(const IpAddress& mIp, const Port& mPort);
+
+            // Returns true if an handler exists, by ID.
+            bool has(CID mCID) const noexcept;
+
+            // Gets a client handler by ID.
+            auto& operator[](CID mCID) noexcept;
+
+            // Refreshes the timeout duration when a ping is received for a specific client.
+            void pingReceived(CID mCID) noexcept;
+    };
+\end{minted}
             
             \subsection{SessionClient}
 
-                The \emph{SessionClient} CTRP derivation of \emph{SessionHost}
+                The \emph{SessionClient} CTRP derivation of \emph{SessionHost} does not require any particular additional data structure. The only additions, compared to the \emph{SessionHost} base class, are the IP and Port of the currentserver.
 
     \newpage
 
