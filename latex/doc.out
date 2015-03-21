@@ -22,15 +22,16 @@
 \BOOKMARK [2][-]{subsection.3.5.1}{Lifetime managers tuple}{section.3.5}% 22
 \BOOKMARK [2][-]{subsection.3.5.2}{Handle maps tuple}{section.3.5}% 23
 \BOOKMARK [2][-]{subsection.3.5.3}{Object management functions}{section.3.5}% 24
-\BOOKMARK [0][-]{chapter.4}{Example application: synchronized chat}{}% 25
-\BOOKMARK [1][-]{section.4.1}{Data structures}{chapter.4}% 26
-\BOOKMARK [2][-]{subsection.4.1.1}{Message}{section.4.1}% 27
-\BOOKMARK [1][-]{section.4.2}{Lifetime manager specialization}{chapter.4}% 28
-\BOOKMARK [1][-]{section.4.3}{Application packet types}{chapter.4}% 29
-\BOOKMARK [1][-]{section.4.4}{ConsoleSessionController}{chapter.4}% 30
-\BOOKMARK [2][-]{subsection.4.4.1}{Server role}{section.4.4}% 31
-\BOOKMARK [2][-]{subsection.4.4.2}{Client role}{section.4.4}% 32
-\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 33
-\BOOKMARK [1][-]{section.5.1}{Learning experience}{chapter.5}% 34
-\BOOKMARK [1][-]{section.5.2}{Future}{chapter.5}% 35
-\BOOKMARK [1][-]{section.5.3}{References}{chapter.5}% 36
+\BOOKMARK [0][-]{chapter.4}{Obtaining the library}{}% 25
+\BOOKMARK [0][-]{chapter.5}{Example application: synchronized chat}{}% 26
+\BOOKMARK [1][-]{section.5.1}{Data structures}{chapter.5}% 27
+\BOOKMARK [2][-]{subsection.5.1.1}{Message}{section.5.1}% 28
+\BOOKMARK [1][-]{section.5.2}{Lifetime manager specialization}{chapter.5}% 29
+\BOOKMARK [1][-]{section.5.3}{Application packet types}{chapter.5}% 30
+\BOOKMARK [1][-]{section.5.4}{ConsoleSessionController}{chapter.5}% 31
+\BOOKMARK [2][-]{subsection.5.4.1}{Server role}{section.5.4}% 32
+\BOOKMARK [2][-]{subsection.5.4.2}{Client role}{section.5.4}% 33
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 34
+\BOOKMARK [1][-]{section.6.1}{Learning experience}{chapter.6}% 35
+\BOOKMARK [1][-]{section.6.2}{Future}{chapter.6}% 36
+\BOOKMARK [1][-]{section.6.3}{References}{chapter.6}% 37

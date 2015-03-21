@@ -17,7 +17,8 @@
 
         \center
 
-        \textsc{\LARGE Universita' degli Studi di Messina}\\[1.5cm] 
+        \textsc{\LARGE Universita' degli Studi di Messina}\\[0.1cm] 
+        \textsc{\Large Dipartimento di Matematica e Informatica}\\[0.5cm] 
         \textsc{\Large Networking course project}\\[0.5cm] 
 
         \HRule \\[0.4cm]
@@ -49,18 +50,18 @@
             \begin{minipage}{0.35\linewidth}
                 \begin{figure}[H]
                     \center
-                    \includegraphics[width=3cm, height=3cm]{logounime}
+                    \includegraphics[width=2cm, height=2cm]{logovee}
                     
-                    http://unime.it
+                    http://vittorioromeo.info
                 \end{figure}
             \end{minipage}
             \hspace{0.27\linewidth}
             \begin{minipage}{0.35\linewidth}
                 \begin{figure}[H]
                     \center
-                    \includegraphics[width=3cm, height=3cm]{logovee}
+                    \includegraphics[width=2cm, height=2cm]{logounime}
                     
-                    http://vittorioromeo.info
+                    http://unime.it
                 \end{figure}
             \end{minipage}
         \end{minipage}\\[3cm]
@@ -929,6 +930,38 @@
 
     \newpage
 
+    \chapter{Obtaining the library}
+
+        AutoSyncGen is available on GitHub, released under the \emph{Academic Free License (AFL3.0)} open source license, at the following address: \url{https://github.com/SuperV1234/AutoSyncGen}.
+        The repository folder structure is:
+
+        \begin{itemize}
+            \item \emph{./include/}: source files of the library.
+            \item \emph{./extlibs/}: required external dependencies, as \emph{git submodules}.
+            \item \emph{./latex/}: source files of this \LaTeX\ document.
+        \end{itemize}
+
+
+        To build the library, your system must satisfy the following requirements:
+        \begin{itemize}
+            \item A fully-compliant C++14 compiler such as \emph{clang++ 3.4} or \emph{g++ 4.9}.
+            \item The latest version of the SFML library, which can be obtained at \url{http://sfml-dev.org} or using your distribution's package manager.
+            \item \emph{CMake}, a cross-platform open-source build system that can be downloaded at \url{http://cmake.org}.
+            \item \emph{Git}, a free and open source distributed version control system available on your distribution's package manager or at \url{http://git-scm.com}.
+        \end{itemize}
+        
+        After cloning the repository with \mintinline{bash}{git clone https://github.com/SuperV1234/AutoSyncGen}, navigate to the local repository folder and execute the \mintinline{bash}{./init-repository.sh} script, that will clone the required dependencies.
+
+        Afterwards, executing \mintinline{bash}{cmake .} will generate the \emph{makefiles} for the project.
+
+        Using \mintinline{bash}{make && sudo make install} will build the library and install it on your system.
+
+        To use AutoSyncGen in your projects, no linking is necessary, as the library is \emph{header-only}. It is sufficient to add \mintinline{cpp}{#include <AutoSyncGen/AutoSyncGen.hpp>} at the beginning of your program.
+
+        A simple synchronized chat test application is included in the repository, that will be analyzed in the following chapter.
+
+    \newpage
+
     \chapter{Example application: synchronized chat}
 
         The current version of the \emph{AutoSyncGen} library comes with a very simple example application to show basic functionality of the library.
@@ -1074,9 +1107,22 @@
 
         \chapter{Conclusion}
 
+            In conclusion, the original problem of implementing a flexible and easy-to-use state synchronization system has been solved.
+
+            The project described in this thesis, \emph{AutoSyncGen}, achieves the goals that were set:
+
+            \begin{itemize}
+                \item The library allows automatic state synchronization between a server and multiple clients.
+                \item Required data structures and procedures are generated at compile-time, minimizing the run-time performance impact and memory overhead.
+                \item User code is clear and easy to write/understand. C++14 metaprogramming features and optional preprocessor macros allow library users to quickly define synchronizable data structures, with minimal boilerplate code.
+                \item Most user-written synchronization code that uses AutoSyncGen can be shared between the client and the server applications, avoiding redundancy.
+                \item The library is suitable for various types of applications, ranging from simple \emph{chat/forum systems} to \emph{realtime multiplayer games}.
+                \item AutoSyncGen minimizes network usage by sending only the minimum data required to synchronize the state between the server and a client.
+            \end{itemize}
+
             \section{Learning experience}
 
-                Creating \emph{AutoSyncGen} was a very useful exercise in \emph{C++ modern metaprogramming techniques} and \emph{computer networking}.
+                Creating \emph{AutoSyncGen} was a very educational experience in \emph{C++ modern metaprogramming techniques} and \emph{computer networking}.
                 During its development, some important design decisions had to be taken:
 
                 \begin{itemize}
