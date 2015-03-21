@@ -7,6 +7,8 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 
+\def \cppStart {\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}}
+
 \graphicspath{ {res/} }
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
 
@@ -21,7 +23,7 @@
         \HRule \\[0.4cm]
         { \huge \bfseries AutoSyncGen}\\[0.1cm]
 
-        {\large \today}
+        {\large 23 March 2015}
         \HRule \\[1.5cm]
          
         \begin{minipage}{0.4\textwidth}
@@ -81,10 +83,10 @@
 
             Implementing state synchronization is not a trivial task. It it usually required to define a simple protocol that \emph{explicitly handles} state synchronization for all data structures. 
 
-            This is usually achieved by explicitly coding serialization behavior and explicitly defining how packets should be created and read for every synchronizable objects. Even for small applications, maintaining and expanding the code using a similar approach can become difficult quickly.
+            This is usually achieved by explicitly coding serialization behavior and explicitly defining how packets should be created and read for every synchronizable object. Even for small applications, maintaining and expanding the code using a similar approach can quickly become difficult.
 
         \section{Solution}
-            The solution proposed in this papers is \emph{AutoSyncGen}, a \emph{C++14} library written using \emph{modern and idiomatic code}.
+            A possible solution to the problem, proposed in this paper, is \emph{AutoSyncGen}: a \emph{C++14} library written using \emph{modern and idiomatic code}.
             The library allows developers to quickly define synchronizable data structures, and automatically deals with \emph{object lifetime management}, \emph{serialization} and \emph{deserialization}, packet \emph{creation} and \emph{reading}.
 
             By quickly specifying how object memory should be managed and the types of the synchronizable fields, \emph{AutoSyncGen} generates code at \emph{compile-time} to keep track of the entire application state and generate synchronization requests and responses that send the smallest amount of data required to fully synchronize the clients to the server.
@@ -93,7 +95,7 @@
 
             Here's an example of a synchronizable data structure defined using the AutoSyncGen library.
 
-            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+            \cppStart
     // Synchronizable data structure representing a chat message.
     struct Message : syn::SyncObj
     <
@@ -114,7 +116,7 @@
 
             A shorter (but more preprocessor-heavy) construct can be used, which reduces code repetition.
 
-            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+            \cppStart
     // Synchronizable data structure representing a chat message.
     SYN_DEFINE_SYNCOBJ
     (
@@ -136,13 +138,13 @@
         \section{Technologies used}
             C++14, which is the latest official C++ standard, released in 2 March 2014 \emph{(paper N3936)}, is the language of choice for AutoSyncGen.
             Like C++11, this newer standard is a huge step forward for the language. \emph{Smarter memory managament}, \emph{automatic type deduction}, and countless new programming and metaprogramming features allow developers to write much safer and powerful code.
-            C++11 and C++14 features make AutoSyncGen possible.
+            C++11 and C++14 features are what make AutoSyncGen possible and its syntax cleaner and easier to use.
 
-            On top of C++14 and its standard library, the \emph{SSV framework} is being used as well. This framework was completely written from scratch by me, \emph{Vittorio Romeo}, and is available under the open-source AFL3.0 license on GitHub.
+            On top of C++14 and its standard library, the \emph{SSV framework} is being used as well. This framework was written completely from scratch by me, \emph{Vittorio Romeo}, and is available under the open-source AFL3.0 license on GitHub.
 
             The \emph{SSVUtils} library, used throughout the whole program, features many heterogeneous self-contained modules: an efficient and modern handwritten JSON parser, a preprocessor metaprogramming module, a template metaprogramming module, automatic console formatted output for containers and user-defined types, efficient data structures (bimap, handle vector, growable arrays), advanced memory management facilities, type-safe variadic unions, handwritten templating system, filesystem management, easy benchmarking of portions of code, and much more.
 
-            Two additional dependencies for AutoSyncGen are the \emph{SFML} library, which offers lightweight abstraction over sockets and packets, and the \emph{SSVStart} library, part of the SSV framework, which extends the functionality of SFML and wraps some of its C++03 abstractions with more modern and safer C++14 constructs.
+            Two additional dependencies for AutoSyncGen are the \emph{SFML} library, which offers lightweight abstraction over sockets and packets, and the \emph{SSVStart} library, part of the SSV framework, which extends the functionality of SFML and wraps some of its C++03 abstractions with modern and safer C++14 constructs.
     
     \newpage
 
@@ -151,13 +153,13 @@
         The \emph{network module} deals with client/server abstraction and communication, and will be covered in this chapter.
         The \emph{synchronization module} deals with compile-time synchronization data structures generation and synchronization algorithms, and will be covered in the next chapter.
 
-        \section{SFML}
+        \section{SFML features}
             As mentioned in the previous chapter, SFML is one of the dependencies of AutoSyncGen. 
             SFML offers convenient and type-safe wrappers over basic networking constructs such as \emph{sockets} and \emph{packets}.
 
             AutoSyncGen's network module extensively uses these abstractions to allow cross-platform compatibility and additional safety.
 
-            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+            \cppStart
     // SFML offers an `IpAddress` data structure that that can be initialized from strings.
     using sf::IpAddress;
     
@@ -171,7 +173,7 @@
 
             Just to clarify how convenient these abstractions are, here's a small code example that shows \emph{sf::Packet} usage.
 
-            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+            \cppStart
     int x{5};
     std::string y{"hello!"};
     double z{2.52};
@@ -189,10 +191,12 @@
     received << outX << outY << outZ;
             \end{minted}
 
-            SFML is open-source, cross-platform and free.
+            SFML is open-source, cross-platform, free and actively being maintained and improved by its community.
 
-        \section{Packets}
+        \section{AutoSyncGen packets}
+            
             AutoSyncGen uses a simple but effective protocol for data synchronization, which requires some special packets.
+            The \emph{transport-layer protocol} used by AutoSyncGen is \emph{UDP}.
 
             \subsection{Packet types}
                 Packet types are defined using \emph{C++11 enum classes}, which are type-safe enumeration types that cannot be implicitly converted to their underlying representation.
@@ -200,8 +204,8 @@
                 \subsubsection{CtoS enumeration}
                     This enumeration holds the packet types that are sent from the client to the server.
 
-                    \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
-    enum class CtoS : NType
+                    \cppStart
+    enum class CtoS : std::size_t
     {
         // Request to establish a connection to the server
         ConnectionRequest = 0,      
@@ -223,8 +227,8 @@
                 \subsubsection{StoC enumeration}
                     This enumeration holds the packet types that are sent from the server to the client.
 
-                    \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
-    enum class StoC : NType
+                    \cppStart
+    enum class StoC : std::size_t
     {
         // Accept a requested client connection, assigning the client a CID
         ConnectionAccept = 0,       
@@ -247,9 +251,9 @@
                     \end{minted}
             
             \subsection{Packet handling}
-                Packets are automatically handled by the client and the server, using a switch.
+                Packets are automatically handled by the client and the server, using a \emph{switch} language construct.
 
-                \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+                \cppStart
     void handle(RPT mType)
     {
         switch(mType)
@@ -265,16 +269,16 @@
     }
                 \end{minted}
 
-                This implementation is fine for the current packet types AutoSyncGen uses, but can be changed to a lookup table or an array of function pointers if more packet types need to be added in the future.
+                This implementation is fine for the current packet types AutoSyncGen uses, but can be changed to a lookup table or an array of function pointers if more packet types need to be added in the future to accomodate more advanced synchronization features.
 
         \section{SessionHost}
 
-            Clients and servers are abstracted as \emph{SessionHost} classes in the network module.
-            The \emph{SessionHost} classes defines data structures and functionality shared both by clients and servers.
+            Clients and servers are abstracted as \emph{SessionHost} derived classes in the network module.
+            The \emph{SessionHost} class defines data structures and functionality shared both by clients and servers.
 
             Every host has a dedicated extra thread for data and socket management.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // `SessionHost` is a CRTP template class, to allow compile-time generation 
     // of appropriate data structures.
     template
@@ -393,7 +397,7 @@
 
                     A \emph{ClientHandler} instance is created and managed for every client connected to the server.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     class ClientHandler
     {
         private:
@@ -436,7 +440,7 @@
                     The manager also stores two vector of pointers to client handlers: one with non-busy handlers, and one with busy handlers.
                     The lists are periodically checked by an extra thread to remove timed-out client handlers and to accept new connections.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     class ClientHandlerManager
     {
         private:
@@ -507,7 +511,7 @@
             JSON is currently used for serialization/deserialization of objects. 
             The code architecture makes it easy to implement and use alternative serialization methods.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     template
     <
         // Variadic type list of field types.
@@ -583,7 +587,7 @@
 
                     It also automatically sets the corresponding field \emph{dirty bit} to true when the underlying data is modified.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     template
     <
         // Index of the field in the tuple.
@@ -617,7 +621,7 @@
             The \emph{Snapshot} stores the state of all types of objects, separating them by type in appropriate data structures.
             It also stores a bitset for every object type, where the \emph{n-th} bit represents the state of the \emph{n-th} object of a specific type (0 for \emph{dead}, 1 for \emph{alive}).
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // Class representing the snapshot of the entire state of the `SyncManager`.
     template<typename TManager> struct Snapshot
     {
@@ -643,7 +647,7 @@
                 A \emph{Snapshot} is composed of \emph{SnapshotTypeData} objects. 
                 Every single type data object represents the synchronization state for a specific type.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // Class representing the snapshot for a specific synchronizable type.
     struct SnapshotTypeData
     {
@@ -667,7 +671,7 @@
 
             A \emph{Diff} is a representation of the difference between two snapshot instances.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // Class representing a diff for all the types handled by the `SyncManager`.
     template<typename TManager> struct Diff
     {
@@ -690,7 +694,7 @@
                 A \emph{Diff} is composed of \emph{DiffTypeData} objects. 
                 Every single type data object represents the synchronization difference for a specific type.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // Class representing the diff for a specific type managed by the `SyncManager`.
     struct DiffTypeData
     {
@@ -735,7 +739,7 @@
 
             Here's an example of an user-defined \emph{LifetimeManager}, for the type \emph{Message}.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}    
+\cppStart    
     // `LifetimeManager` specialization for `Message`.
     template<> struct LifetimeManager<Message>
     {
@@ -789,7 +793,7 @@
 
                 This way, explicit polymorphic type erasure a-la \emph{std::function} is avoided, to optimize run-time performance and memory usage.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}    
+\cppStart    
     template
     <
         // LifetimeManager template template parameter.
@@ -939,7 +943,7 @@
 
                 The \emph{Message} data structure is a simple synchronizable object containing an unique ID for the message, the name of the author and the contents of the message.
 
-            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+            \cppStart
     // Synchronizable data structure representing a chat message.
     struct Message : syn::SyncObj
     <
@@ -959,7 +963,7 @@
             To allow creation, removal and update of \emph{Message} instances, a lifetime manager specialization must be provided.
             In this case, the specialization uses heap-allocation and raw pointers as handles for simplicity.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // `LifetimeManager` specialization for `Message`.
     template<> struct LifetimeManager<Message>
     {
@@ -1006,7 +1010,7 @@
 
             The example application defines some custom packet types for client-server communication.
 
-\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
+\cppStart
     // Custom unique types for server-to-client chat packets.
     enum class DP_StoC : int
     {
@@ -1046,6 +1050,7 @@
 
                 Information is displayed on sent/received data and client connections/disconnections.
 
+\newpage
 
             \subsection{Client role}
         
@@ -1069,13 +1074,30 @@
 
         \chapter{Conclusion}
 
-            \section{Learning experience}            
+            \section{Learning experience}
+
+                Creating \emph{AutoSyncGen} was a very useful exercise in \emph{C++ modern metaprogramming techniques} and \emph{computer networking}.
+                During its development, some important design decisions had to be taken:
+
+                \begin{itemize}
+                  \item The first important choice was the transport-layer protocol. While \emph{TCP}'s additional safety and reliability features are greatly appreciated in most networked applications, AutoSyncGen wants to offer its users the smallest possible overhead. Intended applications for the libraries also include \emph{realtime multiplayer games}, which extremely appreciate the lack of overhead UDP provides.
+                  \item Another important choice was the programming language: C++11 or C++14? The newest standard has many useful features that increase productivity and programmer convenience. Also, both the implementation code and user code of the library greatly benefit from C++14 additions. It is, however, not yet widely supported, even if it's the official C++ standard.
+                  C++11, on the other hand, has gained widespread support and every major Linux distribution features a fully-compliant C++11 compiler.
+                  As having the cleanest possible syntax was one of my main goals for AutoSyncGen, and considering that the SSV framework is C++14-only compatible, I ended up using the latest standard of the C++ language. Hopefully, popular Linux distributions will upgrade their default compiler versions to C++14-compliant ones.
+                  \item The final choices were about the presentation of the library as my networking course project. I chose \LaTeX\ to write the documentation, as it produces (in my opinion) the most professional-looking documents and its packages make syntax-highlighted code inclusion really easy. For the example application written using AutoSyncGen, I chose to build a simple client-server chat: this kind of software is really easy to write and explain, and it shows the strenghts and weaknesses of the library well.
+                \end{itemize}
 
             \section{Future}
 
-                \subsection{Possible improvements}
+                AutoSyncGen can be greatly improved, and will probably be expanded upon and used in some of my projects in the future.
 
-                \subsection{Changes}
+                Possible improvements:
+
+                \begin{itemize}
+                    \item Support for \emph{nested synchronizable data structures}. This could be handled by automatically converting handles to unique IDs during serialization.
+                    \item \emph{Configurable client snapshot storage}. It would be useful for certain application to maintain an history of snapshots for every connected client, so that its state can be retrieved at any point in time.
+                    \item Various optimization, ranging from \emph{specialized integer/string conversions} to \emph{efficient bitset serialization and deserialization}. Some run-time calculations and dispatching could also benefit from additional data strctures generated at compile-time.
+                \end{itemize}
 
             \section{References}
 
@@ -1084,6 +1106,8 @@
                   \item SSVUtils GitHub repository: \url{https://github.com/SuperV1234/SSVUtils}
                   \item SFML website: \url{http://www.sfml-dev.org/}
                   \item SSVStart GitHub repository: \url{https://github.com/SuperV1234/SSVStart}
+                  \item UNIME website: \url{http://unime.it}
+                  \item My personal website: \url{https://vittorioromeo.info}
                 \end{itemize}
             
 
