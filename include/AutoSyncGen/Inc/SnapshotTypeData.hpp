@@ -20,7 +20,6 @@ namespace syn
 			{
 				auto result(ssvj::mkObj());
 
-				// TODO: specialize ssvu::toStr for int to be faster!
 				for(const auto& x : items) result[ssvu::toStr(x.first)] = x.second;
 				return result;
 			}
@@ -30,8 +29,7 @@ namespace syn
 			{
 				items.clear();
 
-				// TODO: ssvu wrapper for stoi
-				for(const auto& x : mX.forObj()) items[std::stoi(x.key)] = x.value;
+				for(const auto& x : mX.forObj()) items[ssvu::sToInt(x.key)] = x.value;
 			}
 		};
 	}

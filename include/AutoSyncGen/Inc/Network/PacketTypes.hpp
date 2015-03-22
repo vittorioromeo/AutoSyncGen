@@ -1,6 +1,8 @@
 #ifndef AUTOSYNCGEN_PACKETTYPES
 #define AUTOSYNCGEN_PACKETTYPES
 
+#include <SSVStart/SSVStart.hpp>
+
 namespace syn
 {
 	namespace PT
@@ -32,45 +34,28 @@ namespace syn
 	}
 }
 
-namespace syn
+template<typename TManager> inline syn::Packet& operator<<(syn::Packet& mP, const syn::Impl::Diff<TManager>& mX)
 {
-	// TODO: optimization opportunities
-	// TODO: move to ssvs utils
-	inline Packet& operator<<(Packet& mP, const ssvj::Val& mX)
-	{
-		return mP << mX.getWriteToStr<ssvj::WSMinified>();
-	}
-	inline Packet& operator>>(Packet& mP, ssvj::Val& mX)
-	{
-		std::string str;
-		mP >> str;
-		mX.readFromStr(str);
-		return mP;
-	}
+	return mP << mX.toJson();
+}
+template<typename TManager> inline syn::Packet& operator>>(syn::Packet& mP, syn::Impl::Diff<TManager>& mX)
+{
+	ssvj::Val data{};
+	mP >> data;
+	mX.initFromJson(data);
+	return mP;
+}
 
-	template<typename TManager> inline Packet& operator<<(Packet& mP, const Impl::Diff<TManager>& mX)
-	{
-		return mP << mX.toJson();
-	}
-	template<typename TManager> inline Packet& operator>>(Packet& mP, Impl::Diff<TManager>& mX)
-	{
-		ssvj::Val data{};
-		mP >> data;
-		mX.initFromJson(data);
-		return mP;
-	}
-
-	template<typename TManager> inline Packet& operator<<(Packet& mP, const Impl::Snapshot<TManager>& mX)
-	{
-		return mP << mX.toJson();
-	}
-	template<typename TManager> inline Packet& operator>>(Packet& mP, Impl::Snapshot<TManager>& mX)
-	{
-		ssvj::Val data{};
-		mP >> data;
-		mX.initFromJson(data);
-		return mP;
-	}
+template<typename TManager> inline syn::Packet& operator<<(syn::Packet& mP, const syn::Impl::Snapshot<TManager>& mX)
+{
+	return mP << mX.toJson();
+}
+template<typename TManager> inline syn::Packet& operator>>(syn::Packet& mP, syn::Impl::Snapshot<TManager>& mX)
+{
+	ssvj::Val data{};
+	mP >> data;
+	mX.initFromJson(data);
+	return mP;
 }
 
 #endif

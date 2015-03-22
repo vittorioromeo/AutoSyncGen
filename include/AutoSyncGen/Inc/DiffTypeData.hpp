@@ -25,7 +25,6 @@ namespace syn
 				auto& jUpdate(result[jsonUpdateIdx]);
 				auto& jRemove(result[jsonRemoveIdx]);
 
-				// TODO: faster int to str in ssvu
 				for(const auto& x : toCreate) jCreate[ssvu::toStr(x.first)] = x.second;
 				for(const auto& x : toUpdate) jUpdate[ssvu::toStr(x.first)] = x.second;
 				for(const auto& x : toRemove) jRemove.emplace(x);
@@ -44,8 +43,8 @@ namespace syn
 				const auto& jUpdate(mX[jsonUpdateIdx]);
 				const auto& jRemove(mX[jsonRemoveIdx]);
 
-				for(const auto& x : jCreate.forObj()) toCreate[std::stoi(x.key)] = x.value;
-				for(const auto& x : jUpdate.forObj()) toUpdate[std::stoi(x.key)] = x.value;
+				for(const auto& x : jCreate.forObj()) toCreate[ssvu::sToInt(x.key)] = x.value;
+				for(const auto& x : jUpdate.forObj()) toUpdate[ssvu::sToInt(x.key)] = x.value;
 				for(const auto& x : jRemove.forArrAs<ID>()) toRemove.emplace_back(x);
 			}
 

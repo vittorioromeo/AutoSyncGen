@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.3.4)  21 MAR 2015 19:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.3.4)  21 MAR 2015 19:31
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -393,13 +393,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 35.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 35.
- <res/logovee.png, id=148, 321.2pt x 321.2pt>
+ <res/logovee.png, id=152, 321.2pt x 321.2pt>
 File: res/logovee.png Graphic file (type png)
  <use res/logovee.png>
 Package pdftex.def Info: res/logovee.png used on input line 53.
 (pdftex.def)             Requested size: 56.90189pt x 56.90189pt.
 
-<res/logounime.jpg, id=150, 90.3375pt x 90.3375pt>
+<res/logounime.jpg, id=154, 90.3375pt x 90.3375pt>
 File: res/logounime.jpg Graphic file (type jpg)
  <use res/logounime.jpg>
 Package pdftex.def Info: res/logounime.jpg used on input line 62.
@@ -408,13 +408,18 @@ Package pdftex.def Info: res/logounime.jpg used on input line 62.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./res/logovee.png> <./res/
-logounime.jpg>] (./doc.toc)
+logounime.jpg>] (./doc.toc [1
+
+])
 \tf@toc=\write7
 \openout7 = `doc.toc'.
 
- [1
-
-]
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.73     \newpage
+                  [2]
 Chapter 1.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
@@ -533,45 +538,25 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 939.
 \openout5 = `doc.pyg'.
 
-runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
-prefix=PYGdefault -o "_minted-doc/DEC1FA46371B3B240A2DB6BCDBBC9EAA75FFD58FDE460
-22B590A0DD5861E59D8.pygtex" "doc.pyg" )...executed.
-
 
 (./_minted-doc/DEC1FA46371B3B240A2DB6BCDBBC9EAA75FFD58FDE46022B590A0DD5861E59D8
 .pygtex)
 \openout5 = `doc.pyg'.
-
-runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
-prefix=PYGdefault -o "_minted-doc/01A6647331CB8CDE6CD5975A0847FE4175FFD58FDE460
-22B590A0DD5861E59D8.pygtex" "doc.pyg" )...executed.
 
 
 (./_minted-doc/01A6647331CB8CDE6CD5975A0847FE4175FFD58FDE46022B590A0DD5861E59D8
 .pygtex)
 \openout5 = `doc.pyg'.
 
-runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
-prefix=PYGdefault -o "_minted-doc/13B73077506B5D70B123EF8638F0CC0575FFD58FDE460
-22B590A0DD5861E59D8.pygtex" "doc.pyg" )...executed.
-
 
 (./_minted-doc/13B73077506B5D70B123EF8638F0CC0575FFD58FDE46022B590A0DD5861E59D8
 .pygtex)
 \openout5 = `doc.pyg'.
 
-runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
-prefix=PYGdefault -o "_minted-doc/47BF38C15E3012EDA38851B9B6961B4975FFD58FDE460
-22B590A0DD5861E59D8.pygtex" "doc.pyg" )...executed.
-
 
 (./_minted-doc/47BF38C15E3012EDA38851B9B6961B4975FFD58FDE46022B590A0DD5861E59D8
 .pygtex)
 \openout5 = `doc.pyg'.
-
-runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
-refix=PYGdefault -o "_minted-doc/8DCC236820F7D90467AE0655415417E90B6205E293B970
-BE41D4BA2D1F7C4791.pygtex" "doc.pyg" )...executed.
 
 
 (./_minted-doc/8DCC236820F7D90467AE0655415417E90B6205E293B970BE41D4BA2D1F7C4791
@@ -595,14 +580,14 @@ Chapter 5.
 
 
 (./_minted-doc/91377C842DA745265BC0DC1CB1766FF078EF3AF6A528B39BF2580CC41E8C0A6B
-.pygtex [23]) <res/screen1.png, id=323, 430.60875pt x 226.8475pt>
+.pygtex [23]) <res/screen1.png, id=330, 430.60875pt x 226.8475pt>
 File: res/screen1.png Graphic file (type png)
 
 <use res/screen1.png>
 Package pdftex.def Info: res/screen1.png used on input line 1078.
 (pdftex.def)             Requested size: 234.8775pt x 123.73846pt.
  [24 <./res/screen1.png>]
-<res/screen2.png, id=331, 421.575pt x 312.16624pt>
+<res/screen2.png, id=336, 421.575pt x 312.16624pt>
 File: res/screen2.png Graphic file (type png)
  <use res/screen2.png>
 Package pdftex.def Info: res/screen2.png used on input line 1093.
@@ -622,59 +607,31 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 1162.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1162.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1162.
 
-
-
-Package rerunfilecheck Warning: File `doc.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `doc.out':
-(rerunfilecheck)             Before: D55E38AC70258B10E26A545812C81DC5;2247
-(rerunfilecheck)             After:  9906A80794620877DB3F0D750A63EF4C;2304.
+Package rerunfilecheck Info: File `doc.out' has not changed.
+(rerunfilecheck)             Checksum: 9906A80794620877DB3F0D750A63EF4C;2304.
  ) 
 Here is how much of TeX's memory you used:
- 8303 strings out of 493108
- 135369 string characters out of 6140726
- 351135 words of memory out of 5000000
- 11491 multiletter control sequences out of 15000+600000
+ 8297 strings out of 493108
+ 135288 string characters out of 6140726
+ 351500 words of memory out of 5000000
+ 11492 multiletter control sequences out of 15000+600000
  8603 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,10n,35p,816b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.4.4.2} has been referenced but does no
-t exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.4.4.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.4.4} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.4.3} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.4.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.4.1.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.4.1} has been referenced but does not exist
-, replaced by a fixed one
-
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
-/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on doc.pdf (29 pages, 243723 bytes).
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
+sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pf
+b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on doc.pdf (30 pages, 244538 bytes).
 PDF statistics:
- 417 PDF objects out of 1000 (max. 8388607)
- 365 compressed objects within 4 object streams
- 87 named destinations out of 1000 (max. 500000)
- 309 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 416 PDF objects out of 1000 (max. 8388607)
+ 363 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 317 words of extra memory for PDF output out of 10000 (max. 10000000)
 
