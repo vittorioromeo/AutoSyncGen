@@ -1,0 +1,37 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Problem}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Solution}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Technologies used}{chapter.1}% 4
+\BOOKMARK [0][-]{chapter.2}{Network module}{}% 5
+\BOOKMARK [1][-]{section.2.1}{SFML features}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{AutoSyncGen packets}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.2.1}{Packet types}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.2}{Packet handling}{section.2.2}% 9
+\BOOKMARK [1][-]{section.2.3}{SessionHost}{chapter.2}% 10
+\BOOKMARK [2][-]{subsection.2.3.1}{SessionServer}{section.2.3}% 11
+\BOOKMARK [2][-]{subsection.2.3.2}{SessionClient}{section.2.3}% 12
+\BOOKMARK [0][-]{chapter.3}{Synchronization module}{}% 13
+\BOOKMARK [1][-]{section.3.1}{SyncObj}{chapter.3}% 14
+\BOOKMARK [2][-]{subsection.3.1.1}{Fields}{section.3.1}% 15
+\BOOKMARK [1][-]{section.3.2}{Snapshot}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.2.1}{SnapshotTypeData}{section.3.2}% 17
+\BOOKMARK [1][-]{section.3.3}{Diff}{chapter.3}% 18
+\BOOKMARK [2][-]{subsection.3.3.1}{DiffTypeData}{section.3.3}% 19
+\BOOKMARK [1][-]{section.3.4}{LifetimeManager}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.5}{SyncManager}{chapter.3}% 21
+\BOOKMARK [2][-]{subsection.3.5.1}{Lifetime managers tuple}{section.3.5}% 22
+\BOOKMARK [2][-]{subsection.3.5.2}{Handle maps tuple}{section.3.5}% 23
+\BOOKMARK [2][-]{subsection.3.5.3}{Object management functions}{section.3.5}% 24
+\BOOKMARK [0][-]{chapter.4}{Obtaining the library}{}% 25
+\BOOKMARK [0][-]{chapter.5}{Example application: synchronized chat}{}% 26
+\BOOKMARK [1][-]{section.5.1}{Data structures}{chapter.5}% 27
+\BOOKMARK [2][-]{subsection.5.1.1}{Message}{section.5.1}% 28
+\BOOKMARK [1][-]{section.5.2}{Lifetime manager specialization}{chapter.5}% 29
+\BOOKMARK [1][-]{section.5.3}{Application packet types}{chapter.5}% 30
+\BOOKMARK [1][-]{section.5.4}{ConsoleSessionController}{chapter.5}% 31
+\BOOKMARK [2][-]{subsection.5.4.1}{Server role}{section.5.4}% 32
+\BOOKMARK [2][-]{subsection.5.4.2}{Client role}{section.5.4}% 33
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 34
+\BOOKMARK [1][-]{section.6.1}{Learning experience}{chapter.6}% 35
+\BOOKMARK [1][-]{section.6.2}{Future}{chapter.6}% 36
+\BOOKMARK [1][-]{section.6.3}{References}{chapter.6}% 37

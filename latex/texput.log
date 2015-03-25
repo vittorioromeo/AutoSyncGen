@@ -1,21 +1,3343 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.3.4)  20 MAR 2015 18:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.3.4)  25 MAR 2015 12:32
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**# 1 "./doc.tex"
+**\documentclass{report}
 
-! Emergency stop.
-<*> # 
-      1 "./doc.tex"
-End of file on the terminal!
+*\usepackage{minted}
+(/usr/share/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+*\usepackage{verbatim}
+(/usr/share/texmf/tex/latex/minted/minted.sty
+Package: minted 2015/01/31 v2.0 Yet another Pygments shim for LaTeX
 
+(/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+(/usr/share/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/usr/share/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
+
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz)
+\FV@CodeLineNo=\count88
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count89
+\FV@StepNumber=\count90
+\FV@OutFile=\write3
+) (/usr/share/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count91
+\float@exts=\toks15
+\float@box=\box27
+\@float@everytoks=\toks16
+\@floatcapt=\box28
+)
+(/usr/share/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count92
+\calc@Bcount=\count93
+\calc@Adimen=\dimen103
+\calc@Bdimen=\dimen104
+\calc@Askip=\skip43
+\calc@Bskip=\skip44
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count94
+\calc@Cskip=\skip45
+)
+(/usr/share/texmf-dist/tex/latex/ifplatform/ifplatform.sty
+Package: ifplatform 2010/10/22 v0.4 Testing for the operating system
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texmf-dist/tex/generic/oberdiek/catchfile.sty
+Package: catchfile 2011/03/01 v1.6 Catch the contents of a file (HO)
+)
+runsystem(uname -s > "texput.w18")...executed.
+
+ (./texput.w18)
+runsystem(rm -- "texput.w18")...executed.
+
+)
+(/usr/share/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
+
+(/usr/share/texmf-dist/tex/latex/etex-pkg/etex.sty
+Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
+\et@xins=\count95
+)
+\etb@tempcnta=\count96
+)
+(/usr/share/texmf-dist/tex/generic/xstring/xstring.sty
+(/usr/share/texmf-dist/tex/generic/xstring/xstring.tex
+\@xs@message=\write4
+\integerpart=\count97
+\decimalpart=\count98
+)
+Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
+)
+(/usr/share/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count99
+\output=\toks17
+\linenoprevgraf=\count100
+\linenumbersep=\dimen105
+\linenumberwidth=\dimen106
+\c@linenumber=\count101
+\c@pagewiselinenumber=\count102
+\c@LN@truepage=\count103
+\c@internallinenumber=\count104
+\c@internallinenumbers=\count105
+\quotelinenumbersep=\dimen107
+\bframerule=\dimen108
+\bframesep=\dimen109
+\bframebox=\box29
+LaTeX Info: Redefining \\ on input line 3056.
+)
+\minted@appexistsfile=\read2
+\FV@BreakIndent=\dimen110
+\FV@BreakSymbolSepLeft=\dimen111
+\FV@BreakSymbolSepRight=\dimen112
+\FV@BreakSymbolIndentLeft=\dimen113
+\FV@BreakSymbolIndentRight=\dimen114
+\c@FancyVerbLineBreakLast=\count106
+\FV@LineBox=\box30
+\FV@LineIndentBox=\box31
+\minted@bgbox=\box32
+\minted@code=\write5
+\c@minted@FancyVerbLineTemp=\count107
+\@float@every@listing=\toks18
+\c@listing=\count108
+)
+runsystem(mkdir -p "_minted-texput")...executed.
+
+runsystem(which "pygmentize" && touch "texput.aex")...executed.
+
+runsystem(rm "texput.aex")...executed.
+
+runsystem(pygmentize -S default -f latex -P commandprefix=PYGdefault > "_minted
+-texput/default.pygstyle")...executed.
+
+
+(./_minted-texput/default.pygstyle)
+*\usepackage{fullpage}
+(/usr/share/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks19
+\verbatim@line=\toks20
+\verbatim@in@stream=\read3
+)
+*\usepackage{etoolbox}
+(/usr/share/texmf-dist/tex/latex/preprint/fullpage.sty
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip46
+)
+*\usepackage{lipsum}
+
+*\usepackage{graphicx}
+(/usr/share/texmf-dist/tex/latex/lipsum/lipsum.sty
+Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
+\c@lips@count=\count109
+)
+*\usepackage{hyperref}
+(/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count110
+))
+\Gin@req@height=\dimen115
+\Gin@req@width=\dimen116
+)
+*
+(/usr/share/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package hobsub Info: Skipping package `ifluatex' (already loaded).
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package hobsub Info: Skipping package `etexcmds' (already loaded).
+Package hobsub Info: Skipping package `kvsetkeys' (already loaded).
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package hobsub Info: Skipping package `pdftexcmds' (already loaded).
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+(/usr/share/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/share/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen117
+\Hy@linkcounter=\count111
+\Hy@pagecounter=\count112
+
+(/usr/share/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count113
+
+(/usr/share/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count114
+
+(/usr/share/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen118
+\Fld@menulength=\count115
+\Field@Width=\dimen119
+\Fld@charsize=\dimen120
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count116
+\c@Item=\count117
+\c@Hfootnote=\count118
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/share/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count119
+\c@bookmark@seq@number=\count120
+
+(/usr/share/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip47
+)
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*\graphicspath{ {res/} }
+
+*\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+*
+(Please type a command or say `\end')
+*\begin{document}
+No file texput.aux.
+\openout1 = `texput.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 0.
+LaTeX Font Info:    ... okay on input line 0.
+(/usr/share/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/usr/share/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+(/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count121
+\scratchdimen=\dimen121
+\scratchbox=\box33
+\nofMPsegments=\count122
+\nofMParguments=\count123
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count124
+\MPscratchDim=\dimen122
+\MPnumerator=\count125
+\makeMPintoPDFobject=\count126
+\everyMPtoPDFconversion=\toks22
+) (/usr/share/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\AtBeginShipoutBox=\box34
+Package hyperref Info: Link coloring OFF on input line 0.
+
+(/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count127
+)
+LaTeX Info: Redefining \ref on input line 0.
+LaTeX Info: Redefining \pageref on input line 0.
+LaTeX Info: Redefining \nameref on input line 0.
+\@outlinefile=\write6
+\openout6 = `texput.out'.
+
+
+*    \begin{titlepage}
+
+*
+(Please type a command or say `\end')
+*        \center
+
+*
+(Please type a command or say `\end')
+*        \textsc{\LARGE Universita' degli Studi di Messina}\\[0.1cm]
+
+*        \textsc{\Large Dipartimento di Matematica e Informatica}\\[0.5cm]
+
+*        \textsc{\Large Networking course project}\\[0.5cm]
+
+*
+(Please type a command or say `\end')
+*        \HRule \\[0.4cm]
+
+*        { \huge \bfseries AutoSyncGen}\\[0.1cm]
+
+*
+(Please type a command or say `\end')
+*        {\large 23 March 2015}
+
+*        \HRule \\[1.5cm]
+
+*
+(Please type a command or say `\end')
+*        \begin{minipage}{0.4\textwidth}
+
+*        \begin{flushleft} \large
+
+*        \emph{Author:}\\
+
+*        Vittorio \textsc{Romeo} % Your name
+
+*        \end{flushleft}
+
+*        \end{minipage}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 0.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 0.
+
+*        ~
+
+*        \begin{minipage}{0.4\textwidth}
+
+*        \begin{flushright} \large
+
+*        \emph{Professors:} \\
+
+*        Antonio \textsc{Puliafito}
+
+*
+(Please type a command or say `\end')
+*        Giovanni \textsc{Merlino}
+
+*        \end{flushright}
+
+*        \end{minipage}\\[4cm]
+
+*
+(Please type a command or say `\end')
+*        \vfill
+
+*
+(Please type a command or say `\end')
+*        \begin{minipage}{\linewidth}
+
+*            \centering
+
+*            \begin{minipage}{0.35\linewidth}
+
+*                \begin{figure}[H]
+
+*                    \center
+
+*                    \includegraphics[width=2cm, height=2cm]{logovee}
+<res/logovee.png, id=4, 321.2pt x 321.2pt>
+File: res/logovee.png Graphic file (type png)
+ <use res/logovee.png>
+Package pdftex.def Info: res/logovee.png used on input line 0.
+(pdftex.def)             Requested size: 56.90189pt x 56.90189pt.
+
+*
+(Please type a command or say `\end')
+*                    http://vittorioromeo.info
+
+*                \end{figure}
+
+*            \end{minipage}
+
+*            \hspace{0.27\linewidth}
+
+*            \begin{minipage}{0.35\linewidth}
+
+*                \begin{figure}[H]
+
+*                    \center
+
+*                    \includegraphics[width=2cm, height=2cm]{logounime}
+<res/logounime.jpg, id=6, 90.3375pt x 90.3375pt>
+File: res/logounime.jpg Graphic file (type jpg)
+ <use res/logounime.jpg>
+Package pdftex.def Info: res/logounime.jpg used on input line 0.
+(pdftex.def)             Requested size: 56.90602pt x 56.90602pt.
+
+*
+(Please type a command or say `\end')
+*                    http://unime.it
+
+*                \end{figure}
+
+*            \end{minipage}
+
+*        \end{minipage}\\[3cm]
+
+*    \end{titlepage}
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./res/logovee.png> <./res/
+logounime.jpg>]
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*    \pagenumbering{gobble}
+
+*    \tableofcontents
+\tf@toc=\write7
+\openout7 = `texput.toc'.
+
+
+*    \newpage
+[1
+
+]
+*    \pagenumbering{arabic}
+
+*
+(Please type a command or say `\end')
+*    \chapter{Introduction}
+Chapter 1.
+
+*        What is \emph{AutoSyncGen} and what is it trying to achieve?
+
+*
+(Please type a command or say `\end')
+*        \section{Problem}
+
+*            Many networked applications require \emph{constant synchronization
+} between the server and the connected clients.
+
+*            Software such as \emph{multiplayer online games} completely rely o
+n the fact that a synchronized state is maintained between the server and the p
+layers.
+
+*            Other applications that are not reliant on state synchronization m
+ay still benefit from such a system.
+
+*            A \emph{basic chatroom program}, for example, may use state synchr
+onization to keep track of sent messages and allow newly-connected users to bro
+wse the message history.
+
+*
+(Please type a command or say `\end')
+*            Implementing state synchronization is not a trivial task. It it us
+ually required to define a simple protocol that \emph{explicitly handles} state
+ synchronization for all data structures.
+
+*
+(Please type a command or say `\end')
+*            This is usually achieved by explicitly coding serialization behavi
+or and explicitly defining how packets should be created and read for every syn
+chronizable object. Even for small applications, maintaining and expanding the 
+code using a similar approach can quickly become difficult.
+
+*
+(Please type a command or say `\end')
+*        \section{Solution}
+
+*            A possible solution to the problem, proposed in this paper, is \em
+ph{AutoSyncGen}: a \emph{C++14} library written using \emph{modern and idiomati
+c code}.
+
+*            The library allows developers to quickly define synchronizable dat
+a structures, and automatically deals with \emph{object lifetime management}, \
+emph{serialization} and \emph{deserialization}, packet \emph{creation} and \emp
+h{reading}.
+
+*
+(Please type a command or say `\end')
+*            By quickly specifying how object memory should be managed and the 
+types of the synchronizable fields, \emph{AutoSyncGen} generates code at \emph{
+compile-time} to keep track of the entire application state and generate synchr
+onization requests and responses that send the smallest amount of data required
+ to fully synchronize the clients to the server.
+
+*
+(Please type a command or say `\end')
+*            \newpage
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+<*>             \newpage
+                         [1
+
+]
+*
+(Please type a command or say `\end')
+*            Here's an example of a synchronizable data structure defined using
+ the AutoSyncGen library.
+
+*
+(Please type a command or say `\end')
+*            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame
+=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Synchronizable data structure representing a chat message.
+
+*    struct Message : syn::SyncObj
+
+*    <
+
+*        // The fields types are passed as a variadic type list.
+
+*
+(Please type a command or say `\end')
+*        int,            // messageID
+
+*        std::string,    // author
+
+*        std::string     // contents
+
+*    >
+
+*    {
+
+*        // Field proxies are generated via macros for convenience.
+
+*
+(Please type a command or say `\end')
+*        SYN_PROXY(0, messageID);
+
+*        SYN_PROXY(1, author);
+
+*        SYN_PROXY(2, contents);
+
+*    };
+
+*            \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/C26A8EECB8
+9FD3F68B080C80034516E7E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/C26A8EECB89FD3F68B080C80034516E7E83203DF72B29F986D19E1E1AD018
+022.pygtex
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 3.
+)
+*
+(Please type a command or say `\end')
+*            A shorter (but more preprocessor-heavy) construct can be used, whi
+ch reduces code repetition.
+
+*
+(Please type a command or say `\end')
+*            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame
+=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Synchronizable data structure representing a chat message.
+
+*    SYN_DEFINE_SYNCOBJ
+
+*    (
+
+*        // Name of data structure.
+
+*        Message,
+
+*
+(Please type a command or say `\end')
+*        // Tuple of synchronizable fields.
+
+*        (
+
+*            (int, messageID),
+
+*            (std::string, author),
+
+*            (std::string, contents)
+
+*        )
+
+*    );
+
+*            \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/41645D2B63
+101628AB18362D86F56598E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/41645D2B63101628AB18362D86F56598E83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*            The library is structured in such a way that most of the user code
+ can be \emph{shared between the client and the server}.
+
+*            It is not necessary to re-define data structures or lifetime manag
+ement instructions twice.
+
+*
+(Please type a command or say `\end')
+*        \section{Technologies used}
+
+*            C++14, which is the latest official C++ standard, released in 2 Ma
+rch 2014 \emph{(paper N3936)}, is the language of choice for AutoSyncGen.
+
+*            Like C++11, this newer standard is a huge step forward for the lan
+guage. \emph{Smarter memory managament}, \emph{automatic type deduction}, and c
+ountless new programming and metaprogramming features allow developers to write
+ much safer and powerful code.
+
+*            C++11 and C++14 features are what make AutoSyncGen possible and it
+s syntax cleaner and easier to use.
+
+*
+(Please type a command or say `\end')
+*            On top of C++14 and its standard library, the \emph{SSV framework}
+ is being used as well. This framework was written completely from scratch by m
+e, \emph{Vittorio Romeo}, and is available under the open-source AFL3.0 license
+ on GitHub.
+
+*
+(Please type a command or say `\end')
+*            The \emph{SSVUtils} library, used throughout the whole program, fe
+atures many heterogeneous self-contained modules: an efficient and modern handw
+ritten JSON parser, a preprocessor metaprogramming module, a template metaprogr
+amming module, automatic console formatted output for containers and user-defin
+ed types, efficient data structures (bimap, handle vector, growable arrays), ad
+vanced memory management facilities, type-safe variadic unions, handwritten tem
+plating system, filesystem management, easy benchmarking of portions of code, a
+nd much more.
+
+*
+[2]
+(Please type a command or say `\end')
+*            Two additional dependencies for AutoSyncGen are the \emph{SFML} li
+brary, which offers lightweight abstraction over sockets and packets, and the \
+emph{SSVStart} library, part of the SSV framework, which extends the functional
+ity of SFML and wraps some of its C++03 abstractions with modern and safer C++1
+4 constructs.
+
+*
+(Please type a command or say `\end')
+*    \newpage
+[3]
+*
+(Please type a command or say `\end')
+*    \chapter{Network module}
+Chapter 2.
+
+*        AutoSyncGen is divided in two main modules.
+
+*        The \emph{network module} deals with client/server abstraction and com
+munication, and will be covered in this chapter.
+
+*        The \emph{synchronization module} deals with compile-time synchronizat
+ion data structures generation and synchronization algorithms, and will be cove
+red in the next chapter.
+
+*
+(Please type a command or say `\end')
+*        \section{SFML features}
+
+*            As mentioned in the previous chapter, SFML is one of the dependenc
+ies of AutoSyncGen.
+
+*            SFML offers convenient and type-safe wrappers over basic networkin
+g constructs such as \emph{sockets} and \emph{packets}.
+
+*
+(Please type a command or say `\end')
+*            AutoSyncGen's network module extensively uses these abstractions t
+o allow cross-platform compatibility and additional safety.
+
+*
+(Please type a command or say `\end')
+*            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame
+=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // SFML offers an `IpAddress` data structure that that can be initialized 
+from strings.
+
+*    using sf::IpAddress;
+
+*
+(Please type a command or say `\end')
+*    // SFML offers a `Packet` object that can be filled/emptied using stream o
+perators.
+
+*    using sf::Packet;
+
+*
+(Please type a command or say `\end')
+*    // SFML offers an `UdpSocket` class that properly manages and abstracts th
+e memory
+
+*    // and functionality of an UDP socket.
+
+*    using sf::UdpSocket;
+
+*            \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/BF735DDFCE
+442D7264E7334BF3D159DFE83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/BF735DDFCE442D7264E7334BF3D159DFE83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*            Just to clarify how convenient these abstractions are, here's a sm
+all code example that shows \emph{sf::Packet} usage.
+
+*
+(Please type a command or say `\end')
+*            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame
+=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    int x{5};
+
+*    std::string y{"hello!"};
+
+*    double z{2.52};
+
+*
+(Please type a command or say `\end')
+*    sf::Packet toSend;
+
+*    toSend >> x >> y >> z;
+
+*
+(Please type a command or say `\end')
+*    // Send packet through the UDP socket...
+
+*
+(Please type a command or say `\end')
+*    int outX;
+
+*    std::string outY;
+
+*    double outZ;
+
+*
+(Please type a command or say `\end')
+*    sf::Packet received;
+
+*    received << outX << outY << outZ;
+
+*            \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/10748ABE74
+6697FC0365838EE801B796E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/10748ABE746697FC0365838EE801B796E83203DF72B29F986D19E1E1AD018
+022.pygtex [4
+
+])
+*
+(Please type a command or say `\end')
+*            SFML is open-source, cross-platform, free and actively being maint
+ained and improved by its community.
+
+*
+(Please type a command or say `\end')
+*        \section{AutoSyncGen packets}
+
+*
+(Please type a command or say `\end')
+*            AutoSyncGen uses a simple but effective protocol for data synchron
+ization, which requires some special packets.
+
+*            The \emph{transport-layer protocol} used by AutoSyncGen is \emph{U
+DP}.
+
+*
+(Please type a command or say `\end')
+*            \subsection{Packet types}
+
+*                Packet types are defined using \emph{C++11 enum classes}, whic
+h are type-safe enumeration types that cannot be implicitly converted to their 
+underlying representation.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{CtoS enumeration}
+
+*                    This enumeration holds the packet types that are sent from
+ the client to the server.
+
+*
+(Please type a command or say `\end')
+*                    \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=
+2, frame=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    enum class CtoS : std::size_t
+
+*    {
+
+*        // Request to establish a connection to the server
+
+*        ConnectionRequest = 0,
+
+*
+(Please type a command or say `\end')
+*        // Ping to avoid timing out with the server
+
+*        Ping = 1,
+
+*
+(Please type a command or say `\end')
+*        // Request to sync data with server
+
+*        SyncRequest = 2,
+
+*
+(Please type a command or say `\end')
+*        // Informs the server that the syncronization was successful
+
+*        SyncSatisfied = 3,
+
+*
+(Please type a command or say `\end')
+*        // Custom data packet
+
+*        Data = 4,
+
+*    };
+
+*                    \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/86DBEDD1B0
+31782FD3615A4237759C05E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/86DBEDD1B031782FD3615A4237759C05E83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*                \subsubsection{StoC enumeration}
+
+*                    This enumeration holds the packet types that are sent from
+ the server to the client.
+
+*
+(Please type a command or say `\end')
+*                    \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=
+2, frame=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    enum class StoC : std::size_t
+
+*    {
+
+*        // Accept a requested client connection, assigning the client a CID
+
+*        ConnectionAccept = 0,
+
+*
+(Please type a command or say `\end')
+*        // Decline a client's requested connection
+
+*        ConnectionDecline = 1,
+
+*
+(Please type a command or say `\end')
+*        // Satisfy sync request (if the client's revision is behind)
+
+*        SyncRequestSatisfy = 2,
+
+*
+(Please type a command or say `\end')
+*        // Sync not needed (client has the same revision as the server)
+
+*        SyncRequestUnneeded = 3,
+
+*
+(Please type a command or say `\end')
+*        // Sync request declined (overload/technical issue)
+
+*        SyncRequestDecline = 4,
+
+*
+(Please type a command or say `\end')
+*        // Custom data packet
+
+*        Data = 5,
+
+*    };
+
+*                    \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/F374067FFA
+9FF609CCBCB4ACD8AAB621E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/F374067FFA9FF609CCBCB4ACD8AAB621E83203DF72B29F986D19E1E1AD018
+022.pygtex [5])
+*
+(Please type a command or say `\end')
+*            \subsection{Packet handling}
+
+*                Packets are automatically handled by the client and the server
+, using a \emph{switch} language construct.
+
+*
+(Please type a command or say `\end')
+*                \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, f
+rame=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    void handle(RPT mType)
+
+*    {
+
+*        switch(mType)
+
+*        {
+
+*            case RPT::ConnectionAccept:
+
+*                handleConnectionAccept();
+
+*                return;
+
+*            case RPT::ConnectionDecline:
+
+*                handleConnectionDecline();
+
+*                return;
+
+*            // ...
+
+*        }
+
+*    }
+
+*                \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/3040F31CC0
+0F764EBBB1BCAC4324CE28E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/3040F31CC00F764EBBB1BCAC4324CE28E83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*                This implementation is fine for the current packet types AutoS
+yncGen uses, but can be changed to a lookup table or an array of function point
+ers if more packet types need to be added in the future to accomodate more adva
+nced synchronization features.
+
+*
+(Please type a command or say `\end')
+*        \section{SessionHost}
+
+*
+(Please type a command or say `\end')
+*            Clients and servers are abstracted as \emph{SessionHost} derived c
+lasses in the network module.
+
+*            The \emph{SessionHost} class defines data structures and functiona
+lity shared both by clients and servers.
+
+*
+(Please type a command or say `\end')
+*            Every host has a dedicated extra thread for data and socket manage
+ment.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // `SessionHost` is a CRTP template class, to allow compile-time generatio
+n
+
+*    // of appropriate data structures.
+
+*    template
+
+*    <
+
+*        // `struct` containing global synchronization settings.
+
+*        typename TSettings,
+
+*
+(Please type a command or say `\end')
+*        // Type of sent packets.
+
+*        typename TSPT,
+
+*
+(Please type a command or say `\end')
+*        // Type of received packets.
+
+*        typename TRPT,
+
+*
+(Please type a command or say `\end')
+*        // CRTP (curiously recurring template pattern) derived type.
+
+*        template<typename> class TDerivedBase
+
+*    >
+
+*    class SessionHost
+
+*    {
+
+*        // Typedefs of data structures that depend on the template parameters.
+
+
+*        public:
+
+*            // CRTP type.
+
+*            using Derived = TDerivedBase<Settings>;
+
+*
+(Please type a command or say `\end')
+*            // Packet types.
+
+*            using SPT = TSPT;
+
+*            using RPT = TRPT;
+
+*
+(Please type a command or say `\end')
+*            // Synchronization classes.
+
+*            using Settings = TSettings;
+
+*            using SyncManager = typename Settings::SyncManager;
+
+*            using Diff = typename SyncManager::DiffType;
+
+*            using Snapshot = typename SyncManager::SnapshotType;
+
+*
+(Please type a command or say `\end')
+*        private:
+
+*            // Name of the host.
+
+*            std::string name;
+
+*
+(Please type a command or say `\end')
+*            // IP address of the host.
+
+*            IpAddress ip;
+
+*
+(Please type a command or say `\end')
+*            // Port the host is listening on.
+
+*            Port port;
+
+*
+(Please type a command or say `\end')
+*            // UDP socket of the host.
+
+*            UdpSocket socket;
+
+*
+(Please type a command or say `\end')
+*            // Status of the host.
+
+*            bool busy{false};
+
+*
+(Please type a command or say `\end')
+*            // Tries binding the socket to the specified port.
+
+*            void tryBindSocket();
+
+*
+(Please type a command or say `\end')
+*            // Tries forwarding the received packets to the underlying
+
+*            // client/server implementation.
+
+*            void tryForwardReceivedPacket();
+
+*
+(Please type a command or say `\end')
+*            // Function running in the receive thread, which keeps track
+
+*            // of the data receiving buffer and of the socket state.
+
+*            void receiveThread();
+
+*
+(Please type a command or say `\end')
+*        protected:
+
+*            // Buffers that store received data and data that will be sent.
+
+*            Packet sendBuffer, recvBuffer;
+
+*
+(Please type a command or say `\end')
+*            // `void` future offering a RAII wrapper for the host's thread.
+
+*            std::future<void> hostFuture;
+
+*
+(Please type a command or say `\end')
+*            // IP of the sender of the last received data.
+
+*            IpAddress senderIp;
+
+*
+(Please type a command or say `\end')
+*            // Port of the sender of the last received data.
+
+*            Port senderPort;
+
+*
+(Please type a command or say `\end')
+*            // Synchronization manager.
+
+*            SyncManager syncManager;
+
+*
+(Please type a command or say `\end')
+*            // Sends the content of the send buffer to the specified host.
+
+*            void sendTo(const IpAddress& mIp, const Port& mPort);
+
+*
+(Please type a command or say `\end')
+*            // Builds a packet from a variadic argument list.
+
+*            template<SPT TType, typename... TArgs> void mkPacket(TArgs&&... mA
+rgs);
+
+*
+(Please type a command or say `\end')
+*            // Sets the state of the host.
+
+*            void setBusy(bool mBusy) noexcept { busy = mBusy; }
+
+*
+(Please type a command or say `\end')
+*            // Pops data of type `T` from the receive buffer.
+
+*            template<typename T> auto popRecv();
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Constructs the host using a specified name and port.
+
+*            // This function tries to bind the socket and start the dedicated 
+thread.
+
+*            SessionHost(std::string mName, syn::Port mPort);
+
+*
+(Please type a command or say `\end')
+*            // Getters.
+
+*            const auto& getName() const noexcept;
+
+*            const auto& getIp() const noexcept;
+
+*            const auto& getPort() const noexcept;
+
+*            const auto& isBusy() const noexcept;
+
+*            auto& getSyncManager() noexcept;
+
+*    };
+
+*
+(Please type a command or say `\end')
+*    // Template typedef for the base `SessionHost` used by servers.
+
+*    template<typename TSettings>
+
+*    using SessionServerBase = SessionHost<TSettings, PT::StoC, PT::CtoS, Sessi
+onServer>;
+
+*
+(Please type a command or say `\end')
+*    // Template typedef for the base `SessionHost` used by clients.
+
+*    template<typename TSettings>
+
+*    using SessionClientBase = SessionHost<TSettings, PT::CtoS, PT::StoC, Sessi
+onClient>;
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/71E2DB3A91
+B5C0C16031B5C29DB93791E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/71E2DB3A91B5C0C16031B5C29DB93791E83203DF72B29F986D19E1E1AD018
+022.pygtex [6] [7] [8])
+*
+(Please type a command or say `\end')
+*            \subsection{SessionServer}
+
+*
+(Please type a command or say `\end')
+*                The \emph{SessionServer} CTRP derivation of \emph{SessionHost}
+ requires additional data structures and algorithms to deal with client connect
+ions and storage of the client's latest synchronization state snapshots.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{ClientHandler}
+
+*
+(Please type a command or say `\end')
+*                    A \emph{ClientHandler} instance is created and managed for
+ every client connected to the server.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    class ClientHandler
+
+*    {
+
+*        private:
+
+*            // Connect client ID.
+
+*            // Assigned by the server.
+
+*            CID cid{nullCID};
+
+*
+(Please type a command or say `\end')
+*            // IP and Port of the client.
+
+*            IpAddress ip;
+
+*            Port port;
+
+*
+(Please type a command or say `\end')
+*            // Seconds until the client is timed out.
+
+*            int secondsUntilTimeout;
+
+*
+(Please type a command or say `\end')
+*            // State of the client handler.
+
+*            bool busy{false};
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Assumes the handler is not busy and binds it to a client with a
+
+
+*            // specific client ID, IP and Port.
+
+*            void bindToClient(CID mCID, const IpAddress& mIp, const Port& mPor
+t);
+
+*
+(Please type a command or say `\end')
+*            // Unbinds the handler from the client connection.
+
+*            void unbindFromClient();
+
+*
+(Please type a command or say `\end')
+*            // Getters
+
+*            const auto& getCID() const noexcept;
+
+*            const auto& getIp() const noexcept;
+
+*            const auto& getPort() const noexcept;
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/5BF49758C1
+4AF21176D666872A0F9A81E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+! Package minted Error: Missing Pygments output; \inputminted was
+probably given a file that does not exist--otherwise, you may need 
+the outputdir package option, or may be using an incompatible build tool.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+<*> \end{minted}
+                
+? 
+
+*                    Client handlers are stored and managed in the \emph{Client
+HandlerManager} class, of which the server has an instance.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{ClientHandlerManager}
+
+*
+(Please type a command or say `\end')
+*                    The \emph{ClientHandlerManager} manages memory and functio
+nality of \emph{ClientHandler} instances.
+
+*
+(Please type a command or say `\end')
+*                    A \emph{ssvu::MonoRecycler} is used to store the handlers 
+on the heap and recycle their memory.
+
+*                    The manager also stores two vector of pointers to client h
+andlers: one with non-busy handlers, and one with busy handlers.
+
+*                    The lists are periodically checked by an extra thread to r
+emove timed-out client handlers and to accept new connections.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    class ClientHandlerManager
+
+*    {
+
+*        private:
+
+*            // Next available unique client ID.
+
+*            CID nextCID{0};
+
+*
+(Please type a command or say `\end')
+*            // Memory management and recycling data structure for `ClientHandl
+er` instances.
+
+*            ssvu::MonoManager<ClientHandler> clientHandlers;
+
+*
+(Please type a command or say `\end')
+*            // Vector of non-busy client handlers.
+
+*            std::vector<ClientHandler*> chAvailable
+
+*
+(Please type a command or say `\end')
+*            // Vector of busy client handlers.
+
+*            std::vector<ClientHandler*> chBusy;
+
+*
+(Please type a command or say `\end')
+*            // Map of client handlers, by client ID.
+
+*            std::map<CID, ClientHandler*> chMap;
+
+*
+(Please type a command or say `\end')
+*            // `void` future that wraps the thread which checks timeouts for c
+lient handlers.
+
+*            std::future<void> timeoutFuture;
+
+*
+(Please type a command or say `\end')
+*            // Vector of client handler IDs that need to be disconnected.
+
+*            std::vector<CID> toDisconnect;
+
+*
+(Please type a command or say `\end')
+*            // State of the client handler manager.
+
+*            bool busy{true};
+
+*
+(Please type a command or say `\end')
+*            // Creates a client handler instance from the `MonoManager`
+
+*            // and inserts it into the available vector.
+
+*            void createClientHandler();
+
+*
+(Please type a command or say `\end')
+*            // Method ran in the timeout thread.
+
+*            // Periodically checks if clients have timed out.
+
+*            void runTimeout();
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Accepts a new client connection.
+
+*            // Uses an existing free handler, if available, otherwise allocate
+s a new one.
+
+*            // Also removes all handlers that have to be disconnected and upda
+tes the ID map.
+
+*            auto& acceptClient(const IpAddress& mIp, const Port& mPort);
+
+*
+(Please type a command or say `\end')
+*            // Returns true if an handler exists, by ID.
+
+*            bool has(CID mCID) const noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Gets a client handler by ID.
+
+*            auto& operator[](CID mCID) noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Refreshes the timeout duration when a ping is received for a sp
+ecific client.
+
+*            void pingReceived(CID mCID) noexcept;
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/884ACE331A
+B9A3CCF1AB7A668E197405E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/884ACE331AB9A3CCF1AB7A668E197405E83203DF72B29F986D19E1E1AD018
+022.pygtex [9])
+*
+(Please type a command or say `\end')
+*            \subsection{SessionClient}
+
+*
+(Please type a command or say `\end')
+*                The \emph{SessionClient} CTRP derivation of \emph{SessionHost}
+ does not require any particular additional data structure. The only additions,
+ compared to the \emph{SessionHost} base class, are the IP and Port of the curr
+ent server.
+
+*
+(Please type a command or say `\end')
+*    \newpage
+[10]
+*
+(Please type a command or say `\end')
+*    \chapter{Synchronization module}
+Chapter 3.
+
+*
+(Please type a command or say `\end')
+*        \section{SyncObj}
+
+*            The \emph{SyncObj} class represents a synchronizable data structur
+e.
+
+*            It is composed of synchronizable fields that automatically get ser
+ialized/deserialized and sent/received by the \emph{SyncManager}.
+
+*
+(Please type a command or say `\end')
+*            \emph{SyncObj} is a template class that derives from a polymorphic
+ base class.
+
+*            It takes a variadic amount of template arguments that are the type
+s of the fields stored by the \emph{SyncObj}.
+
+*
+(Please type a command or say `\end')
+*            JSON is currently used for serialization/deserialization of object
+s.
+
+*            The code architecture makes it easy to implement and use alternati
+ve serialization methods.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    template
+
+*    <
+
+*        // Variadic type list of field types.
+
+*        typename... TArgs
+
+*    >
+
+*    class SyncObj : public Impl::ObjBase
+
+*    {
+
+*        public:
+
+*            // Type of the tuple of fields.
+
+*            using TplFields = ssvu::Tpl<TArgs...>;
+
+*
+(Please type a command or say `\end')
+*        private:
+
+*            // Count of fields.
+
+*            static constexpr SizeT fieldCount{sizeof...(TArgs)};
+
+*
+(Please type a command or say `\end')
+*            // Tuple of fields.
+
+*            TplFields fields;
+
+*
+(Please type a command or say `\end')
+*            // Dirty/clean bits for the fields.
+
+*            std::bitset<fieldCount> fieldFlags;
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Type of the field at index `TI`.
+
+*            template<TypeIdx TI> using TypeAt = ssvu::TplElem<TI, decltype(fie
+lds)>;
+
+*
+(Please type a command or say `\end')
+*            // Type of the field proxy at index `TI`.
+
+*            template<TypeIdx TI> using ProxyAt = FieldProxy<TI, SyncObj<TArgs.
+..>>;
+
+*
+(Please type a command or say `\end')
+*        private:
+
+*            // Non-const reference to the field at index `TI`.
+
+*            template<TypeIdx TI> auto& getFieldAt() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Sets the bit at index `TI` to true.
+
+*            template<TypeIdx TI> void setBitAt() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Sets the bit at index `mI` to false.
+
+*            void unsetBitAt(TypeIdx mI) noexcept;
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Returns a proxy for the field at index `TI`.
+
+*            template<TypeIdx TI> auto get() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Sets the object state from an `mX` json value.
+
+*            void setFromJson(const ssvj::Val& mX);
+
+*
+(Please type a command or say `\end')
+*            // Serializes all the fields to json.
+
+*            auto toJsonAll();
+
+*
+(Please type a command or say `\end')
+*            // Serializes all dirty fields to json.
+
+*            auto toJsonDirty();
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/E515D27490
+8D1F3054F0711C56CD6C51E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+! Package minted Error: Missing Pygments output; \inputminted was
+probably given a file that does not exist--otherwise, you may need 
+the outputdir package option, or may be using an incompatible build tool.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+<*> \end{minted}
+                
+? 
+
+*            \subsection{Fields}
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{Field tuple}
+
+*
+(Please type a command or say `\end')
+*                    The field are stored in an \emph{std::tuple}, generated at
+ compile-time from the passed variadic type list.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{Field flags}
+
+*
+(Please type a command or say `\end')
+*                    Every field has a corresponding bit that keeps track of wh
+ether it has been modified or not.
+
+*                    This bit is used to quickly determine the fields that have
+ to be sent again from the server, that were changed since the last sent revisi
+on.
+
+*
+(Please type a command or say `\end')
+*                    The bits are stored in a \emph{std::bitset}, generated at 
+compile-time with size equal to the number of fields.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{FieldProxy}
+
+*
+(Please type a command or say `\end')
+*                    The \emph{FieldProxy} class is a convenient abstraction to
+ help the developer get and set synchronizable object fields.
+
+*
+(Please type a command or say `\end')
+*                    Since the fields are stored into a tuple, it is impossible
+ to assign a name to them, unlike traditional C++ structs and classes.
+
+*                    The \emph{FieldProxy} abstraction allows the developer to 
+use a name to refer to synchronizable fields.
+
+*
+(Please type a command or say `\end')
+*                    It also automatically sets the corresponding field \emph{d
+irty bit} to true when the underlying data is modified.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    template
+
+*    <
+
+*        // Index of the field in the tuple.
+
+*        TypeIdx TI,
+
+*
+(Please type a command or say `\end')
+*        // Type of attached `SyncObj`.
+
+*        typename TObj
+
+*    >
+
+*    class FieldProxy
+
+*    {
+
+*        private:
+
+*            // Reference to the attached object.
+
+*            TObj& syncObj;
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Constructs the `FieldProxy` from a reference to its parent obje
+ct.
+
+*            FieldProxy(TObj& mSyncObj) noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns a non-const reference to the underlying field, and sets
+ the dirty bit.
+
+*            auto& edit() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns a const reference to the underlying field.
+
+*            const auto& view() const noexcept;
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/D985CA8EEF
+4580375DE53C29CECC5CFBE83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/D985CA8EEF4580375DE53C29CECC5CFBE83203DF72B29F986D19E1E1AD018
+022.pygtex [11
+
+])
+*
+(Please type a command or say `\end')
+*        \section{Snapshot}
+
+*
+(Please type a command or say `\end')
+*            A \emph{Snapshot} is a complete representation of the current sync
+hronizable state.
+
+*
+(Please type a command or say `\end')
+*            The \emph{Snapshot} stores the state of all types of objects, sepa
+rating them by type in appropriate data structures.
+
+*            It also stores a bitset for every object type, where the \emph{n-t
+h} bit represents the state of the \emph{n-th} object of a specific type (0 for
+ \emph{dead}, 1 for \emph{alive}).
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Class representing the snapshot of the entire state of the `SyncManager
+`.
+
+*    template<typename TManager> struct Snapshot
+
+*    {
+
+*        // Alive/dead bitset storage per object type.
+
+*        BitsetStorage bitsetIDs;
+
+*
+(Please type a command or say `\end')
+*        // Tuple that stores a snapshot type data for every synchronizable typ
+e.
+
+*        ssvu::TplRepeat<TypeData, TManager::typeCount> typeDatas;
+
+*
+(Please type a command or say `\end')
+*        // Serializes the snapshot to JSON.
+
+*        auto toJson() const;
+
+*
+(Please type a command or say `\end')
+*        // Initializes the snapshot from JSON.
+
+*        void initFromJson(const ssvj::Val& mX);
+
+*
+(Please type a command or say `\end')
+*        // Returns the difference between this snapshot and `mX`.
+
+*        auto getDiffWith(const Snapshot& mX);
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/3FADD815D3
+A04AF245624D7E7A30C960E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+! Package minted Error: Missing Pygments output; \inputminted was
+probably given a file that does not exist--otherwise, you may need 
+the outputdir package option, or may be using an incompatible build tool.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+<*> \end{minted}
+                
+? 
+
+*            \subsection{SnapshotTypeData}
+
+*
+(Please type a command or say `\end')
+*                A \emph{Snapshot} is composed of \emph{SnapshotTypeData} objec
+ts.
+
+*                Every single type data object represents the synchronization s
+tate for a specific type.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Class representing the snapshot for a specific synchronizable type.
+
+*    struct SnapshotTypeData
+
+*    {
+
+*        // Items contained in the snapshot type data.
+
+*        std::map<ID, ssvj::Val> items;
+
+*
+(Please type a command or say `\end')
+*        // Serializes the snapshot type data to JSON.
+
+*        auto toJson() const;
+
+*
+(Please type a command or say `\end')
+*        // Initializes the snapshot type data from JSON.
+
+*        void initFromJson(const ssvj::Val& mX);
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/AD5FF7ED92
+77886AF003289A8CED608FE83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/AD5FF7ED9277886AF003289A8CED608FE83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*                \subsubsection{`items` map}
+
+*
+(Please type a command or say `\end')
+*                    The \emph{items} map simply contains all the objects of a 
+specific type, serialized to JSON.
+
+*                    The keys are the unique IDs of the objects, the values are
+ their JSON representation.
+
+*
+(Please type a command or say `\end')
+*        \section{Diff}
+
+*
+(Please type a command or say `\end')
+*            A \emph{Diff} is a representation of the difference between two sn
+apshot instances.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Class representing a diff for all the types handled by the `SyncManager
+`.
+
+*    template<typename TManager> struct Diff
+
+*    {
+
+*        // Tuple containing the diff type data for every synchronizable type.
+
+*        ssvu::TplRepeat<TypeData, TManager::typeCount> typeDatas;
+
+*
+(Please type a command or say `\end')
+*        // Serializes the diff to a JSON value.
+
+*        auto toJson() const;
+
+*
+(Please type a command or say `\end')
+*        // Initializes the diff from a JSON value.
+
+*        void initFromJson(const ssvj::Val& mX);
+
+*
+(Please type a command or say `\end')
+*        // Returns true if there is no difference between snapshots.
+
+*        bool isEmpty() const noexcept;
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/60AC26E546
+4EF1C74C4ADDDC1626512CE83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/60AC26E5464EF1C74C4ADDDC1626512CE83203DF72B29F986D19E1E1AD018
+022.pygtex [12])
+*
+(Please type a command or say `\end')
+*            \subsection{DiffTypeData}
+
+*
+(Please type a command or say `\end')
+*                A \emph{Diff} is composed of \emph{DiffTypeData} objects.
+
+*                Every single type data object represents the synchronization d
+ifference for a specific type.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Class representing the diff for a specific type managed by the `SyncMan
+ager`.
+
+*    struct DiffTypeData
+
+*    {
+
+*        // Map of objects that have been created since last snapshot.
+
+*        std::map<ID, ssvj::Val> toCreate;
+
+*
+(Please type a command or say `\end')
+*        // Map of objects that have been updated since last snapshot.
+
+*        std::map<ID, ssvj::Val> toUpdate;
+
+*
+(Please type a command or say `\end')
+*        // Vector of objects that have been removed since last snapshot.
+
+*        std::vector<ID> toRemove;
+
+*
+(Please type a command or say `\end')
+*        // Serializes the diff type data to JSON.
+
+*        auto toJson() const;
+
+*
+(Please type a command or say `\end')
+*        // Initializes the data from JSON.
+
+*        void initFromJson(const ssvj::Val& mX);
+
+*
+(Please type a command or say `\end')
+*        // Returns true if there are no differences.
+
+*        bool isEmpty() const noexcept;
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/E9A70F668B
+96FDEAA0B1018B5F2E4FEEE83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/E9A70F668B96FDEAA0B1018B5F2E4FEEE83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*                \subsubsection{`toCreate` map}
+
+*
+(Please type a command or say `\end')
+*                    The \emph{toCreate} map stores all the objects of a specif
+ic type that have been created since the last snapshot.
+
+*                    The keys are the unique IDs of the objects, the values are
+ their JSON representation.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{`toUpdate` map}
+[13]
+*
+(Please type a command or say `\end')
+*                    The \emph{toUpdate} map stores all the objects of a specif
+ic type that have been modified since the last snapshot.
+
+*                    The keys are the unique IDs of the objects, the values are
+ their JSON difference representation.
+
+*
+(Please type a command or say `\end')
+*                \subsubsection{`toRemove` vector}
+
+*
+(Please type a command or say `\end')
+*                    The \emph{toRemove} vector stores all the unique IDs of ob
+jects of a specific type that have been deleted since the last snapshot.
+
+*                    No JSON values are required, since the objects will be com
+pletely removed from the synchronization manager.
+
+*
+(Please type a command or say `\end')
+*        \section{LifetimeManager}
+
+*
+(Please type a command or say `\end')
+*            In order to allow maximum flexibility in object storage, a \emph{L
+ifetimeManager<T>} template class specialization must be provided to decide how
+ to allocate/deallocate memory for the synchronizable objects, and how to refer
+ to specific objects through \emph{handles}.
+
+*
+(Please type a command or say `\end')
+*            Here's an example of an user-defined \emph{LifetimeManager}, for t
+he type \emph{Message}.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // `LifetimeManager` specialization for `Message`.
+
+*    template<> struct LifetimeManager<Message>
+
+*    {
+
+*        // Required typedef of the handle used by the `SyncManager`.
+
+*        using Handle = Message*;
+
+*
+(Please type a command or say `\end')
+*        // Required function that returns a null handle.
+
+*        Handle getNullHandle() noexcept;
+
+*
+(Please type a command or say `\end')
+*        // Required function that creates an object and returns an handle to i
+t.
+
+*        Handle create();
+
+*
+(Please type a command or say `\end')
+*        // Required function that removes an object attached to a specific han
+dle.
+
+*        void remove(Handle mHandle);
+
+*
+(Please type a command or say `\end')
+*        // ...user data...
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/40B467D5A3
+6DD7EE366B6DE0F86F33AAE83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/40B467D5A36DD7EE366B6DE0F86F33AAE83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*        \section{SyncManager}
+
+*
+(Please type a command or say `\end')
+*            The \emph{SyncManager} is the core of the AutoSyncGen library.
+
+*            The \emph{SyncManager} is a template class that takes a variadic l
+ist of unique synchronizable types and creates the appropriate synchronization 
+data-structures for them at compile time.
+
+*
+(Please type a command or say `\end')
+*            Every object has a specific \emph{type ID}, which corresponds to t
+he position of the type in the passed variadic list, and a \emph{unique ID} per
+ instance.
+
+*
+(Please type a command or say `\end')
+*            An instance of the \emph{SyncManager} is used both in the client a
+nd in the server code. The manager can serialize its entire state and serialize
+ differences between the current state and the previous state.
+
+*
+(Please type a command or say `\end')
+*            Serialized difference data structures received from the server can
+ be applied to the client's \emph{SyncManager} to synchronize its state.
+
+*
+[14]
+(Please type a command or say `\end')
+*            The manager also contains data structures and convenient functions
+ to retrieve an handle to an alive object by unique ID, or check the state of a
+ specific object.
+
+*
+(Please type a command or say `\end')
+*            \subsection{Lifetime managers tuple}
+
+*
+(Please type a command or say `\end')
+*                Creation and destruction of objects is defined in \emph{Lifeti
+meManager<T>} specializations, by the user of AutoSyncGen.
+
+*                During instantiation of the \emph{SyncManager}, a tuple contai
+ning an instance of the specializations, per type, is generated at compile-time
+.
+
+*
+(Please type a command or say `\end')
+*                When creating or destroying an object after applying a \emph{D
+iff} or explicitly modifying the state from the server, the appropriate \emph{L
+ifetimeManager} implementation will be used.
+
+*
+(Please type a command or say `\end')
+*            \subsection{Handle maps tuple}
+
+*
+(Please type a command or say `\end')
+*                It may be necessary to retrieve an object of a specific type t
+hrough its unique ID. The current implementation of \emph{SyncManager} offers t
+his possibility to the user through key-value maps, where the key is the unique
+ ID of the object and the value is an handle to the object itself.
+
+*
+(Please type a command or say `\end')
+*                It is guaranteed that the unique IDs of the objects are synchr
+onized between client and server.
+
+*
+(Please type a command or say `\end')
+*            \subsection{Object management functions}
+
+*
+(Please type a command or say `\end')
+*                Since objects need to be created, removed and updated at run-t
+ime, when the \emph{Diff} instance is received, some dispatch data structures n
+eed to be created to make sure the correct constructors/destructors are called.
+
+
+*
+(Please type a command or say `\end')
+*                This is done through the compile-time generation of three \emp
+h{std::array} of member function pointers, that point to implicit specializatio
+n of templatized creation/removal/update member functions of the \emph{SyncMana
+ger} itself.
+
+*
+(Please type a command or say `\end')
+*                This way, explicit polymorphic type erasure a-la \emph{std::fu
+nction} is avoided, to optimize run-time performance and memory usage.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    template
+
+*    <
+
+*        // LifetimeManager template template parameter.
+
+*        template<typename> class TLFManager,
+
+*
+(Please type a command or say `\end')
+*        // Variadic list of synchronizable types.
+
+*        typename... TTypes
+
+*    >
+
+*    class SyncManager
+
+*    {
+
+*        public:
+
+*            // Count of the types managed by this `SyncManager`.
+
+*            static constexpr SizeT typeCount{sizeof...(TTypes)};
+
+*
+(Please type a command or say `\end')
+*            // Lifetime manager for the type `T`.
+
+*            template<typename T> using LFManagerFor = TLFManager<T>;
+
+*
+(Please type a command or say `\end')
+*            // Handle for the type `T`.
+
+*            template<typename T> using HandleFor = typename LFManagerFor<T>::H
+andle;
+
+*
+(Please type a command or say `\end')
+*            // Handle map for the type `T`.
+
+*            template<typename T> using HandleMapFor = std::map<ID, HandleFor<T
+>>;
+
+*
+(Please type a command or say `\end')
+*            // Type of this manager.
+
+*            using ThisType = SyncManager<TLFManager, TTypes...>;
+
+*
+(Please type a command or say `\end')
+*            // Type of snapshot.
+
+*            using SnapshotType = Impl::Snapshot<ThisType>;
+
+*
+(Please type a command or say `\end')
+*            // Type of diff.
+
+*            using DiffType = Impl::Diff<ThisType>;
+
+*
+(Please type a command or say `\end')
+*            // Type of bitset that keeps track of alive objects.
+
+*            using ObjBitset = std::bitset<maxObjs>;
+
+*
+(Please type a command or say `\end')
+*            // Type of alive/dead bitset storage per type.
+
+*            using BitsetStorage = std::array<ObjBitset, typeCount>;
+
+*
+(Please type a command or say `\end')
+*        private:
+
+*            // Type of lifetime managers tuple.
+
+*            using TplLFManagers = ssvu::Tpl<LFManagerFor<TTypes>...>;
+
+*
+(Please type a command or say `\end')
+*            // Type of handle maps tuple.
+
+*            using TplHandleMaps = ssvu::Tpl<HandleMapFor<TTypes>...>;
+
+*
+(Please type a command or say `\end')
+*            // Type of next available ID-per-type tuple.
+
+*            using TplIDs = ssvu::TplRepeat<ID, typeCount>;
+
+*
+(Please type a command or say `\end')
+*            // Type of member function that creates objects.
+
+*            using MemFnCreate = void(ThisType::*)(ID, const ssvj::Val&);
+
+*
+(Please type a command or say `\end')
+*            // Type of member function that removes objects.
+
+*            using MemFnRemove = void(ThisType::*)(ID);
+
+*
+(Please type a command or say `\end')
+*            // Type of member function that updates objects.
+
+*            using MemFnUpdate = void(ThisType::*)(ID, const ssvj::Val&);
+
+*
+(Please type a command or say `\end')
+*            // Tuple containing all the lifetime managers.
+
+*            TplLFManagers lfManagers;
+
+*
+(Please type a command or say `\end')
+*            // Tuple containing the handle maps.
+
+*            TplHandleMaps handleMaps;
+
+*
+(Please type a command or say `\end')
+*            // Tuple containing the last ID for every type.
+
+*            TplIDs lastIDs;
+
+*
+(Please type a command or say `\end')
+*            // Array containing the creation functions per type.
+
+*            std::array<MemFnCreate, typeCount> funcsCreate;
+
+*
+(Please type a command or say `\end')
+*            // Array containing the removal functions per type.
+
+*            std::array<MemFnRemove, typeCount> funcsRemove;
+
+*
+(Please type a command or say `\end')
+*            // Array containing the update functions per type.
+
+*            std::array<MemFnUpdate, typeCount> funcsUpdate;
+
+*
+(Please type a command or say `\end')
+*            // Array contaning the alive/dead bitset for per type.
+
+*            BitsetStorage bitsetIDs;
+
+*
+(Please type a command or say `\end')
+*            // Returns the alive/dead bitset for type `T`.
+
+*            template<typename T> const auto& getBitsetFor() const noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns true if the object `mID` of type `T` is alive.
+
+*            template<typename T> bool isAlive(ID mID) const noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Sets the alive/dead for the object `mID` of type `T`.
+
+*            template<typename T> void setAlive(ID mID, bool mX) noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Creates an object of type `T` with id `mID` from the JSON value
+ `mVal`.
+
+*            // Member function pointers in `funcsCreate` point to instantiatio
+ns of
+
+*            // this template member function.
+
+*            template<typename T> void createImpl(ID mID, const ssvj::Val& mVal
+);
+
+*
+(Please type a command or say `\end')
+*            // Removes an object of type `T` with id `mID` from the JSON value
+ `mVal`.
+
+*            // Member function pointers in `funcsRemove` point to instantiatio
+ns of
+
+*            // this template member function.
+
+*            template<typename T> void removeImpl(ID mID);
+
+*
+(Please type a command or say `\end')
+*            // Updates an object of type `T` with id `mID` from the JSON value
+ `mVal`.
+
+*            // Member function pointers in `funcsUpdate` point to instantiatio
+ns of
+
+*            // this template member function.
+
+*            template<typename T> void updateImpl(ID mID, const ssvj::Val& mVal
+);
+
+*
+(Please type a command or say `\end')
+*        public:
+
+*            // Returns the unique type ID for the type `T`.
+
+*            template<typename T> static constexpr ID getTypeID() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns the first available unique ID for the type `T`.
+
+*            template<typename T> ID getFirstFreeID() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns a new null handle for the type `T`.
+
+*            template<typename T> auto getNullHandleFor() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns a reference for the `LifetimeManager` for the type `T`.
+
+
+*            template<typename T> auto& getLFManagerFor() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns a the ID<->Handle map for the type `T`.
+
+*            template<typename T> auto& getHandleMapFor() noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Returns a new handle for the object of type `T` with ID `mID`.
+
+*            template<typename T> auto& getHandleFor(ID mID) noexcept;
+
+*
+(Please type a command or say `\end')
+*            // Explicitly creates an object of type `T`.
+
+*            // Intended to be used only from the server.
+
+*            template<typename T> auto serverCreate(const ssvj::Val& mVal);
+
+*
+(Please type a command or say `\end')
+*            // Applies a `Diff` to the current state.
+
+*            void applyDiff(const DiffType& mX);
+
+*
+(Please type a command or say `\end')
+*            // Returns the current state of the manager as a `Snapshot`.
+
+*            auto getSnapshot();
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/B9302B75C0
+4FAB8F79EB59D7EE63DCD4E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/B9302B75C04FAB8F79EB59D7EE63DCD4E83203DF72B29F986D19E1E1AD018
+022.pygtex [15] [16] [17])
+*
+(Please type a command or say `\end')
+*    \newpage
+[18]
+*
+(Please type a command or say `\end')
+*    \chapter{Obtaining the library}
+Chapter 4.
+
+*
+(Please type a command or say `\end')
+*        AutoSyncGen is available on GitHub, released under the \emph{Academic 
+Free License (AFL3.0)} open source license, at the following address: \url{http
+s://github.com/SuperV1234/AutoSyncGen}.
+
+*        The repository folder structure is:
+
+*
+(Please type a command or say `\end')
+*        \begin{itemize}
+
+*            \item \emph{./include/}: source files of the library.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 0.
+(/usr/share/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 0.
+
+*            \item \emph{./extlibs/}: required external dependencies, as \emph{
+git submodules}.
+
+*            \item \emph{./latex/}: source files of this \LaTeX\ document.
+
+*        \end{itemize}
+
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*        To build the library, your system must satisfy the following requireme
+nts:
+
+*        \begin{itemize}
+
+*            \item A fully-compliant C++14 compiler such as \emph{clang++ 3.4} 
+or \emph{g++ 4.9}.
+
+*            \item The latest version of the SFML library, which can be obtaine
+d at \url{http://sfml-dev.org} or using your distribution's package manager.
+
+*            \item \emph{CMake}, a cross-platform open-source build system that
+ can be downloaded at \url{http://cmake.org}.
+
+*            \item \emph{Git}, a free and open source distributed version contr
+ol system available on your distribution's package manager or at \url{http://gi
+t-scm.com}.
+
+*        \end{itemize}
+
+*
+(Please type a command or say `\end')
+*        After cloning the repository with \mintinline{bash}{git clone https://
+github.com/SuperV1234/AutoSyncGen}, navigate to the local repository folder and
+ execute the \mintinline{bash}{./init-repository.sh} script, that will clone th
+e required dependencies.
+\openout5 = `texput.pyg'.
+
+runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
+prefix=PYGdefault -o "_minted-texput/DEC1FA46371B3B240A2DB6BCDBBC9EAA78B00929EA
+3A15AA6A1702F4D1E89F47.pygtex" "texput.pyg" )...executed.
+
+
+(./_minted-texput/DEC1FA46371B3B240A2DB6BCDBBC9EAA78B00929EA3A15AA6A1702F4D1E89
+F47.pygtex)
+\openout5 = `texput.pyg'.
+
+runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
+prefix=PYGdefault -o "_minted-texput/01A6647331CB8CDE6CD5975A0847FE4178B00929EA
+3A15AA6A1702F4D1E89F47.pygtex" "texput.pyg" )...executed.
+
+
+(./_minted-texput/01A6647331CB8CDE6CD5975A0847FE4178B00929EA3A15AA6A1702F4D1E89
+F47.pygtex)
+*
+(Please type a command or say `\end')
+*        Afterwards, executing \mintinline{bash}{cmake .} will generate the \em
+ph{makefiles} for the project.
+\openout5 = `texput.pyg'.
+
+runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
+prefix=PYGdefault -o "_minted-texput/13B73077506B5D70B123EF8638F0CC0578B00929EA
+3A15AA6A1702F4D1E89F47.pygtex" "texput.pyg" )...executed.
+
+
+(./_minted-texput/13B73077506B5D70B123EF8638F0CC0578B00929EA3A15AA6A1702F4D1E89
+F47.pygtex)
+*
+(Please type a command or say `\end')
+*        Using \mintinline{bash}{make && sudo make install} will build the libr
+ary and install it on your system.
+\openout5 = `texput.pyg'.
+
+runsystem(pygmentize -l bash -f latex -F tokenmerge -P style=default -P command
+prefix=PYGdefault -o "_minted-texput/47BF38C15E3012EDA38851B9B6961B4978B00929EA
+3A15AA6A1702F4D1E89F47.pygtex" "texput.pyg" )...executed.
+
+
+(./_minted-texput/47BF38C15E3012EDA38851B9B6961B4978B00929EA3A15AA6A1702F4D1E89
+F47.pygtex)
+*
+(Please type a command or say `\end')
+*        To use AutoSyncGen in your projects, no linking is necessary, as the l
+ibrary is \emph{header-only}. It is sufficient to add \mintinline{cpp}{#include
+ <AutoSyncGen/AutoSyncGen.hpp>} at the beginning of your program.
+\openout5 = `texput.pyg'.
+
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -o "_minted-texput/8DCC236820F7D90467AE0655415417E94B30FE500F6
+6290B3838A4BF7FCF3F91.pygtex" "texput.pyg" )...executed.
+
+
+(./_minted-texput/8DCC236820F7D90467AE0655415417E94B30FE500F66290B3838A4BF7FCF3
+F91.pygtex)
+*
+(Please type a command or say `\end')
+*        A simple synchronized chat test application is included in the reposit
+ory, that will be analyzed in the following chapter.
+
+*
+(Please type a command or say `\end')
+*    \newpage
+[19
+
+]
+*
+(Please type a command or say `\end')
+*    \chapter{Example application: synchronized chat}
+Chapter 5.
+
+*
+(Please type a command or say `\end')
+*        The current version of the \emph{AutoSyncGen} library comes with a ver
+y simple example application to show basic functionality of the library.
+
+*
+(Please type a command or say `\end')
+*        The application is a \emph{client-server chat} with persistent message
+ history.
+
+*        Clients can connect to the server, send messages and edit existing mes
+sages.
+
+*        Clients maintain their state synchronized with the server thanks to pe
+riodic synchronization requests.
+
+*
+(Please type a command or say `\end')
+*        \section{Data structures}
+
+*
+(Please type a command or say `\end')
+*            \subsection{Message}
+
+*
+(Please type a command or say `\end')
+*                The \emph{Message} data structure is a simple synchronizable o
+bject containing an unique ID for the message, the name of the author and the c
+ontents of the message.
+
+*
+(Please type a command or say `\end')
+*            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame
+=lines, framesep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Synchronizable data structure representing a chat message.
+
+*    struct Message : syn::SyncObj
+
+*    <
+
+*        int,            // messageID
+
+*        std::string,    // author
+
+*        std::string     // contents
+
+*    >
+
+*    {
+
+*        SYN_PROXY(0, messageID);
+
+*        SYN_PROXY(1, author);
+
+*        SYN_PROXY(2, contents);
+
+*    };
+
+*            \end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/4FA9EF97E8
+437B9D6AAC520AC062F2D5E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/4FA9EF97E8437B9D6AAC520AC062F2D5E83203DF72B29F986D19E1E1AD018
+022.pygtex)
+*
+(Please type a command or say `\end')
+*        \section{Lifetime manager specialization}
+
+*
+(Please type a command or say `\end')
+*            To allow creation, removal and update of \emph{Message} instances,
+ a lifetime manager specialization must be provided.
+
+*            In this case, the specialization uses heap-allocation and raw poin
+ters as handles for simplicity.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // `LifetimeManager` specialization for `Message`.
+
+*    template<> struct LifetimeManager<Message>
+
+*    {
+
+*        // Type of the handle used by the `SyncManager`.
+
+*        using Handle = Message*;
+
+*
+(Please type a command or say `\end')
+*        // Required function that returns a null handle.
+
+*        Handle getNullHandle() noexcept
+
+*        {
+
+*            // Since raw pointers are being used, `nullptr` will be
+
+*            // our null handle.
+
+*            return nullptr;
+
+*        }
+
+*
+(Please type a command or say `\end')
+*        // Required function that creates an object and returns an handle to i
+t.
+
+*        Handle create()
+
+*        {
+
+*            // To create a object, we simply use `std::make_unique` and
+
+*            // emplace the resultant `std::unique_ptr` in the `storage`
+
+*            // vector. Afterwards, we just return a raw pointer to the
+
+*            // newly created object.
+
+*            return &ssvu::getEmplaceUPtr<Message>(storage);
+
+*        }
+
+*
+(Please type a command or say `\end')
+*        // Required function that removes an object attached to a specific han
+dle.
+
+*        void remove(Handle mHandle)
+
+*        {
+
+*            // To deallocate and destroy a message, we simply look for the
+
+*            // message with the same handle in the `storage`, then remove
+
+*            // it. Since it's being allocated using `std::unique_ptr`, its
+
+*            // memory will be automatically released.
+
+*            ssvu::eraseRemoveIf(storage, [this, mHandle](const auto& mUPtr)
+
+*            {
+
+*                return mUPtr.get() == mHandle;
+
+*            });
+
+*        }
+
+*
+(Please type a command or say `\end')
+*        // Internal memory storage for `Message` instances.
+
+*        std::vector<ssvu::UPtr<Message>> storage;
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/A9DE5317DD
+834086C6F7D74BDA461493E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/A9DE5317DD834086C6F7D74BDA461493E83203DF72B29F986D19E1E1AD018
+022.pygtex [20
+
+])
+*
+(Please type a command or say `\end')
+*        \section{Application packet types}
+
+*
+(Please type a command or say `\end')
+*            The example application defines some custom packet types for clien
+t-server communication.
+
+*
+(Please type a command or say `\end')
+*\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, fram
+esep=2mm]{cpp}
+\openout3 = `texput.pyg'.
+
+
+*    // Custom unique types for server-to-client chat packets.
+
+*    enum class DP_StoC : int
+
+*    {
+
+*        // Send a specific message to the client.
+
+*        DisplayMsg = 0
+
+*    };
+
+*
+(Please type a command or say `\end')
+*    // Custom unique types for client-to-server chat packets.
+
+*    enum class DP_CtoS : int
+
+*    {
+
+*        // Send a message to the server.
+
+*        SendMsg = 0,
+
+*
+(Please type a command or say `\end')
+*        // Edit a message on the server.
+
+*        EditMsg = 1
+
+*    };
+
+*\end{minted}
+runsystem(pygmentize -l cpp -f latex -F tokenmerge -P style=default -P commandp
+refix=PYGdefault -P mathescape=True -F gobble:n=2 -o "_minted-texput/91377C842D
+A745265BC0DC1CB1766FF0E83203DF72B29F986D19E1E1AD018022.pygtex" "texput.pyg" )..
+.executed.
+
+
+(./_minted-texput/91377C842DA745265BC0DC1CB1766FF0E83203DF72B29F986D19E1E1AD018
+022.pygtex [21])
+*
+(Please type a command or say `\end')
+*        \section{ConsoleSessionController}
+
+*
+(Please type a command or say `\end')
+*            The console is used to control the chat application.
+
+*            Interaction with the user is handled thanks to the \emph{stdin} in
+put stream.
+
+*            Information is displayed to the user via the \emph{stdout} output 
+stream.
+
+*
+(Please type a command or say `\end')
+*            When the application is started, the role of the current process c
+an be chosen.
+
+*
+(Please type a command or say `\end')
+*            \subsection{Server role}
+
+*
+(Please type a command or say `\end')
+*                \begin{figure}[h]
+
+*                \caption{Example of the chat application being ran in server m
+ode.}
+
+*                \centering
+
+*                \includegraphics[width=0.5\textwidth]{screen1}
+<res/screen1.png, id=162, 430.60875pt x 226.8475pt>
+File: res/screen1.png Graphic file (type png)
+ <use res/screen1.png>
+Package pdftex.def Info: res/screen1.png used on input line 0.
+(pdftex.def)             Requested size: 234.8775pt x 123.73846pt.
+
+*                \end{figure}
+
+*
+(Please type a command or say `\end')
+*                When the application is running in server mode, the only possi
+ble user command is the shutdown of the application itself.
+
+*                Everything else is handled automatically.
+
+*
+(Please type a command or say `\end')
+*                Information is displayed on sent/received data and client conn
+ections/disconnections.
+
+*
+(Please type a command or say `\end')
+*\newpage
+[22 <./res/screen1.png>]
+*
+(Please type a command or say `\end')
+*            \subsection{Client role}
+
+*
+(Please type a command or say `\end')
+*                \begin{figure}[h]
+
+*                \caption{Example of the chat application being ran in client m
+ode.}
+
+*                \centering
+
+*                \includegraphics[width=0.5\textwidth]{screen2}
+<res/screen2.png, id=170, 421.575pt x 312.16624pt>
+File: res/screen2.png Graphic file (type png)
+ <use res/screen2.png>
+Package pdftex.def Info: res/screen2.png used on input line 0.
+(pdftex.def)             Requested size: 234.8775pt x 173.92117pt.
+
+*                \end{figure}
+
+*
+(Please type a command or say `\end')
+*                When the application is running in client mode, after successf
+ully connecting to the server, the user can interact in several ways.
+
+*
+(Please type a command or say `\end')
+*                \begin{itemize}
+
+*                  \item Messages can be created and sent to the server.
+
+*                  \item A request to edit an existing message on the server ca
+n be sent.
+
+*                  \item The current local state of the client can be displayed
+.
+
+*                \end{itemize}
+
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*    \newpage
+[23 <./res/screen2.png>]
+*
+(Please type a command or say `\end')
+*        \chapter{Conclusion}
+Chapter 6.
+
+*
+(Please type a command or say `\end')
+*            In conclusion, the original problem of implementing a flexible and
+ easy-to-use state synchronization system has been solved.
+
+*
+(Please type a command or say `\end')
+*            The project described in this thesis, \emph{AutoSyncGen}, achieves
+ the goals that were set:
+
+*
+(Please type a command or say `\end')
+*            \begin{itemize}
+
+*                \item The library allows automatic state synchronization betwe
+en a server and multiple clients.
+
+*                \item Required data structures and procedures are generated at
+ compile-time, minimizing the run-time performance impact and memory overhead.
+
+*                \item User code is clear and easy to write/understand. C++14 m
+etaprogramming features and optional preprocessor macros allow library users to
+ quickly define synchronizable data structures, with minimal boilerplate code.
+
+*                \item Most user-written synchronization code that uses AutoSyn
+cGen can be shared between the client and the server applications, avoiding red
+undancy.
+
+*                \item The library is suitable for various types of application
+s, ranging from simple \emph{chat/forum systems} to \emph{realtime multiplayer 
+games}.
+
+*                \item AutoSyncGen minimizes network usage by sending only the 
+minimum data required to synchronize the state between the server and a client.
+
+
+*            \end{itemize}
+
+*
+(Please type a command or say `\end')
+*            \section{Learning experience}
+
+*
+(Please type a command or say `\end')
+*                Creating \emph{AutoSyncGen} was a very educational experience 
+in \emph{C++ modern metaprogramming techniques} and \emph{computer networking}.
+
+
+*                During its development, some important design decisions had to
+ be taken:
+
+*
+(Please type a command or say `\end')
+*                \begin{itemize}
+
+*                  \item The first important choice was the transport-layer pro
+tocol. While \emph{TCP}'s additional safety and reliability features are greatl
+y appreciated in most networked applications, AutoSyncGen wants to offer its us
+ers the smallest possible overhead. Intended applications for the libraries als
+o include \emph{realtime multiplayer games}, which extremely appreciate the lac
+k of overhead UDP provides.
+
+*                  \item Another important choice was the programming language:
+ C++11 or C++14? The newest standard has many useful features that increase pro
+ductivity and programmer convenience. Also, both the implementation code and us
+er code of the library greatly benefit from C++14 additions. It is, however, no
+t yet widely supported, even if it's the official C++ standard.
+
+*                  C++11, on the other hand, has gained widespread support and 
+every major Linux distribution features a fully-compliant C++11 compiler.
+
+*                  As having the cleanest possible syntax was one of my main go
+als for AutoSyncGen, and considering that the SSV framework is C++14-only compa
+tible, I ended up using the latest standard of the C++ language. Hopefully, pop
+ular Linux distributions will upgrade their default compiler versions to C++14-
+compliant ones.
+
+*                  \item The final choices were about the presentation of the l
+ibrary as my networking course project. I chose \LaTeX\ to write the documentat
+ion, as it produces (in my opinion) the most professional-looking documents and
+ its packages make syntax-highlighted code inclusion really easy. For the examp
+le application written using AutoSyncGen, I chose to build a simple client-serv
+er chat: this kind of software is really easy to write and explain, and it show
+s the strenghts and weaknesses of the library well.
+[24
+
+]
+*                \end{itemize}
+
+*
+(Please type a command or say `\end')
+*            \section{Future}
+
+*
+(Please type a command or say `\end')
+*                AutoSyncGen can be greatly improved, and will probably be expa
+nded upon and used in some of my projects in the future.
+
+*
+(Please type a command or say `\end')
+*                Possible improvements:
+
+*
+(Please type a command or say `\end')
+*                \begin{itemize}
+
+*                    \item Support for \emph{nested synchronizable data structu
+res}. This could be handled by automatically converting handles to unique IDs d
+uring serialization.
+
+*                    \item \emph{Configurable client snapshot storage}. It woul
+d be useful for certain application to maintain an history of snapshots for eve
+ry connected client, so that its state can be retrieved at any point in time.
+
+*                    \item Various optimization, ranging from \emph{specialized
+ integer/string conversions} to \emph{efficient bitset serialization and deseri
+alization}. Some run-time calculations and dispatching could also benefit from 
+additional data strctures generated at compile-time.
+
+*                \end{itemize}
+
+*
+(Please type a command or say `\end')
+*            \section{References}
+
+*
+(Please type a command or say `\end')
+*                \begin{itemize}
+
+*                  \item AutoSyncGen GitHub repository: \url{https://github.com
+/SuperV1234/AutoSyncGen}
+
+*                  \item SSVUtils GitHub repository: \url{https://github.com/Su
+perV1234/SSVUtils}
+
+*                  \item SFML website: \url{http://www.sfml-dev.org/}
+
+*                  \item SSVStart GitHub repository: \url{https://github.com/Su
+perV1234/SSVStart}
+
+*                  \item UNIME website: \url{http://unime.it}
+
+*                  \item My personal website: \url{https://vittorioromeo.info}
+
+*                \end{itemize}
+
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*
+(Please type a command or say `\end')
+*\end{document}
+runsystem(rm "texput.pyg")...executed.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 0.
+[25]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 0.
+ (./texput.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 0.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 0.
+
+
+Package rerunfilecheck Warning: File `texput.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `texput.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  9906A80794620877DB3F0D750A63EF4C;2304.
  
 Here is how much of TeX's memory you used:
- 240 strings out of 493108
- 3254 string characters out of 6140726
- 52957 words of memory out of 5000000
- 3569 multiletter control sequences out of 15000+600000
- 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 8240 strings out of 493108
+ 134316 string characters out of 6140726
+ 350416 words of memory out of 5000000
+ 11453 multiletter control sequences out of 15000+600000
+ 8603 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 0i,0n,0p,583b,6s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 36i,10n,35p,806b,540s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmitt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
+/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on texput.pdf (27 pages, 233548 bytes).
+PDF statistics:
+ 254 PDF objects out of 1000 (max. 8388607)
+ 205 compressed objects within 3 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+
