@@ -46,7 +46,7 @@ namespace syn
 			/// @brief Initializes the diff from a json value `mX`.
 			inline void initFromJson(const ssvj::Val& mX)
 			{
-				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mTD){ mTD.initFromJson(mX[mIdx]); }, typeDatas);
+				ssvu::tplForData([this, &mX](auto mD, auto& mTD){ mTD.initFromJson(mX[ssvu::getIdx(mD)]); }, typeDatas);
 			}
 
 			/// @brief Returns true if all diff type datas are empty.

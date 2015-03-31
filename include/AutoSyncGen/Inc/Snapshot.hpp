@@ -68,19 +68,19 @@ namespace syn
 			inline void initFromJson(const ssvj::Val& mX)
 			{
 				for(auto i(0u); i < bitsetIDs.size(); ++i) bitsetIDs[i] = ObjBitset{mX[0][i].as<std::string>()};
-				ssvu::tplForIdx([this, &mX](auto mIdx, auto& mTD){ mTD.initFromJson(mX[1][mIdx]); }, typeDatas);
+				ssvu::tplForData([this, &mX](auto mD, auto& mTD){ mTD.initFromJson(mX[1][ssvu::getIdx(mD)]); }, typeDatas);
 			}
 
 			inline auto getDiffWith(const Snapshot& mX)
 			{
 				DiffType result;
 
-				ssvu::tplForIdx([this, &result, &mX](auto mIType, auto& mTDCurrent, auto& mTDOther, auto& mTDDiff) mutable
+				ssvu::tplForData([this, &result, &mX](auto mD, auto& mTDCurrent, auto& mTDOther, auto& mTDDiff) mutable
 				{
 					// TODO: bitsetIDs need to be cleared somewhere
 					// TODO: use ack/nack system?
-					const auto& myBitset(bitsetIDs[mIType]);
-					const auto& diffBitset(mX.bitsetIDs[mIType]);
+					const auto& myBitset(bitsetIDs[ssvu::getIdx(mD)]);
+					const auto& diffBitset(mX.bitsetIDs[ssvu::getIdx(mD)]);
 
 					auto diffBitsetToCreate((~diffBitset) & myBitset);
 					auto diffBitsetToRemove((~myBitset) & diffBitset);

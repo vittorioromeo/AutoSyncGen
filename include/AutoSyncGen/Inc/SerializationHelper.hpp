@@ -9,14 +9,14 @@ namespace syn
 	{
 		inline static void setFromJson(const ssvj::Val& mVal, TObj& mObj)
 		{
-			ssvu::tplForIdx([&mVal, &mObj](auto mIdx, auto& mField)
+			ssvu::tplForData([&mVal, &mObj](auto mD, auto& mField)
 			{
-				auto key(ssvu::toStr(mIdx));
+				auto key(ssvu::toStr(ssvu::getIdx(mD)));
 
 				if(mVal.has(key))
 				{
 					mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
-					mObj.unsetBitAt(mIdx);
+					mObj.unsetBitAt(ssvu::getIdx(mD));
 				}
 
 			}, mObj.fields);
@@ -29,9 +29,9 @@ namespace syn
 			// TODO: serialize bitset
 			result[jsonFieldFlagsKey] = mObj.fieldFlags.to_string();
 
-			ssvu::tplForIdx([&result, &mObj](auto mIdx, auto&& mField)
+			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
-				auto key(ssvu::toStr(mIdx));
+				auto key(ssvu::toStr(ssvu::getIdx(mD)));
 				result[key] = FWD(mField);
 
 			}, mObj.fields);
@@ -46,11 +46,11 @@ namespace syn
 			// TODO: serialize bitset, code repetition
 			result[jsonFieldFlagsKey] = mObj.fieldFlags.to_string();
 
-			ssvu::tplForIdx([&result, &mObj](auto mIdx, auto&& mField)
+			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
-				if(mObj.fieldFlags[mIdx])
+				if(mObj.fieldFlags[ssvu::getIdx(mD)])
 				{
-					auto key(ssvu::toStr(mIdx));
+					auto key(ssvu::toStr(ssvu::getIdx(mD)));
 					result[key] = FWD(mField);
 				}
 

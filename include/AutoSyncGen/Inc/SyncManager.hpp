@@ -185,14 +185,14 @@ namespace syn
 
 			inline void applyDiff(const DiffType& mX)
 			{
-				ssvu::tplForIdx([this, &mX](auto mIType, auto& mTD) mutable
+				ssvu::tplForData([this, &mX](auto mD, auto& mTD) mutable
 				{
 					//for(auto i(0u); i < maxObjs; ++i)
 					{
 						// TODO: can be compile-time?
-						for(const auto& p : mTD.toCreate) this->onReceivedPacketCreate(mIType, p.first, p.second);
-						for(auto x : mTD.toRemove) this->onReceivedPacketRemove(mIType, x);
-						for(const auto& p : mTD.toUpdate) this->onReceivedPacketUpdate(mIType, p.first, p.second);
+						for(const auto& p : mTD.toCreate) this->onReceivedPacketCreate(ssvu::getIdx(mD), p.first, p.second);
+						for(auto x : mTD.toRemove) this->onReceivedPacketRemove(ssvu::getIdx(mD), x);
+						for(const auto& p : mTD.toUpdate) this->onReceivedPacketUpdate(ssvu::getIdx(mD), p.first, p.second);
 					}
 				}, mX.typeDatas);
 			}
