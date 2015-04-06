@@ -190,9 +190,9 @@ namespace syn
 					//for(auto i(0u); i < maxObjs; ++i)
 					{
 						// TODO: can be compile-time?
-						for(const auto& p : mTD.toCreate) this->onReceivedPacketCreate(ssvu::getIdx(mD), p.first, p.second);
-						for(auto x : mTD.toRemove) this->onReceivedPacketRemove(ssvu::getIdx(mD), x);
-						for(const auto& p : mTD.toUpdate) this->onReceivedPacketUpdate(ssvu::getIdx(mD), p.first, p.second);
+						for(const auto& p : mTD.toCreate) this->onReceivedPacketCreate(mD.getIdx(), p.first, p.second);
+						for(auto x : mTD.toRemove) this->onReceivedPacketRemove(mD.getIdx(), x);
+						for(const auto& p : mTD.toUpdate) this->onReceivedPacketUpdate(mD.getIdx(), p.first, p.second);
 					}
 				}, mX.typeDatas);
 			}

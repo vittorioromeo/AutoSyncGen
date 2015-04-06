@@ -11,12 +11,12 @@ namespace syn
 		{
 			ssvu::tplForData([&mVal, &mObj](auto mD, auto& mField)
 			{
-				auto key(ssvu::toStr(ssvu::getIdx(mD)));
+				auto key(ssvu::toStr(mD.getIdx()));
 
 				if(mVal.has(key))
 				{
 					mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
-					mObj.unsetBitAt(ssvu::getIdx(mD));
+					mObj.unsetBitAt(mD.getIdx());
 				}
 
 			}, mObj.fields);
@@ -31,7 +31,7 @@ namespace syn
 
 			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
-				auto key(ssvu::toStr(ssvu::getIdx(mD)));
+				auto key(ssvu::toStr(mD.getIdx()));
 				result[key] = FWD(mField);
 
 			}, mObj.fields);
@@ -48,9 +48,9 @@ namespace syn
 
 			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
-				if(mObj.fieldFlags[ssvu::getIdx(mD)])
+				if(mObj.fieldFlags[mD.getIdx()])
 				{
-					auto key(ssvu::toStr(ssvu::getIdx(mD)));
+					auto key(ssvu::toStr(mD.getIdx()));
 					result[key] = FWD(mField);
 				}
 
