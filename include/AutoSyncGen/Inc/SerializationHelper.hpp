@@ -26,9 +26,7 @@ namespace syn
 		{
 			auto result(ssvj::mkObj());
 
-			// TODO: serialize bitset
-			result[jsonFieldFlagsKey] = mObj.fieldFlags.to_string();
-
+			result[jsonFieldFlagsKey] = mObj.fieldFlags;
 			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
 				auto key(ssvu::toStr(mD.getIdx()));
@@ -43,9 +41,7 @@ namespace syn
 		{
 			auto result(ssvj::mkObj());
 
-			// TODO: serialize bitset, code repetition
-			result[jsonFieldFlagsKey] = mObj.fieldFlags.to_string();
-
+			result[jsonFieldFlagsKey] = mObj.fieldFlags;
 			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
 				if(mObj.fieldFlags[mD.getIdx()])

@@ -59,15 +59,14 @@ namespace syn
 					ssvj::mkArr() // Data array
 				));
 
-				// TODO: bitset serialization in ssvj
-				for(const auto& b : bitsetIDs) result[0].emplace(b.to_string());
+				for(const auto& b : bitsetIDs) result[0].emplace(b);
 				ssvu::tplFor([this, &result](const auto& mI){ result[1].emplace(mI.toJson()); }, typeDatas);
 				return result;
 			}
 
 			inline void initFromJson(const ssvj::Val& mX)
 			{
-				for(auto i(0u); i < bitsetIDs.size(); ++i) bitsetIDs[i] = ObjBitset{mX[0][i].as<std::string>()};
+				for(auto i(0u); i < bitsetIDs.size(); ++i) bitsetIDs[i] = mX[0][i].as<ObjBitset>();
 				ssvu::tplForData([this, &mX](auto mD, auto& mTD){ mTD.initFromJson(mX[1][mD.getIdx()]); }, typeDatas);
 			}
 
