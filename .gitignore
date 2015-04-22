@@ -208,3 +208,6 @@ asanlogs
 /_RELEASE/level2.lvl
 /log.txt
 latex/_*/_RELEASE/AutoSyncGen
+/latex/
+/latex/*
+/latex/m*
