@@ -24,9 +24,11 @@ namespace syn
 
 		inline static auto getAllToJson(const TObj& mObj)
 		{
-			auto result(ssvj::mkObj());
+			auto result(ssvj::mkObj
+			(
+				jsonFieldFlagsKey, mObj.fieldFlags
+			));
 
-			result[jsonFieldFlagsKey] = mObj.fieldFlags;
 			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
 				auto key(ssvu::toStr(mD.getIdx()));
@@ -39,9 +41,11 @@ namespace syn
 
 		inline static auto getDirtyToJson(const TObj& mObj)
 		{
-			auto result(ssvj::mkObj());
+			auto result(ssvj::mkObj
+			(
+				jsonFieldFlagsKey, mObj.fieldFlags
+			));
 
-			result[jsonFieldFlagsKey] = mObj.fieldFlags;
 			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
 			{
 				if(mObj.fieldFlags[mD.getIdx()])

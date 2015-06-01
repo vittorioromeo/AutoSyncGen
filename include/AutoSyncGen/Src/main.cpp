@@ -142,11 +142,11 @@ class ConsoleSessionController
 					int id{lastID++};
 
 					auto temp(ssvj::mkObj
-					({
-						{"0", id},
-						{"1", author},
-						{"2", msg}
-					}));
+					(
+						"0", id,
+						"1", author,
+						"2", msg
+					));
 
 					auto handle(server.getSyncManager().serverCreate<Message>(temp));
 					server.debugLo() << "Message from (" << mCID << "): << " << handle->author.view() << ": " << handle->contents.view() << " >>\n";
