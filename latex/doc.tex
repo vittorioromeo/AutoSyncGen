@@ -7,7 +7,6 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 
-\def \cppStart {\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}}
 
 \graphicspath{ {res/} }
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
@@ -96,7 +95,7 @@
 
             Here's an example of a synchronizable data structure defined using the AutoSyncGen library.
 
-            \cppStart
+            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Synchronizable data structure representing a chat message.
     struct Message : syn::SyncObj
     <
@@ -117,7 +116,7 @@
 
             A shorter (but more preprocessor-heavy) construct can be used, which reduces code repetition.
 
-            \cppStart
+            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Synchronizable data structure representing a chat message.
     SYN_DEFINE_SYNCOBJ
     (
@@ -160,7 +159,7 @@
 
             AutoSyncGen's network module extensively uses these abstractions to allow cross-platform compatibility and additional safety.
 
-            \cppStart
+            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // SFML offers an `IpAddress` data structure that that can be initialized from strings.
     using sf::IpAddress;
     
@@ -174,7 +173,7 @@
 
             Just to clarify how convenient these abstractions are, here's a small code example that shows \emph{sf::Packet} usage.
 
-            \cppStart
+            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     int x{5};
     std::string y{"hello!"};
     double z{2.52};
@@ -205,7 +204,7 @@
                 \subsubsection{CtoS enumeration}
                     This enumeration holds the packet types that are sent from the client to the server.
 
-                    \cppStart
+                    \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     enum class CtoS : std::size_t
     {
         // Request to establish a connection to the server
@@ -228,7 +227,7 @@
                 \subsubsection{StoC enumeration}
                     This enumeration holds the packet types that are sent from the server to the client.
 
-                    \cppStart
+                    \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     enum class StoC : std::size_t
     {
         // Accept a requested client connection, assigning the client a CID
@@ -254,7 +253,7 @@
             \subsection{Packet handling}
                 Packets are automatically handled by the client and the server, using a \emph{switch} language construct.
 
-                \cppStart
+                \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     void handle(RPT mType)
     {
         switch(mType)
@@ -279,7 +278,7 @@
 
             Every host has a dedicated extra thread for data and socket management.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // `SessionHost` is a CRTP template class, to allow compile-time generation 
     // of appropriate data structures.
     template
@@ -398,7 +397,7 @@
 
                     A \emph{ClientHandler} instance is created and managed for every client connected to the server.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     class ClientHandler
     {
         private:
@@ -441,7 +440,7 @@
                     The manager also stores two vector of pointers to client handlers: one with non-busy handlers, and one with busy handlers.
                     The lists are periodically checked by an extra thread to remove timed-out client handlers and to accept new connections.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     class ClientHandlerManager
     {
         private:
@@ -512,7 +511,7 @@
             JSON is currently used for serialization/deserialization of objects. 
             The code architecture makes it easy to implement and use alternative serialization methods.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     template
     <
         // Variadic type list of field types.
@@ -588,7 +587,7 @@
 
                     It also automatically sets the corresponding field \emph{dirty bit} to true when the underlying data is modified.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     template
     <
         // Index of the field in the tuple.
@@ -622,7 +621,7 @@
             The \emph{Snapshot} stores the state of all types of objects, separating them by type in appropriate data structures.
             It also stores a bitset for every object type, where the \emph{n-th} bit represents the state of the \emph{n-th} object of a specific type (0 for \emph{dead}, 1 for \emph{alive}).
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Class representing the snapshot of the entire state of the `SyncManager`.
     template<typename TManager> struct Snapshot
     {
@@ -648,7 +647,7 @@
                 A \emph{Snapshot} is composed of \emph{SnapshotTypeData} objects. 
                 Every single type data object represents the synchronization state for a specific type.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Class representing the snapshot for a specific synchronizable type.
     struct SnapshotTypeData
     {
@@ -672,7 +671,7 @@
 
             A \emph{Diff} is a representation of the difference between two snapshot instances.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Class representing a diff for all the types handled by the `SyncManager`.
     template<typename TManager> struct Diff
     {
@@ -695,7 +694,7 @@
                 A \emph{Diff} is composed of \emph{DiffTypeData} objects. 
                 Every single type data object represents the synchronization difference for a specific type.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Class representing the diff for a specific type managed by the `SyncManager`.
     struct DiffTypeData
     {
@@ -740,7 +739,7 @@
 
             Here's an example of an user-defined \emph{LifetimeManager}, for the type \emph{Message}.
 
-\cppStart    
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // `LifetimeManager` specialization for `Message`.
     template<> struct LifetimeManager<Message>
     {
@@ -794,7 +793,7 @@
 
                 This way, explicit polymorphic type erasure a-la \emph{std::function} is avoided, to optimize run-time performance and memory usage.
 
-\cppStart    
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     template
     <
         // LifetimeManager template template parameter.
@@ -976,7 +975,7 @@
 
                 The \emph{Message} data structure is a simple synchronizable object containing an unique ID for the message, the name of the author and the contents of the message.
 
-            \cppStart
+            \begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Synchronizable data structure representing a chat message.
     struct Message : syn::SyncObj
     <
@@ -996,7 +995,7 @@
             To allow creation, removal and update of \emph{Message} instances, a lifetime manager specialization must be provided.
             In this case, the specialization uses heap-allocation and raw pointers as handles for simplicity.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // `LifetimeManager` specialization for `Message`.
     template<> struct LifetimeManager<Message>
     {
@@ -1043,7 +1042,7 @@
 
             The example application defines some custom packet types for client-server communication.
 
-\cppStart
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{cpp}
     // Custom unique types for server-to-client chat packets.
     enum class DP_StoC : int
     {
@@ -1160,3 +1159,4 @@
 
 
 \end{document}
+
