@@ -16,7 +16,7 @@ namespace syn
 				IpAddress ip;
 				Port port;
 				int secondsUntilTimeout;
-				bool busy{false};
+				std::atomic<bool> busy{false};
 
 			public:
 				inline void bindToClient(CID mCID, const IpAddress& mIp, const Port& mPort)
@@ -49,7 +49,7 @@ namespace syn
 				std::map<CID, ClientHandler*> chMap;
 				std::future<void> timeoutFuture;
 				std::vector<CID> toDisconnect;
-				bool busy{true};
+				std::atomic<bool> busy{true};
 
 				//std::mutex mtxHandleCollection;
 

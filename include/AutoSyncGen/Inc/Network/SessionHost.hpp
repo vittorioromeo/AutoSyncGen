@@ -24,7 +24,7 @@ namespace syn
 				IpAddress ip;
 				Port port;
 				UdpSocket socket;
-				bool busy{false};
+				std::atomic<bool> busy{false};
 
 				inline auto& getTD() noexcept { return ssvu::castUp<Derived>(*this); }
 				inline const auto& getTD() const noexcept { return ssvu::castUp<Derived>(*this); }
@@ -109,7 +109,6 @@ namespace syn
 					fillPacket(sendBuffer, FWD(mArgs)...);
 				}
 
-				inline void setBusy(bool mBusy) noexcept { busy = mBusy; }
 
 				template<typename T> inline auto popRecv()
 				{
@@ -125,6 +124,8 @@ namespace syn
 					tryBindSocket();
 					hostFuture = std::async(std::launch::async, [this]{ receiveThread(); });
 				}
+
+				inline void setBusy(bool mBusy) noexcept { busy = mBusy; }
 
 				inline const auto& getName() const noexcept { return name; }
 				inline const auto& getIp() const noexcept { return ip; }

@@ -174,6 +174,7 @@ class ConsoleSessionController
 
 				if(choice == 0)
 				{
+					server.setBusy(false);
 					return;
 				}
 			}
@@ -249,7 +250,11 @@ class ConsoleSessionController
 					continue;
 				}
 
-				if(choice == 3) break;
+				if(choice == 3)
+				{
+					client.setBusy(false);
+					break;
+				}
 			}
 		}
 
