@@ -1,5 +1,4 @@
 #include <SSVUtils/Test/Test.hpp>
-#include <SSVUtils/Tests/Tests.hpp>
 #include "../../AutoSyncGen/Inc/AutoSyncGen.hpp"
 
 /// @brief Synchronizable data structure representing a chat message.
