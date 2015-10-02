@@ -5,60 +5,59 @@
 
 namespace syn
 {
-	template<typename TObj> struct SerializationHelper
-	{
-		inline static void setFromJson(const ssvj::Val& mVal, TObj& mObj)
-		{
-			ssvu::tplForData([&mVal, &mObj](auto mD, auto& mField)
-			{
-				auto key(ssvu::toStr(mD.getIdx()));
+template <typename TObj>
+struct SerializationHelper
+{
+    inline static void setFromJson(const ssvj::Val& mVal, TObj& mObj)
+    {
+        ssvu::tplForData(
+        [&mVal, &mObj](auto mD, auto& mField)
+        {
+            auto key(ssvu::toStr(mD.getIdx()));
 
-				if(mVal.has(key))
-				{
-					mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
-					mObj.unsetBitAt(mD.getIdx());
-				}
+            if(mVal.has(key)) {
+                mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
+                mObj.unsetBitAt(mD.getIdx());
+            }
 
-			}, mObj.fields);
-		}
+        },
+        mObj.fields);
+    }
 
-		inline static auto getAllToJson(const TObj& mObj)
-		{
-			auto result(ssvj::mkObj
-			(
-				jsonFieldFlagsKey, mObj.fieldFlags
-			));
+    inline static auto getAllToJson(const TObj& mObj)
+    {
+        auto result(ssvj::mkObj(jsonFieldFlagsKey, mObj.fieldFlags));
 
-			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
-			{
-				auto key(ssvu::toStr(mD.getIdx()));
-				result[key] = FWD(mField);
+        ssvu::tplForData(
+        [&result, &mObj](auto mD, auto&& mField)
+        {
+            auto key(ssvu::toStr(mD.getIdx()));
+            result[key] = FWD(mField);
 
-			}, mObj.fields);
+        },
+        mObj.fields);
 
-			return result;
-		}
+        return result;
+    }
 
-		inline static auto getDirtyToJson(const TObj& mObj)
-		{
-			auto result(ssvj::mkObj
-			(
-				jsonFieldFlagsKey, mObj.fieldFlags
-			));
+    inline static auto getDirtyToJson(const TObj& mObj)
+    {
+        auto result(ssvj::mkObj(jsonFieldFlagsKey, mObj.fieldFlags));
 
-			ssvu::tplForData([&result, &mObj](auto mD, auto&& mField)
-			{
-				if(mObj.fieldFlags[mD.getIdx()])
-				{
-					auto key(ssvu::toStr(mD.getIdx()));
-					result[key] = FWD(mField);
-				}
+        ssvu::tplForData(
+        [&result, &mObj](auto mD, auto&& mField)
+        {
+            if(mObj.fieldFlags[mD.getIdx()]) {
+                auto key(ssvu::toStr(mD.getIdx()));
+                result[key] = FWD(mField);
+            }
 
-			}, mObj.fields);
+        },
+        mObj.fields);
 
-			return result;
-		}
-	};
+        return result;
+    }
+};
 }
 
 #endif
