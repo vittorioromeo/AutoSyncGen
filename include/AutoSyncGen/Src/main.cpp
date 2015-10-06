@@ -3,12 +3,12 @@
 
 /// @brief Synchronizable data structure representing a chat message.
 struct Message : syn::SyncObj<
-                 // The fields types are passed as a variadic type list.
+                     // The fields types are passed as a variadic type list.
 
-                 int,         // messageID
-                 std::string, // author
-                 std::string  // contents
-                 >
+                     int,         // messageID
+                     std::string, // author
+                     std::string  // contents
+                     >
 {
     // Field proxies are generated via macros for convenience.
 
@@ -43,9 +43,9 @@ struct LifetimeManager<Message>
     inline void remove(Handle mHandle)
     {
         ssvu::eraseRemoveIf(storage, [this, mHandle](const auto& mUPtr)
-        {
-            return mUPtr.get() == mHandle;
-        });
+            {
+                return mUPtr.get() == mHandle;
+            });
     }
 };
 
@@ -88,7 +88,8 @@ class ConsoleSessionController
 private:
     inline void selectRole()
     {
-        while(true) {
+        while(true)
+        {
             ssvu::lo() << "Select: \n"
                        << "    0. Server\n"
                        << "    1. Client\n"
@@ -96,19 +97,22 @@ private:
 
             auto choice(safeCin<int>());
 
-            if(choice == 0) {
+            if(choice == 0)
+            {
                 ssvu::lo() << "Server selected\n";
                 selectServer();
                 return;
             }
 
-            if(choice == 1) {
+            if(choice == 1)
+            {
                 ssvu::lo() << "Client selected\n";
                 selectClient();
                 return;
             }
 
-            if(choice == 2) {
+            if(choice == 2)
+            {
                 return;
             }
 
@@ -125,12 +129,13 @@ private:
         int lastID{0};
 
         server.onDataReceived +=
-        [&server, &lastID](syn::CID mCID, syn::Packet& mP)
+            [&server, &lastID](syn::CID mCID, syn::Packet& mP)
         {
             DP_CtoS type;
             mP >> type;
 
-            if(type == DP_CtoS::SendMsg) {
+            if(type == DP_CtoS::SendMsg)
+            {
                 std::string author, msg;
                 mP >> author >> msg;
 
@@ -139,7 +144,7 @@ private:
                 auto temp(ssvj::mkObj("0", id, "1", author, "2", msg));
 
                 auto handle(
-                server.getSyncManager().serverCreate<Message>(temp));
+                    server.getSyncManager().serverCreate<Message>(temp));
                 server.debugLo() << "Message from (" << mCID << "): << "
                                  << handle->author.view() << ": "
                                  << handle->contents.view() << " >>\n";
@@ -154,18 +159,20 @@ private:
                 auto& sm(server.getSyncManager());
 
                 LifetimeManager<Message>::Handle h(
-                sm.getHandleFor<Message>(id));
+                    sm.getHandleFor<Message>(id));
                 h->contents.edit() = msg;
             }
         };
 
-        while(server.isBusy()) {
+        while(server.isBusy())
+        {
             ssvu::lo() << "Choose: \n"
                        << "    0. Shutdown server\n";
 
             auto choice(safeCin<int>());
 
-            if(choice == 0) {
+            if(choice == 0)
+            {
                 server.setBusy(false);
                 return;
             }
@@ -177,8 +184,8 @@ private:
         auto port = getInputPort("Insert port to listen onto: \n", 27016);
 
         ssvu::lo() << "Enter target server ip and port: \n";
-        auto serverIp =
-        getInputIp("Insert target server ip: \n", syn::IpAddress{"127.0.0.1"});
+        auto serverIp = getInputIp(
+            "Insert target server ip: \n", syn::IpAddress{"127.0.0.1"});
         auto serverPort = getInputPort("Insert target server port: \n", 27015);
 
         ssvu::lo() << "Enter your name: \n";
@@ -190,7 +197,8 @@ private:
             DP_StoC type;
             mP >> type;
 
-            if(type == DP_StoC::DisplayMsg) {
+            if(type == DP_StoC::DisplayMsg)
+            {
                 int id;
                 std::string author;
                 std::string msg;
@@ -203,7 +211,8 @@ private:
             }
         };
 
-        while(client.isBusy()) {
+        while(client.isBusy())
+        {
             ssvu::lo() << "Choose: \n"
                        << "    0. New message\n"
                        << "    1. Edit message\n"
@@ -212,7 +221,8 @@ private:
 
             auto choice(safeCin<int>());
 
-            if(choice == 0) {
+            if(choice == 0)
+            {
                 ssvu::lo() << "Enter message: \n";
                 auto msg(safeCin<std::string>());
 
@@ -221,7 +231,8 @@ private:
                 continue;
             }
 
-            if(choice == 1) {
+            if(choice == 1)
+            {
                 ssvu::lo() << "Enter message ID: \n";
                 auto id(safeCin<int>());
 
@@ -233,13 +244,15 @@ private:
                 continue;
             }
 
-            if(choice == 2) {
+            if(choice == 2)
+            {
                 ssvu::lo() << client.getSyncManager().getSnapshot().toJson()
                            << "\n\n";
                 continue;
             }
 
-            if(choice == 3) {
+            if(choice == 3)
+            {
                 client.setBusy(false);
                 break;
             }
@@ -257,7 +270,7 @@ private:
     }
 
     inline syn::IpAddress getInputIp(
-    const std::string& mMsg, const syn::IpAddress& mDefault)
+        const std::string& mMsg, const syn::IpAddress& mDefault)
     {
         auto choice(getChoice(mMsg, mDefault));
         if(choice == 0) return mDefault;
@@ -266,7 +279,7 @@ private:
     }
 
     inline syn::Port getInputPort(
-    const std::string& mMsg, const syn::Port& mDefault)
+        const std::string& mMsg, const syn::Port& mDefault)
     {
         auto choice(getChoice(mMsg, mDefault));
         if(choice == 0) return mDefault;

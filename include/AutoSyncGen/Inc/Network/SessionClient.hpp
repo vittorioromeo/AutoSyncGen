@@ -3,146 +3,157 @@
 
 namespace syn
 {
-template <typename TSettings>
-class SessionClient : public Impl::SessionClientBase<TSettings>
-{
-    friend Impl::SessionClientBase<TSettings>;
-
-public:
-    using BaseType = Impl::SessionClientBase<TSettings>;
-    using SPT = typename BaseType::SPT;
-    using RPT = typename BaseType::RPT;
-    using Diff = typename BaseType::Diff;
-
-private:
-    IpAddress serverIp;
-    Port serverPort;
-
-    // Assigned from server after connection is accepted
-    CID cid{nullCID};
-
-    template <SPT TType, typename... TArgs>
-    inline void sendToServerNoCID(TArgs&&... mArgs)
+    template <typename TSettings>
+    class SessionClient : public Impl::SessionClientBase<TSettings>
     {
-        SSVU_ASSERT(cid == nullCID);
+        friend Impl::SessionClientBase<TSettings>;
 
-        this->template mkPacket<TType>(FWD(mArgs)...);
-        this->sendTo(serverIp, serverPort);
-    }
+    public:
+        using BaseType = Impl::SessionClientBase<TSettings>;
+        using SPT = typename BaseType::SPT;
+        using RPT = typename BaseType::RPT;
+        using Diff = typename BaseType::Diff;
 
-    template <SPT TType, typename... TArgs>
-    inline void sendToServer(TArgs&&... mArgs)
-    {
-        SSVU_ASSERT(cid != nullCID);
+    private:
+        IpAddress serverIp;
+        Port serverPort;
 
-        this->template mkPacket<TType>(cid, FWD(mArgs)...);
-        this->sendTo(serverIp, serverPort);
-    }
+        // Assigned from server after connection is accepted
+        CID cid{nullCID};
 
-    inline void handle(RPT mType)
-    {
-        switch(mType)
+        template <SPT TType, typename... TArgs>
+        inline void sendToServerNoCID(TArgs&&... mArgs)
         {
-            case RPT::ConnectionAccept: handleConnectionAccept(); return;
-            case RPT::ConnectionDecline: handleConnectionDecline(); return;
-            case RPT::SyncRequestSatisfy: handleSyncRequestSatisfy(); return;
-            case RPT::SyncRequestUnneeded: handleSyncRequestUnneeded(); return;
-            case RPT::SyncRequestDecline: handleSyncRequestDecline(); return;
-            case RPT::Data: this->onDataReceived(this->recvBuffer); return;
-        }
-    }
+            SSVU_ASSERT(cid == nullCID);
 
-    inline void sendConnectionRequest()
-    {
-        sendToServerNoCID<SPT::ConnectionRequest>();
-    }
-
-    inline void sendPing()
-    {
-        // this->debugLo() << "Sending ping\n";
-        sendToServer<SPT::Ping>();
-    }
-
-    inline void sendSyncRequest()
-    {
-        this->debugLo() << "Sending sync request...\n";
-        sendToServer<SPT::SyncRequest>(this->syncManager.getSnapshot());
-    }
-
-    inline void handleConnectionAccept()
-    {
-        auto id(this->template popRecv<CID>());
-        auto msg(this->template popRecv<std::string>());
-
-        this->debugLo() << "Server accepted connection - my CID is " << id
-                        << "\n"
-                        << "Server message: " << msg << "\n";
-
-        cid = id;
-    }
-
-    inline void handleConnectionDecline() {}
-
-    inline void handleSyncRequestSatisfy()
-    {
-        auto diff(this->template popRecv<Diff>());
-        auto diffJson(diff.toJson());
-
-        if(!diff.isEmpty()) {
-            this->debugLo() << "Received diff\n" << diffJson << "\n";
+            this->template mkPacket<TType>(FWD(mArgs)...);
+            this->sendTo(serverIp, serverPort);
         }
 
-        this->syncManager.applyDiff(diff);
-
-        // this->debugLo() << "Diff applied\n";
-    }
-
-    inline void handleSyncRequestUnneeded() {}
-
-    inline void handleSyncRequestDecline() {}
-
-public:
-    ssvu::Delegate<void(sf::Packet&)> onDataReceived;
-
-    inline SessionClient(
-    syn::Port mPort, syn::IpAddress mServerIp, syn::Port mServerPort)
-        : Impl::SessionClientBase<TSettings>{"Client", mPort},
-          serverIp{mServerIp}, serverPort{mServerPort}
-    {
-        this->setBusy(true);
-
-        // TODO: wat
-        auto xd = std::thread([this]
+        template <SPT TType, typename... TArgs>
+        inline void sendToServer(TArgs&&... mArgs)
         {
-            while(true) {
-                sendConnectionRequest();
-                std::this_thread::sleep_for(std::chrono::seconds(1));
+            SSVU_ASSERT(cid != nullCID);
 
-                int i = 0;
-                while(true) {
-                    sendPing();
+            this->template mkPacket<TType>(cid, FWD(mArgs)...);
+            this->sendTo(serverIp, serverPort);
+        }
 
-                    ++i;
-
-                    if(i == 4) {
-                        i = 0;
-                        sendSyncRequest();
-                    }
-
-                    std::this_thread::sleep_for(std::chrono::seconds(1));
-                }
+        inline void handle(RPT mType)
+        {
+            switch(mType)
+            {
+                case RPT::ConnectionAccept: handleConnectionAccept(); return;
+                case RPT::ConnectionDecline: handleConnectionDecline(); return;
+                case RPT::SyncRequestSatisfy:
+                    handleSyncRequestSatisfy();
+                    return;
+                case RPT::SyncRequestUnneeded:
+                    handleSyncRequestUnneeded();
+                    return;
+                case RPT::SyncRequestDecline:
+                    handleSyncRequestDecline();
+                    return;
+                case RPT::Data: this->onDataReceived(this->recvBuffer); return;
             }
-        });
+        }
 
-        xd.detach();
-    }
+        inline void sendConnectionRequest()
+        {
+            sendToServerNoCID<SPT::ConnectionRequest>();
+        }
 
-    template <typename... TArgs>
-    inline void sendDataToServer(TArgs&&... mArgs)
-    {
-        sendToServer<SPT::Data>(FWD(mArgs)...);
-    }
-};
+        inline void sendPing()
+        {
+            // this->debugLo() << "Sending ping\n";
+            sendToServer<SPT::Ping>();
+        }
+
+        inline void sendSyncRequest()
+        {
+            this->debugLo() << "Sending sync request...\n";
+            sendToServer<SPT::SyncRequest>(this->syncManager.getSnapshot());
+        }
+
+        inline void handleConnectionAccept()
+        {
+            auto id(this->template popRecv<CID>());
+            auto msg(this->template popRecv<std::string>());
+
+            this->debugLo() << "Server accepted connection - my CID is " << id
+                            << "\n"
+                            << "Server message: " << msg << "\n";
+
+            cid = id;
+        }
+
+        inline void handleConnectionDecline() {}
+
+        inline void handleSyncRequestSatisfy()
+        {
+            auto diff(this->template popRecv<Diff>());
+            auto diffJson(diff.toJson());
+
+            if(!diff.isEmpty())
+            {
+                this->debugLo() << "Received diff\n" << diffJson << "\n";
+            }
+
+            this->syncManager.applyDiff(diff);
+
+            // this->debugLo() << "Diff applied\n";
+        }
+
+        inline void handleSyncRequestUnneeded() {}
+
+        inline void handleSyncRequestDecline() {}
+
+    public:
+        ssvu::Delegate<void(sf::Packet&)> onDataReceived;
+
+        inline SessionClient(
+            syn::Port mPort, syn::IpAddress mServerIp, syn::Port mServerPort)
+            : Impl::SessionClientBase<TSettings>{"Client", mPort},
+              serverIp{mServerIp}, serverPort{mServerPort}
+        {
+            this->setBusy(true);
+
+            // TODO: wat
+            auto xd = std::thread([this]
+                {
+                    while(true)
+                    {
+                        sendConnectionRequest();
+                        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+                        int i = 0;
+                        while(true)
+                        {
+                            sendPing();
+
+                            ++i;
+
+                            if(i == 4)
+                            {
+                                i = 0;
+                                sendSyncRequest();
+                            }
+
+                            std::this_thread::sleep_for(
+                                std::chrono::seconds(1));
+                        }
+                    }
+                });
+
+            xd.detach();
+        }
+
+        template <typename... TArgs>
+        inline void sendDataToServer(TArgs&&... mArgs)
+        {
+            sendToServer<SPT::Data>(FWD(mArgs)...);
+        }
+    };
 }
 
 #endif

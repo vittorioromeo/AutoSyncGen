@@ -5,59 +5,63 @@
 
 namespace syn
 {
-template <typename TObj>
-struct SerializationHelper
-{
-    inline static void setFromJson(const ssvj::Val& mVal, TObj& mObj)
+    template <typename TObj>
+    struct SerializationHelper
     {
-        ssvu::tplForData(
-        [&mVal, &mObj](auto mD, auto& mField)
+        inline static void setFromJson(const ssvj::Val& mVal, TObj& mObj)
         {
-            auto key(ssvu::toStr(mD.getIdx()));
+            ssvu::tplForData(
+                [&mVal, &mObj](auto mD, auto& mField)
+                {
+                    auto key(ssvu::toStr(mD.getIdx()));
 
-            if(mVal.has(key)) {
-                mField = mVal[key].template as<ssvu::RmAll<decltype(mField)>>();
-                mObj.unsetBitAt(mD.getIdx());
-            }
+                    if(mVal.has(key))
+                    {
+                        mField =
+                            mVal[key]
+                                .template as<ssvu::RmAll<decltype(mField)>>();
+                        mObj.unsetBitAt(mD.getIdx());
+                    }
 
-        },
-        mObj.fields);
-    }
+                },
+                mObj.fields);
+        }
 
-    inline static auto getAllToJson(const TObj& mObj)
-    {
-        auto result(ssvj::mkObj(jsonFieldFlagsKey, mObj.fieldFlags));
-
-        ssvu::tplForData(
-        [&result, &mObj](auto mD, auto&& mField)
+        inline static auto getAllToJson(const TObj& mObj)
         {
-            auto key(ssvu::toStr(mD.getIdx()));
-            result[key] = FWD(mField);
+            auto result(ssvj::mkObj(jsonFieldFlagsKey, mObj.fieldFlags));
 
-        },
-        mObj.fields);
+            ssvu::tplForData(
+                [&result, &mObj](auto mD, auto&& mField)
+                {
+                    auto key(ssvu::toStr(mD.getIdx()));
+                    result[key] = FWD(mField);
 
-        return result;
-    }
+                },
+                mObj.fields);
 
-    inline static auto getDirtyToJson(const TObj& mObj)
-    {
-        auto result(ssvj::mkObj(jsonFieldFlagsKey, mObj.fieldFlags));
+            return result;
+        }
 
-        ssvu::tplForData(
-        [&result, &mObj](auto mD, auto&& mField)
+        inline static auto getDirtyToJson(const TObj& mObj)
         {
-            if(mObj.fieldFlags[mD.getIdx()]) {
-                auto key(ssvu::toStr(mD.getIdx()));
-                result[key] = FWD(mField);
-            }
+            auto result(ssvj::mkObj(jsonFieldFlagsKey, mObj.fieldFlags));
 
-        },
-        mObj.fields);
+            ssvu::tplForData(
+                [&result, &mObj](auto mD, auto&& mField)
+                {
+                    if(mObj.fieldFlags[mD.getIdx()])
+                    {
+                        auto key(ssvu::toStr(mD.getIdx()));
+                        result[key] = FWD(mField);
+                    }
 
-        return result;
-    }
-};
+                },
+                mObj.fields);
+
+            return result;
+        }
+    };
 }
 
 #endif

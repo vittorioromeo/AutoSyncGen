@@ -5,15 +5,15 @@
 
 namespace syn
 {
-namespace Impl
-{
-    /// @brief Base polymorphic class for `Obj`.
-    class ObjBase
+    namespace Impl
     {
-    public:
-        virtual ~ObjBase() {}
-    };
-}
+        /// @brief Base polymorphic class for `Obj`.
+        class ObjBase
+        {
+        public:
+            virtual ~ObjBase() {}
+        };
+    }
 }
 
 #endif

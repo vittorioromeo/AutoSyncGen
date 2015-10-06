@@ -3,11 +3,11 @@
 
 namespace syn
 {
-template <typename TSyncManager>
-struct SessionSettings
-{
-    using SyncManager = TSyncManager;
-};
+    template <typename TSyncManager>
+    struct SessionSettings
+    {
+        using SyncManager = TSyncManager;
+    };
 }
 
 #endif

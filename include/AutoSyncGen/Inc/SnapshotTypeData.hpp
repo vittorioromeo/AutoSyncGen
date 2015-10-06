@@ -7,34 +7,36 @@
 
 namespace syn
 {
-namespace Impl
-{
-    /// @brief Class representing the snapshot for a specific type managed by
-    /// the `SyncManager`.
-    struct SnapshotTypeData
+    namespace Impl
     {
-        /// @brief Items contained in the snapshot type data.
-        std::map<ID, ssvj::Val> items;
-
-        /// @brief Returns a json value representing the snapshot type data.
-        inline auto toJson() const
+        /// @brief Class representing the snapshot for a specific type managed
+        /// by
+        /// the `SyncManager`.
+        struct SnapshotTypeData
         {
-            auto result(ssvj::mkObj());
+            /// @brief Items contained in the snapshot type data.
+            std::map<ID, ssvj::Val> items;
 
-            for(const auto& x : items) result[ssvu::toStr(x.first)] = x.second;
-            return result;
-        }
+            /// @brief Returns a json value representing the snapshot type data.
+            inline auto toJson() const
+            {
+                auto result(ssvj::mkObj());
 
-        /// @brief Initializes the snapshot type data from json.
-        inline void initFromJson(const ssvj::Val& mX)
-        {
-            items.clear();
+                for(const auto& x : items)
+                    result[ssvu::toStr(x.first)] = x.second;
+                return result;
+            }
 
-            for(const auto& x : mX.forObj())
-                items[ssvu::sToInt(x.key)] = x.value;
-        }
-    };
-}
+            /// @brief Initializes the snapshot type data from json.
+            inline void initFromJson(const ssvj::Val& mX)
+            {
+                items.clear();
+
+                for(const auto& x : mX.forObj())
+                    items[ssvu::sToInt(x.key)] = x.value;
+            }
+        };
+    }
 }
 
 #endif

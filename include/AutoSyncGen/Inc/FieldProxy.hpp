@@ -5,49 +5,51 @@
 
 namespace syn
 {
-template <TypeIdx TI, typename TObj>
-class FieldProxy
-{
-private:
-    TObj& syncObj;
-
-    /// @brief Set the "dirty bit" associated to this field to true.
-    inline void setDirtyBit() noexcept { syncObj.template setBitAt<TI>(); }
-
-public:
-    /// @brief Type of the underlying field.
-    using Type = typename ssvu::RmRef<decltype(syncObj)>::template TypeAt<TI>;
-
-    inline FieldProxy(TObj& mSyncObj) noexcept : syncObj{mSyncObj} {}
-
-    /// @brief Returns a non-const reference to the underlying field, and sets
-    /// the dirty bit.
-    inline auto& edit() noexcept
+    template <TypeIdx TI, typename TObj>
+    class FieldProxy
     {
-        setDirtyBit();
-        return syncObj.template getFieldAt<TI>();
-    }
+    private:
+        TObj& syncObj;
 
-    /// @brief Returns a const reference to the underlying field.
-    inline const auto& view() const noexcept
+        /// @brief Set the "dirty bit" associated to this field to true.
+        inline void setDirtyBit() noexcept { syncObj.template setBitAt<TI>(); }
+
+    public:
+        /// @brief Type of the underlying field.
+        using Type =
+            typename ssvu::RmRef<decltype(syncObj)>::template TypeAt<TI>;
+
+        inline FieldProxy(TObj& mSyncObj) noexcept : syncObj{mSyncObj} {}
+
+        /// @brief Returns a non-const reference to the underlying field, and
+        /// sets
+        /// the dirty bit.
+        inline auto& edit() noexcept
+        {
+            setDirtyBit();
+            return syncObj.template getFieldAt<TI>();
+        }
+
+        /// @brief Returns a const reference to the underlying field.
+        inline const auto& view() const noexcept
+        {
+            return syncObj.template getFieldAt<TI>();
+        }
+    };
+
+    /// @brief `type_traits`-like class that checks whether or not a class is a
+    /// `FieldProxy`.
+    template <typename>
+    struct IsFieldProxy
     {
-        return syncObj.template getFieldAt<TI>();
-    }
-};
+        using Type = ssvu::FalseT;
+    };
 
-/// @brief `type_traits`-like class that checks whether or not a class is a
-/// `FieldProxy`.
-template <typename>
-struct IsFieldProxy
-{
-    using Type = ssvu::FalseT;
-};
-
-template <TypeIdx TI, typename TObj>
-struct IsFieldProxy<FieldProxy<TI, TObj>>
-{
-    using Type = ssvu::TrueT;
-};
+    template <TypeIdx TI, typename TObj>
+    struct IsFieldProxy<FieldProxy<TI, TObj>>
+    {
+        using Type = ssvu::TrueT;
+    };
 }
 
 #define SYN_PROXY(mIdx, mName) \

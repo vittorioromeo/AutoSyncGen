@@ -19,65 +19,65 @@
 
 namespace syn
 {
-namespace Impl
-{
-    /// @brief Class representing a diff for all the types handled by the
-    /// `SyncManager`.
-    template <typename TManager>
-    struct Diff
+    namespace Impl
     {
-        /// @brief Bitset of object flags.
-        using ObjBitset = typename TManager::ObjBitset;
-
-        /// @brief Type of the bitset storage.
-        using BitsetStorage = typename TManager::BitsetStorage;
-
-        /// @brief Type of the diff type data..
-        using TypeData = DiffTypeData;
-
-        /// @brief Tuple containing the diff type data for every type.
-        ssvu::TplRepeat<TypeData, TManager::typeCount> typeDatas;
-
-        /// @brief Returns a json value represeting the whole diff.
-        inline auto toJson() const
+        /// @brief Class representing a diff for all the types handled by the
+        /// `SyncManager`.
+        template <typename TManager>
+        struct Diff
         {
-            auto result(ssvj::mkArr());
-            ssvu::tplFor(
-            [this, &result](const auto& mI)
-            {
-                result.emplace(mI.toJson());
-            },
-            typeDatas);
-            return result;
-        }
+            /// @brief Bitset of object flags.
+            using ObjBitset = typename TManager::ObjBitset;
 
-        /// @brief Initializes the diff from a json value `mX`.
-        inline void initFromJson(const ssvj::Val& mX)
-        {
-            ssvu::tplForData(
-            [this, &mX](auto mD, auto& mTD)
-            {
-                mTD.initFromJson(mX[mD.getIdx()]);
-            },
-            typeDatas);
-        }
+            /// @brief Type of the bitset storage.
+            using BitsetStorage = typename TManager::BitsetStorage;
 
-        /// @brief Returns true if all diff type datas are empty.
-        inline bool isEmpty() const noexcept
-        {
-            bool result{true};
+            /// @brief Type of the diff type data..
+            using TypeData = DiffTypeData;
 
-            // TODO: is there a way of short-circuiting this?
-            ssvu::tplFor(
-            [this, &result](const auto& mTD)
+            /// @brief Tuple containing the diff type data for every type.
+            ssvu::TplRepeat<TypeData, TManager::typeCount> typeDatas;
+
+            /// @brief Returns a json value represeting the whole diff.
+            inline auto toJson() const
             {
-                result &= mTD.isEmpty();
-            },
-            typeDatas);
-            return result;
-        }
-    };
-}
+                auto result(ssvj::mkArr());
+                ssvu::tplFor(
+                    [this, &result](const auto& mI)
+                    {
+                        result.emplace(mI.toJson());
+                    },
+                    typeDatas);
+                return result;
+            }
+
+            /// @brief Initializes the diff from a json value `mX`.
+            inline void initFromJson(const ssvj::Val& mX)
+            {
+                ssvu::tplForData(
+                    [this, &mX](auto mD, auto& mTD)
+                    {
+                        mTD.initFromJson(mX[mD.getIdx()]);
+                    },
+                    typeDatas);
+            }
+
+            /// @brief Returns true if all diff type datas are empty.
+            inline bool isEmpty() const noexcept
+            {
+                bool result{true};
+
+                // TODO: is there a way of short-circuiting this?
+                ssvu::tplFor(
+                    [this, &result](const auto& mTD)
+                    {
+                        result &= mTD.isEmpty();
+                    },
+                    typeDatas);
+                return result;
+            }
+        };
+    }
 }
 
 #endif
