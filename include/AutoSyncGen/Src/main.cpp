@@ -1,4 +1,3 @@
-#include <SSVUtils/Test/Test.hpp>
 #include "../../AutoSyncGen/Inc/AutoSyncGen.hpp"
 
 /// @brief Synchronizable data structure representing a chat message.
@@ -294,8 +293,6 @@ public:
 
 int main()
 {
-    SSVUT_RUN();
-
     ConsoleSessionController{}.start();
     return 0;
 }
