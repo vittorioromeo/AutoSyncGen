@@ -33,6 +33,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+_RELEASE/AutoSyncGen
 
 # External tool builders
 .externalToolBuilders/
